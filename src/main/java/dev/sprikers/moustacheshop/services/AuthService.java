@@ -1,5 +1,6 @@
 package dev.sprikers.moustacheshop.services;
 
+import java.io.IOException;
 import java.net.http.HttpResponse;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,16 +23,20 @@ public class AuthService {
         LoginRequest loginRequest = new LoginRequest(email, password);
         ObjectMapper objectMapper = new ObjectMapper();
 
-        HttpResponse<String> response = apiClient.post("/user/login", loginRequest);
-        if (response.statusCode() != 200) {
-            JsonNode errorResponse = objectMapper.readTree(response.body());
-            throw new Exception(errorResponse.get("message").asText());
-        }
+        try {
+            HttpResponse<String> response = apiClient.post("/user/login", loginRequest);
+            if (response.statusCode() != 200) {
+                JsonNode errorResponse = objectMapper.readTree(response.body());
+                throw new Exception(errorResponse.get("message").asText());
+            }
 
-        JwtResponse jwtResponse = objectMapper.readValue(response.body(), JwtResponse.class);
-        String token = jwtResponse.getToken();
-        apiClient.setBearerToken(token);
-        JwtPreferencesManager.setJwt(token);
+            JwtResponse jwtResponse = objectMapper.readValue(response.body(), JwtResponse.class);
+            String token = jwtResponse.getToken();
+            apiClient.setBearerToken(token);
+            JwtPreferencesManager.setJwt(token);
+        } catch (IOException e) {
+            throw new Exception("Error de comunicación: " + e.getMessage());
+        }
     }
 
 }

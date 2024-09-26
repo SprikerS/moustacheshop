@@ -30,7 +30,7 @@ public class AuthController {
             authService.login(email, password);
             Main.changeStage(PathViews.HOME, "Moustache Shop", event);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            showErrorMessage(e.getMessage());
         }
     }
 

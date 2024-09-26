@@ -1,12 +1,13 @@
 package dev.sprikers.moustacheshop.clients;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import dev.sprikers.moustacheshop.exceptions.ApiExceptionHandler;
 
 public class ApiClient {
 
@@ -22,18 +23,19 @@ public class ApiClient {
         bearerToken = token;
     }
 
-    public HttpResponse<String> post(String endpoint, Object requestBody) throws IOException, InterruptedException {
+    public HttpResponse<String> post(String endpoint, Object requestBody) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(requestBody);
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(BASE_URL + endpoint))
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + bearerToken)
-                .POST(HttpRequest.BodyPublishers.ofString(json))
-                .build();
-
-        return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        return ApiExceptionHandler.handleApiCall(() -> {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(BASE_URL + endpoint))
+                    .header("Content-Type", "application/json")
+                    .header("Authorization", "Bearer " + bearerToken)
+                    .POST(HttpRequest.BodyPublishers.ofString(json))
+                    .build();
+            return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        });
     }
 
 }
