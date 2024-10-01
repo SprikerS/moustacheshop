@@ -6,5 +6,6 @@ public class PathViews {
 
     public static final String HOME = VIEWS_PATH + "home.fxml";
     public static final String AUTH = VIEWS_PATH + "auth.fxml";
+    public static final String SETTINGS = VIEWS_PATH + "settings.fxml";
 
 }

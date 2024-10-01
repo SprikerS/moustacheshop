@@ -33,6 +33,14 @@ public class Main extends Application {
         centerOnScreen(stage);
     }
 
+    public static void changeScene(String fxmlFile, Event event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlFile));
+        Scene newScene = new Scene(fxmlLoader.load());
+
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.setScene(newScene);
+    }
+
     public static void changeStage(String fxmlFile, String title, Event event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlFile));
         Stage newStage = new Stage();
