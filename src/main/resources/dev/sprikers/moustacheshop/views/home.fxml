@@ -7,11 +7,21 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.controllers.HomeController">
     <children>
-        <Label layoutX="95.0" layoutY="116.0" text="BIENVENIDO">
-            <font>
-                <Font size="72.0" />
-            </font>
-        </Label>
-        <Button layoutX="223.0" layoutY="275.0" mnemonicParsing="false" onMouseClicked="#btnLogout" prefHeight="47.0" prefWidth="155.0" text="CERRAR SESION" />
+        <Button layoutX="238.0" layoutY="335.0" mnemonicParsing="false" onMouseClicked="#btnLogout" prefHeight="35.0" prefWidth="123.0" text="CERRAR SESION" />
+      <Label layoutX="204.0" layoutY="103.0" text="Nombres:" />
+      <Label layoutX="206.0" layoutY="149.0" text="Apellido Paterno:" />
+      <Label layoutX="204.0" layoutY="187.0" text="Apellido Materno:" />
+      <Label layoutX="204.0" layoutY="224.0" text="DNI:" />
+      <Label layoutX="201.0" layoutY="264.0" text="Email:" />
+      <Label fx:id="lblNames" layoutX="371.0" layoutY="103.0" text="Label" />
+      <Label fx:id="lblPaternalSurname" layoutX="371.0" layoutY="149.0" text="Label" />
+      <Label fx:id="lblMaternalSurname" layoutX="371.0" layoutY="187.0" text="Label" />
+      <Label fx:id="lblDni" layoutX="371.0" layoutY="224.0" text="Label" />
+      <Label fx:id="lblEmail" layoutX="371.0" layoutY="264.0" text="Label" />
+      <Label layoutX="210.0" layoutY="30.0" text="TIENDA BIGOTES">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

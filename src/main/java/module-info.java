@@ -15,5 +15,6 @@ module dev.sprikers.moustacheshop {
     opens dev.sprikers.moustacheshop.controllers to javafx.fxml;
 
 
+    exports dev.sprikers.moustacheshop.models to com.fasterxml.jackson.databind;
     opens dev.sprikers.moustacheshop.dto to com.fasterxml.jackson.databind;
 }

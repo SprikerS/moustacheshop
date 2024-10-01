@@ -8,19 +8,18 @@ import java.net.http.HttpResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.sprikers.moustacheshop.exceptions.ApiExceptionHandler;
+import dev.sprikers.moustacheshop.utils.JwtPreferencesManager;
 
 public class ApiClient {
 
-    private static final String BASE_URL = "http://localhost:3000/api";
     private static HttpClient httpClient;
-    private static String bearerToken;
 
     public ApiClient() {
         httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2).build();
     }
 
-    public void setBearerToken(String token) {
-        bearerToken = token;
+    private String getBearerToken() {
+        return JwtPreferencesManager.getJwt() != null ? JwtPreferencesManager.getJwt() : "";
     }
 
     public HttpResponse<String> post(String endpoint, Object requestBody) throws Exception {
@@ -29,10 +28,21 @@ public class ApiClient {
 
         return ApiExceptionHandler.handleApiCall(() -> {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(BASE_URL + endpoint))
+                    .uri(URI.create(endpoint))
                     .header("Content-Type", "application/json")
-                    .header("Authorization", "Bearer " + bearerToken)
+                    .header("Authorization", "Bearer " + getBearerToken())
                     .POST(HttpRequest.BodyPublishers.ofString(json))
+                    .build();
+            return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        });
+    }
+
+    public HttpResponse<String> get(String endpoint) throws Exception {
+        return ApiExceptionHandler.handleApiCall(() -> {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(endpoint))
+                    .header("Authorization", "Bearer " + getBearerToken())
+                    .GET()
                     .build();
             return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         });
