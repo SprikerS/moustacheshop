@@ -9,8 +9,9 @@
 
 <BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.controllers.HomeController">
     <left>
-        <VBox prefHeight="600.0" prefWidth="100.0" style="-fx-background-color: #FCFCFC;" BorderPane.alignment="CENTER">
+        <VBox fx:id="sidebarVBox" prefHeight="600.0" prefWidth="100.0" style="-fx-background-color: #FCFCFC;" BorderPane.alignment="CENTER">
             <Button mnemonicParsing="false" onMouseClicked="#viewHome" prefHeight="40.0" prefWidth="178.0" style="-fx-background-color: transparent; -fx-border-color: #DFDFDF; -fx-border-width: 0px 0px 2px 0px;" text="Inicio" />
+            <Button fx:id="btnUserModule" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#viewUsers" prefHeight="40.0" prefWidth="178.0" style="-fx-background-color: transparent; -fx-border-color: #DFDFDF; -fx-border-width: 0px 0px 2px 0px;" text="Usuarios" />
             <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#viewSettings" prefHeight="40.0" prefWidth="178.0" style="-fx-background-color: transparent; -fx-border-color: #DFDFDF; -fx-border-width: 0px 0px 2px 0px;" text="Ajustes" />
         </VBox>
     </left>

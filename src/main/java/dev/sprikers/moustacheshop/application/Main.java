@@ -12,9 +12,13 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import dev.sprikers.moustacheshop.constants.PathViews;
+import dev.sprikers.moustacheshop.services.AuthService;
+import dev.sprikers.moustacheshop.utils.AlertManager;
 import dev.sprikers.moustacheshop.utils.JwtPreferencesManager;
 
 public class Main extends Application {
+
+    private static final AuthService authService = new AuthService();
 
     public static void main(String[] args) {
         launch(args);
@@ -22,9 +26,18 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        String viewPath = JwtPreferencesManager.isLogged() ? PathViews.HOME : PathViews.AUTH;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(viewPath));
+        boolean jwtExists = JwtPreferencesManager.isJWT();
+        String viewPath = jwtExists ? PathViews.HOME : PathViews.AUTH;
 
+        if (jwtExists) {
+            try {
+                authService.loadUserInfo();
+            } catch (Exception e) {
+                AlertManager.showErrorMessage(e.getMessage(), true);
+            }
+        }
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(viewPath));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
         stage.setResizable(false);

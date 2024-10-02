@@ -2,25 +2,31 @@ package dev.sprikers.moustacheshop.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
 import dev.sprikers.moustacheshop.constants.PathViews;
+import dev.sprikers.moustacheshop.enums.UserRole;
 import dev.sprikers.moustacheshop.models.UserModel;
-import dev.sprikers.moustacheshop.services.AuthService;
 import dev.sprikers.moustacheshop.utils.UserSession;
 
 public class HomeController implements Initializable {
 
-    private final AuthService authService = new AuthService();
+    private final Map<String, Parent> pageCache = new HashMap<>();
+    private final UserModel user = UserSession.getInstance().getUserModel();
 
     @FXML
     private Label lblDni, lblEmail, lblMaternalSurname, lblNames, lblPaternalSurname;
@@ -32,15 +38,24 @@ public class HomeController implements Initializable {
     private BorderPane bp;
 
     @FXML
-    void viewHome(MouseEvent event) {
-        System.out.println("center home page");
+    private Button btnUserModule;
+
+    @FXML
+    private VBox sidebarVBox;
+
+    @FXML
+    void viewHome() {
         bp.setCenter(ap);
     }
 
     @FXML
-    void viewSettings(MouseEvent event) {
-        System.out.println("center settings page");
-        loadPage(PathViews.SETTINGS);
+    void viewSettings() {
+        loadView(PathViews.SETTINGS);
+    }
+
+    @FXML
+    void viewUsers() {
+        loadView(PathViews.USERS);
     }
 
     @Override
@@ -48,29 +63,30 @@ public class HomeController implements Initializable {
         loadUserInfo();
     }
 
-    private void loadPage(String page) {
-        Parent root = null;
-
-        try {
-            root = FXMLLoader.load(getClass().getResource(page));
-            bp.setCenter(root);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     private void loadUserInfo() {
-        try {
-            authService.loadUserInfo();
-            UserModel user = UserSession.getInstance().getUserModel();
-
-            lblNames.setText(user.getNames());
-            lblPaternalSurname.setText(user.getPaternalSurname());
-            lblMaternalSurname.setText(user.getMaternalSurname());
-            lblEmail.setText(user.getEmail());
-            lblDni.setText(user.getDni());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        Set<String> allowedRoles = Set.of(UserRole.ADMIN.getRole(), UserRole.SUPERUSER.getRole());
+        if (user.getRoles().stream().noneMatch(allowedRoles::contains)) {
+            sidebarVBox.getChildren().remove(btnUserModule);
         }
+
+        lblNames.setText(user.getNames());
+        lblPaternalSurname.setText(user.getPaternalSurname());
+        lblMaternalSurname.setText(user.getMaternalSurname());
+        lblEmail.setText(user.getEmail());
+        lblDni.setText(user.getDni());
     }
+
+    private void loadView(String view) {
+        Parent root = pageCache.get(view);
+        if (root == null) {
+            try {
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(view)));
+                pageCache.put(view, root);
+            } catch (IOException e) {
+                System.out.println("Error loading view: " + e.getMessage());
+            }
+        }
+        bp.setCenter(root);
+    }
+
 }

@@ -19,7 +19,7 @@ public class JwtPreferencesManager {
         prefs.remove(JWT_KEY);
     }
 
-    public static boolean isLogged() {
+    public static boolean isJWT() {
         return getJwt() != null;
     }
 

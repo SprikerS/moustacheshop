@@ -36,7 +36,7 @@ public class AuthService {
             JwtResponse jwtResponse = objectMapper.readValue(response.body(), JwtResponse.class);
             JwtPreferencesManager.setJwt(jwtResponse.getToken());
         } catch (IOException e) {
-            throw new Exception("Error de comunicación: " + e.getMessage());
+            throw new Exception(e.getMessage());
         }
     }
 
@@ -52,8 +52,9 @@ public class AuthService {
 
             UserModel user = objectMapper.readValue(response.body(), UserModel.class);
             UserSession.getInstance().setUserModel(user);
+            JwtPreferencesManager.setJwt(user.getToken());
         } catch (IOException e) {
-            throw new Exception("Error de comunicación: " + e.getMessage());
+            throw new Exception(e.getMessage());
         }
     }
 

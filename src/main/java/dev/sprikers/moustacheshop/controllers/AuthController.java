@@ -1,13 +1,13 @@
 package dev.sprikers.moustacheshop.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import dev.sprikers.moustacheshop.application.Main;
 import dev.sprikers.moustacheshop.constants.PathViews;
 import dev.sprikers.moustacheshop.services.AuthService;
+import dev.sprikers.moustacheshop.utils.AlertManager;
 
 public class AuthController {
 
@@ -22,7 +22,7 @@ public class AuthController {
         String password = txtPass.getText().trim();
 
         if (email.isEmpty() || password.isEmpty()) {
-            showErrorMessage("Por favor, complete todos los campos");
+            AlertManager.showErrorMessage("Por favor, complete todos los campos");
             return;
         }
 
@@ -30,16 +30,8 @@ public class AuthController {
             authService.login(email, password);
             Main.changeStage(PathViews.HOME, "Moustache Shop", event);
         } catch (Exception e) {
-            showErrorMessage(e.getMessage());
+            AlertManager.showErrorMessage(e.getMessage());
         }
-    }
-
-    private void showErrorMessage(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error de Autenticación");
-        alert.setHeaderText("No se pudo iniciar sesión");
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
 }
