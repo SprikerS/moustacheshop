@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.sprikers.moustacheshop.clients.ApiClient;
 import dev.sprikers.moustacheshop.constants.ApiEndpoints;
-import dev.sprikers.moustacheshop.dto.JwtResponse;
 import dev.sprikers.moustacheshop.dto.LoginRequest;
 import dev.sprikers.moustacheshop.models.UserModel;
 import dev.sprikers.moustacheshop.utils.JwtPreferencesManager;
@@ -23,39 +22,35 @@ public class AuthService {
     }
 
     public void login(String email, String password) throws Exception {
-        LoginRequest loginRequest = new LoginRequest(email, password);
-        ObjectMapper objectMapper = new ObjectMapper();
-
         try {
+            LoginRequest loginRequest = new LoginRequest(email, password);
             HttpResponse<String> response = apiClient.post(ApiEndpoints.AUTH_LOGIN, loginRequest);
-            if (response.statusCode() != 200) {
-                JsonNode errorResponse = objectMapper.readTree(response.body());
-                throw new Exception(errorResponse.get("message").asText());
-            }
-
-            JwtResponse jwtResponse = objectMapper.readValue(response.body(), JwtResponse.class);
-            JwtPreferencesManager.setJwt(jwtResponse.getToken());
+            handleResponse(response);
         } catch (IOException e) {
             throw new Exception(e.getMessage());
         }
     }
 
-    public void loadUserInfo() throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-
+    public void fetchUserInfo() throws Exception {
         try {
             HttpResponse<String> response = apiClient.get(ApiEndpoints.CHECK_AUTH_STATUS);
-            if (response.statusCode() != 200) {
-                JsonNode errorResponse = objectMapper.readTree(response.body());
-                throw new Exception(errorResponse.get("message").asText());
-            }
-
-            UserModel user = objectMapper.readValue(response.body(), UserModel.class);
-            UserSession.getInstance().setUserModel(user);
-            JwtPreferencesManager.setJwt(user.getToken());
+            handleResponse(response);
         } catch (IOException e) {
             throw new Exception(e.getMessage());
         }
+    }
+
+    private void handleResponse(HttpResponse<String> response) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        if (response.statusCode() != 200) {
+            JsonNode errorResponse = objectMapper.readTree(response.body());
+            throw new Exception(errorResponse.get("message").asText());
+        }
+
+        UserModel user = objectMapper.readValue(response.body(), UserModel.class);
+        UserSession.getInstance().setUserModel(user);
+        JwtPreferencesManager.setJwt(user.getToken());
     }
 
 }

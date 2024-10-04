@@ -3,6 +3,7 @@ package dev.sprikers.moustacheshop.application;
 import java.io.IOException;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -31,7 +32,7 @@ public class Main extends Application {
 
         if (jwtExists) {
             try {
-                authService.loadUserInfo();
+                authService.fetchUserInfo();
             } catch (Exception e) {
                 AlertManager.showErrorMessage(e.getMessage(), true);
             }
@@ -64,7 +65,7 @@ public class Main extends Application {
         newStage.show();
 
         centerOnScreen(newStage);
-        ((Stage) (((Node) event.getSource()).getScene().getWindow())).close();
+        Platform.runLater(() -> ((Stage) (((Node) event.getSource()).getScene().getWindow())).close());
     }
 
     private static void centerOnScreen(Stage stage) {
