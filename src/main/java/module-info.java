@@ -6,6 +6,7 @@ module dev.sprikers.moustacheshop {
     requires com.fasterxml.jackson.databind;
     requires javafx.controls;
     requires javafx.fxml;
+    requires org.burningwave.core;
     requires static lombok;
 
 

@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="dev.sprikers.moustacheshop.controllers.AuthController"
-            prefHeight="245.0" prefWidth="400.0">
-    <children>
-        <Label layoutX="62.0" layoutY="66.0" text="EMAIL:" />
-        <Label layoutX="57.0" layoutY="121.0" text="PASSWORD:" />
-        <TextField fx:id="txtEmail" layoutX="160.0" layoutY="71.0" prefHeight="25.0" prefWidth="199.0" />
-        <TextField fx:id="txtPass" layoutX="159.0" layoutY="117.0" prefHeight="25.0" prefWidth="199.0" />
-        <Button layoutX="135.0" layoutY="173.0" mnemonicParsing="false" onMouseClicked="#onLogin" prefHeight="34.0" prefWidth="131.0" text="INICIAR SESION" />
-    </children>
+<AnchorPane prefHeight="245.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.controllers.AuthController">
+    <Label layoutX="62.0" layoutY="66.0" text="EMAIL:" />
+    <Label layoutX="57.0" layoutY="121.0" text="PASSWORD:" />
+    <JFXTextField fx:id="txtEmail" focusColor="#e65f00" layoutX="159.0" layoutY="62.0" prefHeight="25.0" prefWidth="199.0" promptText="example@gmail.com" />
+    <JFXPasswordField fx:id="txtPass" focusColor="#e65f00" layoutX="159.0" layoutY="117.0" prefHeight="25.0" prefWidth="199.0" promptText="●●●●●●●●●●" />
+    <JFXButton layoutX="122.0" layoutY="171.0" onMouseClicked="#onLogin" prefHeight="49.0" prefWidth="157.0" style="-fx-background-color: #E65F00;" text="INICIAR SESION" textFill="WHITE" />
 </AnchorPane>

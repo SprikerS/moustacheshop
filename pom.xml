@@ -50,6 +50,27 @@
       <scope>provided</scope>
     </dependency>
 
+    <!-- JFoenix -->
+    <dependency>
+      <groupId>com.jfoenix</groupId>
+      <artifactId>jfoenix</artifactId>
+      <version>9.0.10</version>
+    </dependency>
+
+    <!-- Burningwave Core -->
+    <dependency>
+      <groupId>org.burningwave</groupId>
+      <artifactId>core</artifactId>
+      <version>12.65.2</version>
+    </dependency>
+
+    <!-- Logback Classic -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.5.8</version>
+    </dependency>
+
     <!-- Maven Shade Plugin  -->
     <dependency>
       <groupId>org.apache.maven.plugins</groupId>

@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import org.burningwave.core.assembler.StaticComponentContainer;
 
 import dev.sprikers.moustacheshop.constants.PathViews;
 import dev.sprikers.moustacheshop.services.AuthService;
@@ -23,6 +24,11 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void init() {
+        StaticComponentContainer.JVMInfo.getVersion();
     }
 
     @Override
