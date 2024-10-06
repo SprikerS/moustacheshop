@@ -4,6 +4,7 @@ module dev.sprikers.moustacheshop {
 
 
     requires com.fasterxml.jackson.databind;
+    requires com.jfoenix;
     requires javafx.controls;
     requires javafx.fxml;
     requires org.burningwave.core;

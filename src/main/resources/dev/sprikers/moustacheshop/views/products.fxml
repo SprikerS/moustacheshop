@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.controllers.ProductsController">
+   <children>
+      <JFXTextField fx:id="txtName" focusColor="#e65f00" labelFloat="true" layoutX="40.0" layoutY="70.0" promptText="Nombre" />
+      <JFXTextField fx:id="txtPrice" focusColor="#e65f00" labelFloat="true" layoutX="40.0" layoutY="120.0" promptText="Precio" />
+      <JFXTextField fx:id="txtStock" focusColor="#e65f00" labelFloat="true" layoutX="40.0" layoutY="170.0" promptText="Stock" />
+      <Label layoutX="40.0" layoutY="20.0" text="REGISTRAR PRODUCTO" textFill="#e65f00">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <JFXButton layoutX="40.0" layoutY="220.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onRegister" prefHeight="35.0" prefWidth="135.0" style="-fx-background-color: #E65F00;" text="Registrar" textFill="WHITE" />
+      <JFXTreeTableView fx:id="ttvProducts" layoutX="40.0" layoutY="288.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="350.0">
+         <columns>
+            <TreeTableColumn fx:id="colName" maxWidth="-Infinity" minWidth="150.0" prefWidth="150.0" resizable="false" text="Nombre" />
+            <TreeTableColumn fx:id="colPrice" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" text="Precio" />
+            <TreeTableColumn fx:id="colStock" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" text="Stock" />
+         </columns>
+      </JFXTreeTableView>
+   </children>
+</AnchorPane>
