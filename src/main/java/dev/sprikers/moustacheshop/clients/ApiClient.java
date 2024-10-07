@@ -48,4 +48,30 @@ public class ApiClient {
         });
     }
 
+    public HttpResponse<String> patch(String endpoint, Object requestBody) throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(requestBody);
+
+        return ApiExceptionHandler.handleApiCall(() -> {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(endpoint))
+                    .header("Content-Type", "application/json")
+                    .header("Authorization", "Bearer " + getBearerToken())
+                    .method("PATCH", HttpRequest.BodyPublishers.ofString(json))
+                    .build();
+            return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        });
+    }
+
+    public HttpResponse<String> delete(String endpoint) throws Exception {
+        return ApiExceptionHandler.handleApiCall(() -> {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(endpoint))
+                    .header("Authorization", "Bearer " + getBearerToken())
+                    .DELETE()
+                    .build();
+            return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        });
+    }
+
 }

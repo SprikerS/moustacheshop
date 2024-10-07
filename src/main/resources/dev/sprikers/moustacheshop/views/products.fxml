@@ -1,31 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.Pane?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.controllers.ProductsController">
-   <children>
-      <JFXTextField fx:id="txtName" focusColor="#e65f00" labelFloat="true" layoutX="40.0" layoutY="70.0" promptText="Nombre" />
-      <JFXTextField fx:id="txtPrice" focusColor="#e65f00" labelFloat="true" layoutX="40.0" layoutY="120.0" promptText="Precio" />
-      <JFXTextField fx:id="txtStock" focusColor="#e65f00" labelFloat="true" layoutX="40.0" layoutY="170.0" promptText="Stock" />
-      <Label layoutX="40.0" layoutY="20.0" text="REGISTRAR PRODUCTO" textFill="#e65f00">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Label>
-      <JFXButton layoutX="40.0" layoutY="220.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onRegister" prefHeight="35.0" prefWidth="135.0" style="-fx-background-color: #E65F00;" text="Registrar" textFill="WHITE" />
-      <JFXTreeTableView fx:id="ttvProducts" layoutX="40.0" layoutY="288.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="350.0">
-         <columns>
-            <TreeTableColumn fx:id="colName" maxWidth="-Infinity" minWidth="150.0" prefWidth="150.0" resizable="false" text="Nombre" />
-            <TreeTableColumn fx:id="colPrice" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" text="Precio" />
-            <TreeTableColumn fx:id="colStock" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" text="Stock" />
-         </columns>
-      </JFXTreeTableView>
-   </children>
+<AnchorPane prefHeight="600.0" prefWidth="600.0" styleClass="background" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.controllers.ProductController">
+    <children>
+        <Pane layoutX="30.0" layoutY="30.0" prefHeight="125.0" prefWidth="540.0" styleClass="card">
+            <children>
+                <JFXTextField fx:id="txtName" focusColor="#e65f00" labelFloat="true" layoutX="33.0" layoutY="30.0" promptText="Nombre" />
+                <JFXTextField fx:id="txtPrice" focusColor="#e65f00" labelFloat="true" layoutX="321.0" layoutY="30.0" promptText="Precio" />
+                <JFXTextField fx:id="txtStock" focusColor="#e65f00" labelFloat="true" layoutX="33.0" layoutY="76.0" promptText="Stock" />
+                <JFXComboBox layoutX="321.0" layoutY="76.0" prefHeight="25.0" prefWidth="135.0" />
+            </children>
+        </Pane>
+        <JFXButton fx:id="btnSubmit" layoutX="471.0" layoutY="166.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="100.0" text="Registrar">
+            <styleClass>
+                <String fx:value="button-reset" />
+                <String fx:value="button-primary" />
+            </styleClass></JFXButton>
+        <JFXButton fx:id="btnClean" layoutX="369.0" layoutY="166.0" text="Limpiar">
+            <styleClass>
+                <String fx:value="button-reset" />
+                <String fx:value="button-outline" />
+            </styleClass>
+        </JFXButton>
+        <JFXButton fx:id="btnDelete" layoutX="266.0" layoutY="166.0" text="Eliminar">
+            <styleClass>
+                <String fx:value="button-reset" />
+                <String fx:value="button-destructive" />
+            </styleClass>
+        </JFXButton>
+        <Button fx:id="btnReload" layoutX="30.0" layoutY="239.0" mnemonicParsing="false">
+            <styleClass>
+                <String fx:value="button-reset" />
+                <String fx:value="button-outline" />
+                <String fx:value="button-content-icon" />
+            </styleClass>
+            <graphic>
+                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view-icon-button">
+                    <image>
+                        <Image url="@../images/rotate-ccw.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+        <Label layoutX="190.0" layoutY="249.0" text="Buscar producto:" />
+      <Button fx:id="btnSearch" layoutX="529.0" layoutY="239.0" mnemonicParsing="false">
+         <styleClass>
+            <String fx:value="button-reset" />
+            <String fx:value="button-outline" />
+            <String fx:value="button-content-icon" />
+         </styleClass>
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view-icon-button">
+               <image>
+                  <Image url="@../images/package-search.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+        <TableView fx:id="tblProducts" layoutX="30.0" layoutY="289.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="540.0">
+            <columns>
+                <TableColumn fx:id="colName" maxWidth="-Infinity" minWidth="150.0" prefWidth="150.0" resizable="false" text="Nombre" />
+                <TableColumn fx:id="colPrice" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Precio" />
+                <TableColumn fx:id="colStock" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Stock" />
+            </columns>
+        </TableView>
+        <JFXTextField fx:id="txtSearch" layoutX="307.0" layoutY="245.0" prefHeight="25.0" prefWidth="200.0" />
+        <Label layoutX="335.0" layoutY="560.0" text="Total:" />
+        <Label fx:id="lblTotalProducts" layoutX="420.0" layoutY="560.0" text="Label" />
+    </children>
+    <stylesheets>
+        <URL value="@../styles/globals.css" />
+        <URL value="@../styles/button.css" />
+    </stylesheets>
 </AnchorPane>

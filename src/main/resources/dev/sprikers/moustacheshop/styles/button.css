@@ -1,0 +1,65 @@
+.button-reset {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+    -fx-faint-focus-color: transparent;
+    -fx-padding: 10px 20px;
+}
+
+.button-primary {
+    -fx-background-color: #18181B;
+    -fx-background-radius: 5;
+    -fx-text-fill: #FFFFFF;
+}
+
+.button-secondary {
+    -fx-background-color: #F4F4F5;
+    -fx-background-radius: 5;
+    -fx-text-fill: #18181B;
+}
+
+.button-destructive {
+    -fx-background-color: #EF4444;
+    -fx-background-radius: 5;
+    -fx-text-fill: #FAFAFA;
+}
+
+.button-destructive:hover {
+    -fx-background-color: #EF4444E6;
+}
+
+.button-outline {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 5;
+    -fx-border-color: #E4E4E7;
+    -fx-border-radius: 5;
+    -fx-border-width: 1;
+    -fx-padding: 9px 20px;
+    -fx-text-fill: #09090B;
+}
+
+.button-outline:hover {
+    -fx-background-color: #F4F4F5;
+}
+
+.button-ghost {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 5;
+    -fx-text-fill: #09090B;
+}
+
+.button-ghost:hover {
+    -fx-background-color: #F4F4F5;
+}
+
+.button-content-icon {
+    -fx-padding: 0 10px;
+    -fx-pref-height: 37px;
+}
+
+.image-view-icon-button {
+    -fx-fit-height: 20px;
+    -fx-fit-width: 20px;
+}

@@ -2,7 +2,6 @@ package dev.sprikers.moustacheshop.services;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -28,9 +27,7 @@ public class ProductService {
                 throw new Exception(errorResponse.get("message").asText());
             }
 
-            System.out.println(response.body());
-            List<ProductModel> productList = objectMapper.readValue(response.body(), new TypeReference<ArrayList<ProductModel>>() {});
-            return productList;
+            return objectMapper.readValue(response.body(), new TypeReference<List<ProductModel>>() {});
         } catch (IOException e) {
             throw new Exception(e.getMessage());
         }
@@ -49,4 +46,33 @@ public class ProductService {
             throw new Exception(e.getMessage());
         }
     }
+
+    public void update(ProductRequest productRequest, String id) throws Exception {
+        try {
+            HttpResponse<String> response = apiClient.patch(ApiEndpoints.PRODUCT + "/" + id, productRequest);
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            if (response.statusCode() != 200) {
+                JsonNode errorResponse = objectMapper.readTree(response.body());
+                throw new Exception(errorResponse.get("message").asText());
+            }
+        } catch (IOException e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    public void delete(String id) throws Exception {
+        try {
+            HttpResponse<String> response = apiClient.delete(ApiEndpoints.PRODUCT + "/" + id);
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            if (response.statusCode() != 200) {
+                JsonNode errorResponse = objectMapper.readTree(response.body());
+                throw new Exception(errorResponse.get("message").asText());
+            }
+        } catch (IOException e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+
 }

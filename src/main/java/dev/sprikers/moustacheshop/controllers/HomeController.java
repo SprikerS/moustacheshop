@@ -73,7 +73,7 @@ public class HomeController implements Initializable {
 
         SidebarButton sbHome = new SidebarButton(PathImages.HOUSE, "Inicio", () -> setView(PathViews.HOME));
         SidebarButton sbUsers = new SidebarButton(PathImages.USERS, "Usuarios", () -> setView(PathViews.USERS));
-        SidebarButton sbProducts = new SidebarButton(PathImages.PACKAGE, "Products", () -> setView(PathViews.PRODUCTS));
+        SidebarButton sbProducts = new SidebarButton(PathImages.PACKAGE, "Productos", () -> setView(PathViews.PRODUCTS));
         SidebarButton sbSettings = new SidebarButton(PathImages.SETTINGS, "Configuración", () -> setView(PathViews.SETTINGS));
 
         list.add(sbHome);

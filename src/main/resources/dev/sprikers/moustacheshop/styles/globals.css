@@ -1,0 +1,10 @@
+.background {
+    -fx-background-color: #FFFFFF;
+}
+
+.card {
+    -fx-border-color: #E4E4E7;
+    -fx-border-radius: 5;
+    -fx-border-width: 1;
+    -fx-padding: 20px;
+}
