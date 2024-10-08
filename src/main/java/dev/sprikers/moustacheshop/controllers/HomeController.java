@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -21,6 +22,7 @@ import dev.sprikers.moustacheshop.constants.PathSVG;
 import dev.sprikers.moustacheshop.constants.PathViews;
 import dev.sprikers.moustacheshop.enums.UserRole;
 import dev.sprikers.moustacheshop.models.UserModel;
+import dev.sprikers.moustacheshop.utils.AlertManager;
 import dev.sprikers.moustacheshop.utils.UserSession;
 
 public class HomeController implements Initializable {
@@ -113,16 +115,31 @@ public class HomeController implements Initializable {
     }
 
     private void loadView(String view) {
-        Parent root = pageCache.get(view);
-        if (root == null) {
-            try {
-                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(view)));
-                pageCache.put(view, root);
-            } catch (IOException e) {
-                System.out.println("Error loading view: " + e.getMessage());
-            }
+        Parent cachedRoot = pageCache.get(view);
+        if (cachedRoot != null) {
+            bp.setCenter(cachedRoot);
+            return;
         }
-        bp.setCenter(root);
+
+        Task<Parent> loadTask = new Task<>() {
+            @Override
+            protected Parent call() throws Exception {
+                return FXMLLoader.load(Objects.requireNonNull(getClass().getResource(view)));
+            }
+        };
+
+        loadTask.setOnSucceeded(event -> {
+            Parent loadedRoot = loadTask.getValue();
+            pageCache.put(view, loadedRoot);
+            bp.setCenter(loadedRoot);
+        });
+
+        loadTask.setOnFailed(event -> {
+            Throwable error = loadTask.getException();
+            AlertManager.showErrorMessage("Error loading view: " + error.getMessage());
+        });
+
+        new Thread(loadTask).start();
     }
 
 }
