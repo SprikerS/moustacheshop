@@ -1,20 +1,40 @@
 .container {
     -fx-cursor: hand;
     -fx-faint-focus-color: transparent;
+    -fx-padding: 0 10px;
+    -fx-pref-height: 40px;
+    -fx-pref-width: 200px;
 }
 
-.container:hover {
-    -fx-background-color: rgba(40, 41, 45, 0.5);
-}
-
-.container.active {
-    -fx-background-color: rgba(125, 125, 125, 0.1);
-}
-
-.button-reset {
+.sidebar-button {
     -fx-background-color: transparent;
     -fx-background-insets: 0;
-    -fx-background-radius: 0;
+    -fx-background-radius: 5;
     -fx-border-width: 0;
+    -fx-cursor: hand;
     -fx-faint-focus-color: transparent;
+    -fx-padding: 10px 20px;
+    -fx-pref-width: 180px;
+    -fx-text-fill: #09090B;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #F4F4F5;
+}
+
+.primary {
+    -fx-background-color: #18181B;
+    -fx-text-fill: #FFFFFF;
+}
+
+.primary:hover {
+    -fx-background-color: #18181BE6;
+}
+
+.sidebar-svg-icon {
+    -fx-fill: black;
+}
+
+.primary .sidebar-svg-icon {
+    -fx-fill: #FAFAFA;
 }

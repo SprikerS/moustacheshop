@@ -1,26 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.image.ImageView?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.shape.SVGPath?>
 
-<HBox fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="200.0" spacing="5.0" styleClass="container" stylesheets="@sidebar.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.components.SidebarButtonController">
-   <Pane fx:id="active" prefHeight="200.0" prefWidth="4.0" style="-fx-background-color: #FF5F00; -fx-background-radius: 2;" visible="false" />
-   <Button fx:id="button" alignment="BASELINE_LEFT" graphicTextGap="15.0" maxWidth="181.0" minWidth="181.0" mnemonicParsing="false" prefWidth="181.0" styleClass="button-reset" text="TEXT" textFill="WHITE">
-      <graphic>
-         <ImageView fx:id="image" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-            <viewport><Rectangle2D /></viewport>
-         </ImageView>
-      </graphic>
-      <font>
-         <Font size="16.0" />
-      </font>
-   </Button>
-   <padding>
-      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-   </padding>
+<HBox fx:id="container" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.components.SidebarButtonController">
+   <stylesheets>
+      <URL value="@../styles/globals.css" />
+      <URL value="@../styles/button.css" />
+      <URL value="@sidebar.css" />
+   </stylesheets>
+   <children>
+      <JFXButton fx:id="button" alignment="BASELINE_LEFT" graphicTextGap="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="sidebar-button" text="HOUSE">
+         <graphic>
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="20.0">
+               <children>
+                  <SVGPath fx:id="svgIcon" content="M40,60 C42,48 44,30 25,32" styleClass="sidebar-svg-icon" />
+               </children>
+            </AnchorPane>
+         </graphic>
+      </JFXButton>
+   </children>
+   <styleClass>
+      <String fx:value="background" />
+      <String fx:value="container" />
+   </styleClass>
 </HBox>

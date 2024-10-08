@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -8,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.controllers.HomeController">
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.controllers.HomeController">
     <left>
-        <VBox fx:id="sidebarVBox" prefHeight="600.0" prefWidth="200.0" spacing="4.0" style="-fx-background-color: #1E1F22;" BorderPane.alignment="CENTER">
+        <VBox fx:id="sidebarVBox" prefHeight="600.0" prefWidth="200.0" spacing="5.0" styleClass="sidebar" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
@@ -24,18 +25,22 @@
          </children></VBox>
     </left>
     <center>
-        <AnchorPane fx:id="ap" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #2B2D31;" BorderPane.alignment="CENTER">
-            <Label layoutX="40.0" layoutY="90.0" text="Nombres:" textFill="WHITE" />
-            <Label fx:id="lblNames" layoutX="200.0" layoutY="90.0" text="lblNames" textFill="WHITE" />
-            <Label layoutX="40.0" layoutY="143.0" text="Apellido Paterno:" textFill="WHITE" />
-            <Label fx:id="lblPaternalSurname" layoutX="200.0" layoutY="143.0" text="lblPaternalSurname" textFill="WHITE" />
-            <Label layoutX="40.0" layoutY="190.0" text="Apellido Materno:" textFill="WHITE" />
-            <Label fx:id="lblMaternalSurname" layoutX="200.0" layoutY="190.0" text="lblMaternalSurname" textFill="WHITE" />
-            <Label layoutX="40.0" layoutY="232.0" text="DNI:" textFill="WHITE" />
-            <Label fx:id="lblDni" layoutX="200.0" layoutY="232.0" text="lblDni" textFill="WHITE" />
-            <Label layoutX="40.0" layoutY="281.0" text="Email:" textFill="WHITE" />
-            <Label fx:id="lblEmail" layoutX="200.0" layoutY="281.0" text="lblEmail" textFill="WHITE" />
-            <Label layoutX="260.0" layoutY="26.0" text="TIENDA BIGOTES" textFill="WHITE"><font><Font size="24.0" /></font></Label>
+        <AnchorPane fx:id="ap" prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <Label layoutX="40.0" layoutY="90.0" text="Nombres:" />
+            <Label fx:id="lblNames" layoutX="200.0" layoutY="90.0" text="lblNames" />
+            <Label layoutX="40.0" layoutY="143.0" text="Apellido Paterno:" />
+            <Label fx:id="lblPaternalSurname" layoutX="200.0" layoutY="143.0" text="lblPaternalSurname" />
+            <Label layoutX="40.0" layoutY="190.0" text="Apellido Materno:" />
+            <Label fx:id="lblMaternalSurname" layoutX="200.0" layoutY="190.0" text="lblMaternalSurname" />
+            <Label layoutX="40.0" layoutY="232.0" text="DNI:" />
+            <Label fx:id="lblDni" layoutX="200.0" layoutY="232.0" text="lblDni" />
+            <Label layoutX="40.0" layoutY="281.0" text="Email:" />
+            <Label fx:id="lblEmail" layoutX="200.0" layoutY="281.0" text="lblEmail" />
+            <Label layoutX="200.0" layoutY="26.0" text="TIENDA BIGOTES"><font><Font size="24.0" /></font></Label>
         </AnchorPane>
     </center>
+   <stylesheets>
+      <URL value="@../styles/globals.css" />
+      <URL value="@../styles/button.css" />
+   </stylesheets>
 </BorderPane>

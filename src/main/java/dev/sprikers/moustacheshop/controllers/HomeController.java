@@ -17,7 +17,7 @@ import javafx.scene.layout.VBox;
 import dev.sprikers.moustacheshop.components.SidebarButton;
 import dev.sprikers.moustacheshop.components.SidebarButtonController;
 import dev.sprikers.moustacheshop.constants.PathComponents;
-import dev.sprikers.moustacheshop.constants.PathImages;
+import dev.sprikers.moustacheshop.constants.PathSVG;
 import dev.sprikers.moustacheshop.constants.PathViews;
 import dev.sprikers.moustacheshop.enums.UserRole;
 import dev.sprikers.moustacheshop.models.UserModel;
@@ -71,10 +71,10 @@ public class HomeController implements Initializable {
     private List<SidebarButton> getSidebarButtons() {
         List<SidebarButton> list = new ArrayList<>();
 
-        SidebarButton sbHome = new SidebarButton(PathImages.HOUSE, "Inicio", () -> setView(PathViews.HOME));
-        SidebarButton sbUsers = new SidebarButton(PathImages.USERS, "Usuarios", () -> setView(PathViews.USERS));
-        SidebarButton sbProducts = new SidebarButton(PathImages.PACKAGE, "Productos", () -> setView(PathViews.PRODUCTS));
-        SidebarButton sbSettings = new SidebarButton(PathImages.SETTINGS, "Configuración", () -> setView(PathViews.SETTINGS));
+        SidebarButton sbHome = new SidebarButton(PathSVG.HOUSE, "Inicio", () -> setView(PathViews.HOME));
+        SidebarButton sbUsers = new SidebarButton(PathSVG.USERS_ROUND, "Usuarios", () -> setView(PathViews.USERS));
+        SidebarButton sbProducts = new SidebarButton(PathSVG.PACKAGE, "Productos", () -> setView(PathViews.PRODUCTS));
+        SidebarButton sbSettings = new SidebarButton(PathSVG.BOLT, "Configuración", () -> setView(PathViews.SETTINGS));
 
         list.add(sbHome);
         list.add(sbProducts);

@@ -1,18 +1,13 @@
 package dev.sprikers.moustacheshop.components;
 
-import java.util.Objects;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.shape.SVGPath;
+
+import dev.sprikers.moustacheshop.utils.SvgLoader;
 
 public class SidebarButtonController {
-
-    @FXML
-    private Pane active;
 
     @FXML
     private Button button;
@@ -21,13 +16,13 @@ public class SidebarButtonController {
     private HBox container;
 
     @FXML
-    private ImageView image;
+    private SVGPath svgIcon;
 
     public void setData(SidebarButton sidebarButton) {
-        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream(sidebarButton.getIcon())));
-        image.setImage(icon);
+        String svgPathData = SvgLoader.loadSvgPathData(sidebarButton.getIcon());
+        svgIcon.setContent(svgPathData);
 
-        active.setVisible(sidebarButton.isActive());
+        button.setGraphic(svgIcon);
         button.setText(sidebarButton.getText());
 
         container.setOnMouseClicked(event -> handleButtonClick(sidebarButton));
@@ -43,12 +38,11 @@ public class SidebarButtonController {
     }
 
     public void activateButton() {
-        active.setVisible(true);
-        container.getStyleClass().add("active");
+        button.getStyleClass().add("primary");
     }
 
     public void deactivateButton() {
-        active.setVisible(false);
-        container.getStyleClass().remove("active");
+        button.getStyleClass().remove("primary");
     }
+
 }
