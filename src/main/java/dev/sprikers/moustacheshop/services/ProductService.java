@@ -2,6 +2,8 @@ package dev.sprikers.moustacheshop.services;
 
 import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,11 +16,17 @@ import dev.sprikers.moustacheshop.models.ProductModel;
 public class ProductService {
 
     private final ApiClient apiClient = new ApiClient();
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public List<ProductModel> allProducts() throws Exception {
-        HttpResponse<String> response = apiClient.get(ApiEndpoints.PRODUCT);
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(response.body(), new TypeReference<List<ProductModel>>() {});
+    public CompletableFuture<List<ProductModel>> allProductsAsync() {
+        return apiClient.getAsync(ApiEndpoints.PRODUCT)
+            .thenApply(response -> {
+                try {
+                    return objectMapper.readValue(response.body(), new TypeReference<List<ProductModel>>() {});
+                } catch (Exception e) {
+                    throw new CompletionException(e);
+                }
+            });
     }
 
     public void register(ProductRequest productRequest) throws Exception {

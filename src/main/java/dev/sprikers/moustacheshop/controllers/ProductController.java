@@ -5,14 +5,12 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 
 import dev.sprikers.moustacheshop.dto.ProductRequest;
 import dev.sprikers.moustacheshop.models.ProductModel;
@@ -26,16 +24,19 @@ public class ProductController implements Initializable {
     private ProductModel productSelected;
 
     @FXML
-    private JFXTextField txtName, txtPrice, txtStock, txtSearch;
-
-    @FXML
     private Label lblTotalProducts;
 
     @FXML
     private JFXButton btnClean, btnDelete, btnSubmit;
 
     @FXML
-    private Button btnReload, btnSearch;
+    private Button btnReload;
+
+    @FXML
+    private TextField txtName, txtPrice, txtStock, txtSearch;
+
+    @FXML
+    private HBox hbSpinner;
 
     @FXML
     private TableColumn<ProductModel, String> colName;
@@ -53,7 +54,7 @@ public class ProductController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeTableColumns();
         initializeEventHandlers();
-        loadProducts();
+        loadProductsAsync();
         btnClean.setVisible(false);
         btnDelete.setVisible(false);
     }
@@ -68,42 +69,54 @@ public class ProductController implements Initializable {
         btnClean.setOnAction(event -> resetForm());
         btnDelete.setOnAction(event -> handleDelete());
         btnReload.setOnAction(event -> handleReload());
-        btnSearch.setOnAction(event -> handleSearch());
         btnSubmit.setOnAction(event -> handleSubmit());
 
         tblProducts.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 ProductModel product = tblProducts.getSelectionModel().getSelectedItem();
-                setProductSelected(product);
+                if (product != null && !product.equals(productSelected)) {
+                    setProductSelected(product);
+                }
             }
         });
 
-        txtSearch.setOnKeyReleased(event -> {
-            handleSearch();
-        });
+        txtSearch.setOnKeyReleased(event -> handleSearch());
     }
 
-    private void loadProducts() {
-        try {
-            products = productService.allProducts();
-            tblProducts.getItems().clear();
-            tblProducts.getItems().addAll(products);
-            lblTotalProducts.setText(String.valueOf(products.size()));
-        } catch (Exception e) {
-            AlertManager.showErrorMessage("Error al cargar los productos: " + e.getMessage());
-        }
+    private void loadProductsAsync() {
+        hbSpinner.setVisible(true);
+        lblTotalProducts.setText("0");
+
+        productService.allProductsAsync()
+            .thenAccept(products -> {
+                this.products = products;
+                Platform.runLater(() -> {
+                    setProductsList(products);
+                    hbSpinner.setVisible(false);
+                });
+            })
+            .exceptionally(ex -> {
+                Platform.runLater(() -> AlertManager.showErrorMessage("Error al cargar los productos: " + ex.getMessage()));
+                return null;
+            });
+    }
+
+    private void setProductsList(List<ProductModel> products) {
+        tblProducts.getItems().clear();
+        tblProducts.getItems().addAll(products);
+        lblTotalProducts.setText(String.valueOf(products.size()));
     }
 
     private void searchProduct(String name) {
         try {
             List<ProductModel> results = products.stream()
-                    .filter(product -> product.getName().toLowerCase().contains(name.toLowerCase()))
-                    .toList();
+                .filter(product -> product.getName().toLowerCase().contains(name.toLowerCase()))
+                .toList();
             tblProducts.getItems().clear();
             tblProducts.getItems().addAll(results);
             lblTotalProducts.setText(String.valueOf(results.size()));
         } catch (Exception e) {
-            AlertManager.showErrorMessage("Error al cargar los productos: " + e.getMessage());
+            AlertManager.showErrorMessage("Error al buscar el producto: " + e.getMessage());
         }
     }
 
@@ -144,13 +157,16 @@ public class ProductController implements Initializable {
     private void handleSearch() {
         String searchText = txtSearch.getText().trim().toLowerCase();
         if (searchText.isEmpty()) {
-            loadProducts();
+            setProductsList(products);
         } else {
             searchProduct(searchText);
         }
     }
 
     private void handleDelete() {
+        boolean confirmed = AlertManager.showConfirmation("¿Estás seguro de que deseas eliminar este producto?", Alert.AlertType.WARNING);
+        if (!confirmed) return;
+
         try {
             productService.delete(productSelected.getId());
             handleReload();
@@ -161,7 +177,7 @@ public class ProductController implements Initializable {
 
     private void handleReload() {
         resetForm();
-        loadProducts();
+        loadProductsAsync();
     }
 
     private void setProductSelected(ProductModel product) {
@@ -179,6 +195,7 @@ public class ProductController implements Initializable {
         productSelected = null;
         txtName.clear();
         txtPrice.clear();
+        txtSearch.clear();
         txtStock.clear();
         tblProducts.getSelectionModel().clearSelection();
 

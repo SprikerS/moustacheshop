@@ -1,85 +1,180 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXSpinner?>
 <?import java.lang.String?>
 <?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="600.0" prefWidth="600.0" styleClass="background" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.controllers.ProductController">
     <children>
-        <Pane layoutX="30.0" layoutY="30.0" prefHeight="125.0" prefWidth="540.0" styleClass="card">
+        <VBox layoutX="30.0" layoutY="30.0" prefWidth="540.0" spacing="20.0" styleClass="card">
             <children>
-                <JFXTextField fx:id="txtName" focusColor="#e65f00" labelFloat="true" layoutX="33.0" layoutY="30.0" promptText="Nombre" />
-                <JFXTextField fx:id="txtPrice" focusColor="#e65f00" labelFloat="true" layoutX="321.0" layoutY="30.0" promptText="Precio" />
-                <JFXTextField fx:id="txtStock" focusColor="#e65f00" labelFloat="true" layoutX="33.0" layoutY="76.0" promptText="Stock" />
-                <JFXComboBox layoutX="321.0" layoutY="76.0" prefHeight="25.0" prefWidth="135.0" />
+                <Label styleClass="text-muted" text="Registrar nuevo producto:">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+                <HBox spacing="24.0">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="150.0" spacing="10.0" styleClass="card">
+                            <children>
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/file-box.png" />
+                                    </image>
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </ImageView>
+                                <TextField fx:id="txtName" maxHeight="-Infinity" minHeight="-Infinity" promptText="Nombre" styleClass="text-field-custom" />
+                            </children>
+                            <padding>
+                                <Insets left="10.0" right="10.0" />
+                            </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="37.0" prefWidth="150.0" spacing="10.0" styleClass="card">
+                            <children>
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/boxes.png" />
+                                    </image>
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </ImageView>
+                                <TextField fx:id="txtStock" maxHeight="-Infinity" minHeight="-Infinity" promptText="Stock" styleClass="text-field-custom" />
+                            </children>
+                            <padding>
+                                <Insets left="10.0" right="10.0" />
+                            </padding>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="37.0" prefWidth="150.0" spacing="10.0" styleClass="card">
+                            <children>
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/coins.png" />
+                                    </image>
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </ImageView>
+                                <TextField fx:id="txtPrice" maxHeight="-Infinity" minHeight="-Infinity" promptText="Precio" styleClass="text-field-custom" />
+                            </children>
+                            <padding>
+                                <Insets left="10.0" right="10.0" />
+                            </padding>
+                        </HBox>
+                    </children>
+                </HBox>
+                <HBox alignment="TOP_RIGHT" prefWidth="200.0" spacing="20.0">
+                    <children>
+                        <JFXButton fx:id="btnDelete" text="Eliminar">
+                            <styleClass>
+                                <String fx:value="button-reset" />
+                                <String fx:value="button-destructive" />
+                            </styleClass>
+                        </JFXButton>
+                        <JFXButton fx:id="btnClean" text="Limpiar">
+                            <styleClass>
+                                <String fx:value="button-reset" />
+                                <String fx:value="button-outline" />
+                            </styleClass>
+                        </JFXButton>
+                        <JFXButton fx:id="btnSubmit" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="100.0" text="Registrar">
+                            <styleClass>
+                                <String fx:value="button-reset" />
+                                <String fx:value="button-primary" />
+                            </styleClass>
+                        </JFXButton>
+                    </children>
+                </HBox>
             </children>
-        </Pane>
-        <JFXButton fx:id="btnSubmit" layoutX="471.0" layoutY="166.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="100.0" text="Registrar">
-            <styleClass>
-                <String fx:value="button-reset" />
-                <String fx:value="button-primary" />
-            </styleClass></JFXButton>
-        <JFXButton fx:id="btnClean" layoutX="369.0" layoutY="166.0" text="Limpiar">
-            <styleClass>
-                <String fx:value="button-reset" />
-                <String fx:value="button-outline" />
-            </styleClass>
-        </JFXButton>
-        <JFXButton fx:id="btnDelete" layoutX="266.0" layoutY="166.0" text="Eliminar">
-            <styleClass>
-                <String fx:value="button-reset" />
-                <String fx:value="button-destructive" />
-            </styleClass>
-        </JFXButton>
-        <Button fx:id="btnReload" layoutX="30.0" layoutY="239.0" mnemonicParsing="false">
-            <styleClass>
-                <String fx:value="button-reset" />
-                <String fx:value="button-outline" />
-                <String fx:value="button-content-icon" />
-            </styleClass>
-            <graphic>
-                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view-icon-button">
-                    <image>
-                        <Image url="@../images/rotate-ccw.png" />
-                    </image>
-                </ImageView>
-            </graphic>
-        </Button>
-        <Label layoutX="190.0" layoutY="249.0" text="Buscar producto:" />
-      <Button fx:id="btnSearch" layoutX="529.0" layoutY="239.0" mnemonicParsing="false">
-         <styleClass>
-            <String fx:value="button-reset" />
-            <String fx:value="button-outline" />
-            <String fx:value="button-content-icon" />
-         </styleClass>
-         <graphic>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view-icon-button">
-               <image>
-                  <Image url="@../images/package-search.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-        <TableView fx:id="tblProducts" layoutX="30.0" layoutY="289.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="540.0">
-            <columns>
-                <TableColumn fx:id="colName" maxWidth="-Infinity" minWidth="150.0" prefWidth="150.0" resizable="false" text="Nombre" />
-                <TableColumn fx:id="colPrice" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Precio" />
-                <TableColumn fx:id="colStock" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Stock" />
-            </columns>
-        </TableView>
-        <JFXTextField fx:id="txtSearch" layoutX="307.0" layoutY="245.0" prefHeight="25.0" prefWidth="200.0" />
-        <Label layoutX="335.0" layoutY="560.0" text="Total:" />
-        <Label fx:id="lblTotalProducts" layoutX="420.0" layoutY="560.0" text="Label" />
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </VBox>
+        <Label layoutX="457.0" layoutY="552.0" text="Total:" />
+        <Label fx:id="lblTotalProducts" layoutX="542.0" layoutY="552.0" text="Label" />
+        <VBox layoutX="30.0" layoutY="226.0" prefWidth="540.0" spacing="20.0">
+            <children>
+                <HBox prefWidth="200.0">
+                    <children>
+                        <Button fx:id="btnReload" mnemonicParsing="false">
+                            <styleClass>
+                                <String fx:value="button-reset" />
+                                <String fx:value="button-outline" />
+                                <String fx:value="button-content-icon" />
+                            </styleClass>
+                            <graphic>
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" styleClass="image-view-icon-button">
+                                    <image>
+                                        <Image url="@../images/rotate-ccw.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                        </Button>
+                  <Region HBox.hgrow="ALWAYS" />
+                        <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="37.0" prefWidth="250.0" spacing="10.0" styleClass="card">
+                            <children>
+                                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../images/package-search.png" />
+                                    </image>
+                                    <HBox.margin>
+                                        <Insets />
+                                    </HBox.margin>
+                                </ImageView>
+                                <TextField fx:id="txtSearch" maxHeight="-Infinity" minHeight="-Infinity" promptText="Buscar producto...." styleClass="text-field-custom" />
+                            </children>
+                            <padding>
+                                <Insets left="10.0" right="10.0" />
+                            </padding>
+                        </HBox>
+                    </children>
+                </HBox>
+              <StackPane alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="540.0">
+                  <children>
+                      <TableView fx:id="tblProducts" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="540.0">
+                          <columns>
+                              <TableColumn fx:id="colName" maxWidth="-Infinity" minWidth="150.0" prefWidth="150.0" resizable="false" text="Nombre" />
+                              <TableColumn fx:id="colPrice" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Precio" />
+                              <TableColumn fx:id="colStock" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Stock" />
+                          </columns>
+                      </TableView>
+                      <HBox fx:id="hbSpinner" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="214.0" prefWidth="538.0" spacing="10.0" styleClass="background" visible="false">
+                          <children>
+                              <JFXSpinner maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="15.0" prefWidth="15.0" />
+                              <Label styleClass="text-muted" text="Loading...">
+                                  <font>
+                                      <Font size="14.0" />
+                                  </font>
+                              </Label>
+                          </children>
+                          <StackPane.margin>
+                              <Insets bottom="1.0" />
+                          </StackPane.margin>
+                      </HBox>
+                  </children>
+              </StackPane>
+            </children>
+        </VBox>
     </children>
     <stylesheets>
         <URL value="@../styles/globals.css" />

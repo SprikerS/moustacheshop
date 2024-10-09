@@ -1,6 +1,9 @@
 package dev.sprikers.moustacheshop.utils;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
+import java.util.Optional;
 
 public class AlertManager {
 
@@ -39,6 +42,19 @@ public class AlertManager {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public static boolean showConfirmation(String contentText, Alert.AlertType alertType) {
+        Alert confirmationAlert = new Alert(alertType);
+        confirmationAlert.setHeaderText(null);
+        confirmationAlert.setContentText(contentText);
+
+        ButtonType yesButton = new ButtonType("Sí");
+        ButtonType noButton = new ButtonType("No");
+        confirmationAlert.getButtonTypes().setAll(yesButton, noButton);
+
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        return result.isPresent() && result.get() == yesButton;
     }
 
 }
