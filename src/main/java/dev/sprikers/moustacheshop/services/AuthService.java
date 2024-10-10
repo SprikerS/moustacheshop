@@ -15,22 +15,23 @@ public class AuthService {
 
     private final ApiClient apiClient = new ApiClient();
 
-    public void login(String email, String password) throws Exception {
+    public UserModel login(String email, String password) throws Exception {
         LoginRequest loginRequest = new LoginRequest(email, password);
         HttpResponse<String> response = apiClient.post(ApiEndpoints.AUTH_LOGIN, loginRequest);
-        handleResponse(response);
+        return handleResponse(response);
     }
 
     public void fetchUserInfo() throws Exception {
         HttpResponse<String> response = apiClient.get(ApiEndpoints.CHECK_AUTH_STATUS);
-        handleResponse(response);
+        UserModel user = handleResponse(response);
+        JwtPreferencesManager.setJwt(user.getToken());
     }
 
-    private void handleResponse(HttpResponse<String> response) throws Exception {
+    private UserModel handleResponse(HttpResponse<String> response) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         UserModel user = objectMapper.readValue(response.body(), UserModel.class);
         UserSession.getInstance().setUserModel(user);
-        JwtPreferencesManager.setJwt(user.getToken());
+        return user;
     }
 
 }
