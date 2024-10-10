@@ -33,16 +33,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        boolean jwtExists = JwtPreferencesManager.isJWT();
-        String viewPath = jwtExists ? PathViews.HOME : PathViews.AUTH;
-
-        if (jwtExists) {
-            try {
-                authService.fetchUserInfo();
-            } catch (Exception e) {
-                AlertManager.showErrorMessage(e.getMessage(), true);
-            }
-        }
+        String viewPath = determineViewPath();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(viewPath));
         Scene scene = new Scene(fxmlLoader.load());
@@ -51,6 +42,31 @@ public class Main extends Application {
         stage.show();
 
         centerOnScreen(stage);
+    }
+
+    private String determineViewPath() {
+        if (!JwtPreferencesManager.isJWT())
+            return PathViews.AUTH;
+
+        try {
+            authService.fetchUserInfo();
+            return PathViews.HOME;
+        } catch (Exception e) {
+            handleAuthException(e);
+            return PathViews.AUTH;
+        }
+    }
+
+    private void handleAuthException(Exception e) {
+        String errorMessage = e.getMessage();
+        boolean isAuthException = errorMessage.contains("Unauthorized");
+
+        if (isAuthException) {
+            JwtPreferencesManager.removeJwt();
+            AlertManager.showErrorMessage("Su sesión ha expirado, por favor inicie sesión nuevamente");
+        } else {
+            AlertManager.showErrorMessage(errorMessage, true);
+        }
     }
 
     public static void changeScene(String fxmlFile, Event event) throws IOException {
