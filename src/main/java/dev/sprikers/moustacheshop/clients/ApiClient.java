@@ -4,12 +4,15 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import dev.sprikers.moustacheshop.exceptions.ApiException;
 import dev.sprikers.moustacheshop.exceptions.ApiExceptionHandler;
 import dev.sprikers.moustacheshop.utils.JwtPreferencesManager;
 
@@ -44,20 +47,30 @@ public class ApiClient {
         return requestBuilder.build();
     }
 
-    private HttpResponse<String> sendRequest(HttpRequest request) throws Exception {
+    private HttpResponse<String> dispatchSyncRequest(HttpRequest request) throws Exception {
         return ApiExceptionHandler.handleApiCall(() -> {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             return handleResponse(response);
         });
     }
 
-    private CompletableFuture<HttpResponse<String>> sendRequestAsync(HttpRequest request) {
-        return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenCompose(this::handleResponseAsync);
+    private CompletableFuture<HttpResponse<String>> dispatchAsyncRequest(HttpRequest request) {
+        return ApiExceptionHandler.handleApiCallAsync(() -> httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenCompose(this::handleResponseAsync));
     }
 
     private Exception buildApiException(HttpResponse<String> response) throws JsonProcessingException {
         JsonNode errorResponse = objectMapper.readTree(response.body());
-        return new Exception(errorResponse.get("message").asText());
+        JsonNode messageNode = errorResponse.get("message");
+
+        if (messageNode.isArray()) {
+            List<String> messages = new ArrayList<>();
+            for (JsonNode message : messageNode) {
+                messages.add(message.asText());
+            }
+            return new ApiException(messages);
+        }
+
+        return new ApiException(messageNode.asText());
     }
 
     private HttpResponse<String> handleResponse(HttpResponse<String> response) throws Exception {
@@ -83,18 +96,14 @@ public class ApiClient {
      *
     **/
 
-    private HttpResponse<String> sendSyncRequest(String endpoint, String method, Object requestBody) throws Exception {
+    private HttpResponse<String> processSyncRequest(String endpoint, String method, Object requestBody) throws Exception {
         HttpRequest request = buildHttpRequest(endpoint, method, requestBody);
-        return sendRequest(request);
+        return dispatchSyncRequest(request);
     }
 
-    private CompletableFuture<HttpResponse<String>> sendAsyncRequest(String endpoint, String method, Object requestBody) {
-        try {
-            HttpRequest request = buildHttpRequest(endpoint, method, requestBody);
-            return sendRequestAsync(request);
-        } catch (Exception e) {
-            return CompletableFuture.failedFuture(e);
-        }
+    private CompletableFuture<HttpResponse<String>> processAsyncRequest(String endpoint, String method, Object requestBody) {
+        HttpRequest request = buildHttpRequest(endpoint, method, requestBody);
+        return dispatchAsyncRequest(request);
     }
 
     /**
@@ -103,19 +112,19 @@ public class ApiClient {
     **/
 
     public HttpResponse<String> get(String endpoint) throws Exception {
-        return sendSyncRequest(endpoint, "GET", null);
+        return processSyncRequest(endpoint, "GET", null);
     }
 
     public HttpResponse<String> post(String endpoint, Object requestBody) throws Exception {
-        return sendSyncRequest(endpoint, "POST", requestBody);
+        return processSyncRequest(endpoint, "POST", requestBody);
     }
 
     public HttpResponse<String> patch(String endpoint, Object requestBody) throws Exception {
-        return sendSyncRequest(endpoint, "PATCH", requestBody);
+        return processSyncRequest(endpoint, "PATCH", requestBody);
     }
 
     public HttpResponse<String> delete(String endpoint) throws Exception {
-        return sendSyncRequest(endpoint, "DELETE", null);
+        return processSyncRequest(endpoint, "DELETE", null);
     }
 
     /**
@@ -124,19 +133,19 @@ public class ApiClient {
     **/
 
     public CompletableFuture<HttpResponse<String>> getAsync(String endpoint) {
-        return sendAsyncRequest(endpoint, "GET", null);
+        return processAsyncRequest(endpoint, "GET", null);
     }
 
     public CompletableFuture<HttpResponse<String>> postAsync(String endpoint, Object requestBody) {
-        return sendAsyncRequest(endpoint, "POST", requestBody);
+        return processAsyncRequest(endpoint, "POST", requestBody);
     }
 
     public CompletableFuture<HttpResponse<String>> patchAsync(String endpoint, Object requestBody) {
-        return sendAsyncRequest(endpoint, "PATCH", requestBody);
+        return processAsyncRequest(endpoint, "PATCH", requestBody);
     }
 
     public CompletableFuture<HttpResponse<String>> deleteAsync(String endpoint) {
-        return sendAsyncRequest(endpoint, "DELETE", null);
+        return processAsyncRequest(endpoint, "DELETE", null);
     }
 
 }

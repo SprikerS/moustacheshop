@@ -11,7 +11,7 @@
 
 <BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" styleClass="background" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.controllers.HomeController">
     <left>
-        <VBox fx:id="sidebarVBox" prefHeight="600.0" prefWidth="200.0" spacing="5.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+        <VBox fx:id="sidebarVBox" focusTraversable="true" prefHeight="600.0" prefWidth="200.0" spacing="5.0" styleClass="sidebar" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
