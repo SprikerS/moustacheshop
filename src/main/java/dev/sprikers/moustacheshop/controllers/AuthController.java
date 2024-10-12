@@ -4,7 +4,10 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.PasswordField;
@@ -12,12 +15,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 
 import dev.sprikers.moustacheshop.application.Main;
 import dev.sprikers.moustacheshop.constants.PathImages;
 import dev.sprikers.moustacheshop.constants.PathViews;
-import dev.sprikers.moustacheshop.models.UserModel;
 import dev.sprikers.moustacheshop.services.AuthService;
 import dev.sprikers.moustacheshop.utils.AlertManager;
 import dev.sprikers.moustacheshop.utils.JwtPreferencesManager;
@@ -41,15 +42,16 @@ public class AuthController implements Initializable {
     @FXML
     private ImageView imgToggleEye;
 
+    @FXML
+    private JFXButton btnLogin;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         txtHiddenPass.textProperty().bindBidirectional(txtVisiblePass.textProperty());
 
         toggleDisplayPass.selectedProperty().addListener((obs, oldValue, newValue) -> togglePasswordVisibility(newValue));
-
-        txtHiddenPass.textProperty().addListener((obs, oldText, newText) -> {
-            toggleDisplayPass.setVisible(!newText.isEmpty());
-        });
+        txtHiddenPass.textProperty().addListener((obs, oldText, newText) -> toggleDisplayPass.setVisible(!newText.isEmpty()));
+        btnLogin.setOnAction(this::handleLogin);
     }
 
     private void togglePasswordVisibility(boolean isVisible) {
@@ -60,8 +62,7 @@ public class AuthController implements Initializable {
         imgToggleEye.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath))));
     }
 
-    @FXML
-    void onLogin(MouseEvent event) {
+    private void handleLogin(ActionEvent event) {
         String email = txtEmail.getText().trim().toLowerCase();
         String password = txtHiddenPass.getText().trim();
 
@@ -70,15 +71,36 @@ public class AuthController implements Initializable {
             return;
         }
 
-        try {
-            UserModel user = authService.login(email, password);
-            if (chkRemember.isSelected())
-                JwtPreferencesManager.setJwt(user.getToken());
+        updateLoginButtonState(true);
 
+        authService.loginAsync(email, password)
+            .thenAccept(user -> {
+                if (chkRemember.isSelected())
+                    JwtPreferencesManager.setJwt(user.getToken());
+
+                Platform.runLater(() -> navigateToHome(event));
+            })
+            .exceptionally(ex -> {
+                Platform.runLater(() -> {
+                    updateLoginButtonState(false);
+                    AlertManager.showErrorMessage("Error al iniciar sesión: \n" + ex.getCause().getMessage());
+                });
+                return null;
+            });
+    }
+
+    private void navigateToHome(ActionEvent event) {
+        try {
             Main.changeStage(PathViews.HOME, "Moustache Shop", event);
         } catch (Exception e) {
             AlertManager.showErrorMessage(e.getMessage());
         }
+    }
+
+    private void updateLoginButtonState(boolean isLoading) {
+        String buttonText = isLoading ? "Cargando..." : "Iniciar sesión";
+        btnLogin.setText(buttonText);
+        btnLogin.setDisable(isLoading);
     }
 
 }

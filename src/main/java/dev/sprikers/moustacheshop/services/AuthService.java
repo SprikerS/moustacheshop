@@ -1,6 +1,8 @@
 package dev.sprikers.moustacheshop.services;
 
 import java.net.http.HttpResponse;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -15,10 +17,15 @@ public class AuthService {
 
     private final ApiClient apiClient = new ApiClient();
 
-    public UserModel login(String email, String password) throws Exception {
-        LoginRequest loginRequest = new LoginRequest(email, password);
-        HttpResponse<String> response = apiClient.post(ApiEndpoints.AUTH_LOGIN, loginRequest);
-        return handleResponse(response);
+    public CompletableFuture<UserModel> loginAsync(String email, String password) {
+        return apiClient.postAsync(ApiEndpoints.AUTH_LOGIN, new LoginRequest(email, password))
+            .thenApply(response -> {
+                try {
+                    return handleResponse(response);
+                } catch (Exception e) {
+                    throw new CompletionException(e);
+                }
+            });
     }
 
     public void fetchUserInfo() throws Exception {

@@ -128,7 +128,7 @@
                      <Insets />
                   </opaqueInsets>
                </JFXCheckBox>
-               <JFXButton maxWidth="1.7976931348623157E308" onMouseClicked="#onLogin" text="Login">
+               <JFXButton fx:id="btnLogin" maxWidth="1.7976931348623157E308" text="Iniciar sesión">
                   <styleClass>
                      <String fx:value="button-reset" />
                      <String fx:value="button-primary" />
