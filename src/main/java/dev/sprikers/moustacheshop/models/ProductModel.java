@@ -10,10 +10,6 @@ import lombok.NoArgsConstructor;
 public class ProductModel {
     private String id;
     private String name;
-    private String price;
+    private double price;
     private int stock;
-
-    public double getPriceAsDouble() {
-        return Double.parseDouble(price);
-    }
 }

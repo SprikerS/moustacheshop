@@ -1,44 +1,38 @@
 package dev.sprikers.moustacheshop.services;
 
-import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionException;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.sprikers.moustacheshop.clients.ApiClient;
 import dev.sprikers.moustacheshop.constants.ApiEndpoints;
 import dev.sprikers.moustacheshop.dto.ProductRequest;
 import dev.sprikers.moustacheshop.models.ProductModel;
+import dev.sprikers.moustacheshop.utils.JsonParserUtils;
 
 public class ProductService {
 
     private final ApiClient apiClient = new ApiClient();
-    private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public CompletableFuture<List<ProductModel>> allProductsAsync() {
+    public CompletableFuture<List<ProductModel>> allProducts() {
         return apiClient.getAsync(ApiEndpoints.PRODUCT)
-            .thenApply(response -> {
-                try {
-                    return objectMapper.readValue(response.body(), new TypeReference<List<ProductModel>>() {});
-                } catch (Exception e) {
-                    throw new CompletionException(e);
-                }
-            });
+            .thenApply(response -> JsonParserUtils.parseResponse(response.body(), new TypeReference<List<ProductModel>>() {}));
     }
 
-    public void register(ProductRequest productRequest) throws Exception {
-        HttpResponse<String> response = apiClient.post(ApiEndpoints.PRODUCT, productRequest);
+    public CompletableFuture<ProductModel> register(ProductRequest productRequest) {
+        return apiClient.postAsync(ApiEndpoints.PRODUCT, productRequest)
+            .thenApply(response -> JsonParserUtils.parseResponse(response.body(), ProductModel.class));
     }
 
-    public void update(ProductRequest productRequest, String id) throws Exception {
-        HttpResponse<String> response = apiClient.patch(ApiEndpoints.PRODUCT + "/" + id, productRequest);
+    public CompletableFuture<ProductModel> update(ProductRequest productRequest, String id) {
+        return apiClient.patchAsync(ApiEndpoints.PRODUCT + "/" + id, productRequest)
+            .thenApply(response -> JsonParserUtils.parseResponse(response.body(), ProductModel.class));
     }
 
-    public void delete(String id) throws Exception {
-        HttpResponse<String> response = apiClient.delete(ApiEndpoints.PRODUCT + "/" + id);
+    public CompletableFuture<Void> delete(String id) {
+        return apiClient.deleteAsync(ApiEndpoints.PRODUCT + "/" + id)
+            .thenAccept(response -> {});
     }
 
 }

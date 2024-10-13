@@ -3,6 +3,7 @@ package dev.sprikers.moustacheshop.controllers;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
@@ -54,7 +55,7 @@ public class ProductController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeTableColumns();
         initializeEventHandlers();
-        loadProductsAsync();
+        loadProducts();
         btnClean.setVisible(false);
         btnDelete.setVisible(false);
     }
@@ -83,11 +84,11 @@ public class ProductController implements Initializable {
         txtSearch.setOnKeyReleased(event -> handleSearch());
     }
 
-    private void loadProductsAsync() {
+    private void loadProducts() {
         hbSpinner.setVisible(true);
         lblTotalProducts.setText("0");
 
-        productService.allProductsAsync()
+        productService.allProducts()
             .thenAccept(products -> {
                 this.products = products;
                 Platform.runLater(() -> {
@@ -96,7 +97,7 @@ public class ProductController implements Initializable {
                 });
             })
             .exceptionally(ex -> {
-                Platform.runLater(() -> AlertManager.showErrorMessage("Error al cargar los productos: " + ex.getMessage()));
+                Platform.runLater(() -> AlertManager.showErrorMessage("Error al cargar los productos: " + ex.getCause().getMessage()));
                 return null;
             });
     }
@@ -121,16 +122,16 @@ public class ProductController implements Initializable {
     }
 
     private void handleSubmit() {
+        String name = txtName.getText().trim().toLowerCase();
+        String valPrice = txtPrice.getText().trim();
+        String valStock = txtStock.getText().trim();
+
+        if (name.isEmpty() || valPrice.isEmpty() || valStock.isEmpty()) {
+            AlertManager.showErrorMessage("Por favor, complete todos los campos");
+            return;
+        }
+
         try {
-            String name = txtName.getText().trim().toLowerCase();
-            String valPrice = txtPrice.getText().trim();
-            String valStock = txtStock.getText().trim();
-
-            if (name.isEmpty() || valPrice.isEmpty() || valStock.isEmpty()) {
-                AlertManager.showErrorMessage("Por favor, complete todos los campos");
-                return;
-            }
-
             double price = Double.parseDouble(valPrice);
             int stock = Integer.parseInt(valStock);
 
@@ -140,18 +141,42 @@ public class ProductController implements Initializable {
             }
 
             ProductRequest productRequest = new ProductRequest(name, price, stock);
-            if (productSelected != null) {
-                productService.update(productRequest, productSelected.getId());
-            } else {
-                productService.register(productRequest);
-            }
-
-            handleReload();
+            saveOrUpdateProduct(productRequest);
         } catch (NumberFormatException e) {
             AlertManager.showErrorMessage("El precio o stock no tienen un formato válido.");
-        } catch (Exception e) {
-            AlertManager.showErrorMessage("Error al registrar el producto: " + e.getMessage());
         }
+    }
+
+    private void saveOrUpdateProduct(ProductRequest productRequest) {
+        submitButtonState(true);
+        CompletableFuture<ProductModel> productFuture;
+        String action = (productSelected != null) ? "actualizar" : "registrar";
+
+        productFuture = (productSelected != null)
+            ? productService.update(productRequest, productSelected.getId())
+            : productService.register(productRequest);
+
+        productFuture
+            .thenAccept(producto -> Platform.runLater(() -> {
+                submitButtonState(false);
+                handleReload();
+            }))
+            .exceptionally(ex -> {
+                Platform.runLater(() -> {
+                    submitButtonState(false);
+                    AlertManager.showErrorMessage("Error al %s el producto: %s".formatted(action, ex.getCause().getMessage()));
+                });
+                return null;
+            });
+    }
+
+    private void submitButtonState(boolean isLoading) {
+        btnClean.setVisible(false);
+        btnDelete.setVisible(false);
+
+        String buttonText = isLoading ? "Cargando..." : productSelected != null ? "Actualizar" : "Registrar";
+        btnSubmit.setText(buttonText);
+        btnSubmit.setDisable(isLoading);
     }
 
     private void handleSearch() {
@@ -167,23 +192,23 @@ public class ProductController implements Initializable {
         boolean confirmed = AlertManager.showConfirmation("¿Estás seguro de que deseas eliminar este producto?", Alert.AlertType.WARNING);
         if (!confirmed) return;
 
-        try {
-            productService.delete(productSelected.getId());
-            handleReload();
-        } catch (Exception e) {
-            AlertManager.showErrorMessage(e.getMessage());
-        }
+        productService.delete(productSelected.getId())
+            .thenRun(() -> Platform.runLater(this::handleReload))
+            .exceptionally(ex -> {
+                Platform.runLater(() -> AlertManager.showErrorMessage("Error al eliminar el producto: " + ex.getCause().getMessage()));
+                return null;
+            });
     }
 
     private void handleReload() {
         resetForm();
-        loadProductsAsync();
+        loadProducts();
     }
 
     private void setProductSelected(ProductModel product) {
         productSelected = product;
         txtName.setText(product.getName());
-        txtPrice.setText(product.getPrice());
+        txtPrice.setText(String.valueOf(product.getPrice()));
         txtStock.setText(String.valueOf(product.getStock()));
 
         btnClean.setVisible(true);
@@ -202,6 +227,7 @@ public class ProductController implements Initializable {
         btnClean.setVisible(false);
         btnDelete.setVisible(false);
         btnSubmit.setText("Registrar");
+        lblTotalProducts.requestFocus();
     }
 
 }
