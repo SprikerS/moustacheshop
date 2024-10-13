@@ -1,6 +1,9 @@
 package dev.sprikers.moustacheshop.application;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -9,10 +12,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.burningwave.core.assembler.StaticComponentContainer;
 
+import dev.sprikers.moustacheshop.constants.PathImages;
 import dev.sprikers.moustacheshop.constants.PathViews;
 import dev.sprikers.moustacheshop.services.AuthService;
 import dev.sprikers.moustacheshop.utils.AlertManager;
@@ -37,6 +42,8 @@ public class Main extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(viewPath));
         Scene scene = new Scene(fxmlLoader.load());
+
+        stage.getIcons().addAll(loadIcons());
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
@@ -81,6 +88,8 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlFile));
         Stage newStage = new Stage();
         Scene scene = new Scene(fxmlLoader.load());
+
+        newStage.getIcons().addAll(loadIcons());
         newStage.setScene(scene);
         newStage.setTitle(title);
         newStage.setResizable(false);
@@ -88,6 +97,14 @@ public class Main extends Application {
 
         centerOnScreen(newStage);
         Platform.runLater(() -> ((Stage) (((Node) event.getSource()).getScene().getWindow())).close());
+    }
+
+    private static List<Image> loadIcons() {
+        List<Image> icons = new ArrayList<>();
+        for (String logoPath : PathImages.ALL_LOGOS) {
+            icons.add(new Image(Objects.requireNonNull(Main.class.getResourceAsStream(logoPath))));
+        }
+        return icons;
     }
 
     private static void centerOnScreen(Stage stage) {
