@@ -21,10 +21,60 @@
     -fx-border-width: 0 1 0 0;
 }
 
+/* Textbox */
+
+.textbox-container {
+    -fx-alignment: center;
+    -fx-border-color: #E4E4E7;
+    -fx-border-radius: 5;
+    -fx-border-width: 1;
+    -fx-padding: 8 10;
+    -fx-spacing: 10;
+}
+
 .text-field-custom {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
-    -fx-padding: 0;
     -fx-focus-color: transparent;
+    -fx-padding: 0;
     -fx-pref-height: 20;
+}
+
+/* CheckComboBox */
+
+.combo-box-base {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, white;
+    -fx-background-insets: 0;
+}
+
+.combo-box .combo-box-popup .list-cell:hover {
+    -fx-background-color: #F4F4F5;
+    -fx-cursor: hand;
+    -fx-text-fill: #09090B;
+}
+
+.combo-box .combo-box-popup .list-view, .combo-box .combo-box-popup .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: #71717A ;
+}
+
+/* ComboBox - ListView */
+
+.combo-box .combo-box-popup .list-cell .check-box .box {
+    -fx-background-color: white;
+    -fx-border-color: #E4E4E7;
+    -fx-border-radius: 5px;
+}
+
+.combo-box .combo-box-popup .list-cell .check-box .mark {
+    -fx-shape: "M1.73,12.91 8.1,19.28 22.79,4.59 22.79,1.59 8.1,16.28 1.73,9.91";
+}
+
+.combo-box .combo-box-popup .list-cell .check-box:selected .mark {
+    -fx-background-color: white;
+}
+
+.combo-box .combo-box-popup .list-cell .check-box:selected .box {
+    -fx-background-color: #18181B;
+    -fx-border-color: transparent;
 }
