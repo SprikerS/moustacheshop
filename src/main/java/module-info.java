@@ -8,6 +8,7 @@ module dev.sprikers.moustacheshop {
     requires javafx.controls;
     requires javafx.fxml;
     requires org.burningwave.core;
+    requires org.controlsfx.controls;
     requires static lombok;
 
 
@@ -19,6 +20,7 @@ module dev.sprikers.moustacheshop {
 
     exports dev.sprikers.moustacheshop.models to com.fasterxml.jackson.databind;
     opens dev.sprikers.moustacheshop.dto to com.fasterxml.jackson.databind;
+
 
     exports dev.sprikers.moustacheshop.components;
     opens dev.sprikers.moustacheshop.components to javafx.fxml, com.fasterxml.jackson.databind;

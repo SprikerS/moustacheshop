@@ -57,6 +57,13 @@
       <version>9.0.10</version>
     </dependency>
 
+    <!-- ControlsFX -->
+    <dependency>
+      <groupId>org.controlsfx</groupId>
+      <artifactId>controlsfx</artifactId>
+      <version>11.2.1</version>
+    </dependency>
+
     <!-- Burningwave Core -->
     <dependency>
       <groupId>org.burningwave</groupId>
