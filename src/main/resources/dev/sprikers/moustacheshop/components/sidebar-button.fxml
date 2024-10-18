@@ -1,31 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.SVGPath?>
 
-<HBox fx:id="container" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.components.SidebarButtonController">
+<JFXButton fx:id="button" alignment="BASELINE_LEFT" graphicTextGap="20.0" styleClass="sidebar-button" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.components.SidebarButtonController">
    <stylesheets>
       <URL value="@../styles/globals.css" />
       <URL value="@../styles/button.css" />
       <URL value="@sidebar.css" />
    </stylesheets>
-   <children>
-      <JFXButton fx:id="button" alignment="BASELINE_LEFT" graphicTextGap="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="sidebar-button" text="HOUSE">
-         <graphic>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="20.0" prefWidth="20.0">
-               <children>
-                  <SVGPath fx:id="svgIcon" content="M40,60 C42,48 44,30 25,32" styleClass="sidebar-svg-icon" />
-               </children>
-            </AnchorPane>
-         </graphic>
-      </JFXButton>
-   </children>
-   <styleClass>
-      <String fx:value="background" />
-      <String fx:value="container" />
-   </styleClass>
-</HBox>
+   <graphic>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="16.0" prefWidth="16.0">
+         <children>
+            <SVGPath fx:id="svgIcon" styleClass="sidebar-svg-icon" />
+         </children>
+      </AnchorPane>
+   </graphic>
+</JFXButton>

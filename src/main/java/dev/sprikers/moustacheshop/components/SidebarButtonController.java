@@ -2,7 +2,6 @@ package dev.sprikers.moustacheshop.components;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 import javafx.scene.shape.SVGPath;
 
 import dev.sprikers.moustacheshop.utils.SvgLoader;
@@ -13,9 +12,6 @@ public class SidebarButtonController {
     private Button button;
 
     @FXML
-    private HBox container;
-
-    @FXML
     private SVGPath svgIcon;
 
     public void setData(SidebarButton sidebarButton) {
@@ -24,12 +20,7 @@ public class SidebarButtonController {
 
         button.setGraphic(svgIcon);
         button.setText(sidebarButton.getText());
-
-        container.setOnMouseClicked(event -> handleButtonClick(sidebarButton));
-        button.setOnMouseClicked(event -> {
-            event.consume();
-            handleButtonClick(sidebarButton);
-        });
+        button.setOnMouseClicked(event -> handleButtonClick(sidebarButton));
     }
 
     private void handleButtonClick(SidebarButton sidebarButton) {

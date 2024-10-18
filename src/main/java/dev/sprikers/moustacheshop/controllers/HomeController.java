@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +13,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import dev.sprikers.moustacheshop.components.SidebarButton;
@@ -57,11 +57,11 @@ public class HomeController implements Initializable {
             FXMLLoader fxml = new FXMLLoader();
             fxml.setLocation(getClass().getResource(PathComponents.SIDEBAR_BUTTON));
             try {
-                HBox button = fxml.load();
+                JFXButton jfxButton = fxml.load();
                 SidebarButtonController controller = fxml.getController();
                 controller.setData(sb);
                 if (i == 0) controller.activateButton();
-                sidebarVBox.getChildren().add(button);
+                sidebarVBox.getChildren().add(jfxButton);
                 buttonControllers.add(controller);
             } catch (IOException e) {
                 System.out.println("Error loading sidebar button: " + e.getMessage());
