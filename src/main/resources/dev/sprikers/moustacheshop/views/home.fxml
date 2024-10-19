@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="664.0" prefWidth="802.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.controllers.HomeController">
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="964.0" prefWidth="1102.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.controllers.HomeController">
     <left>
         <VBox focusTraversable="true" prefHeight="600.0" prefWidth="200.0" spacing="10.0" styleClass="sidebar" BorderPane.alignment="CENTER">
          <padding>
@@ -110,8 +110,8 @@
          </children></VBox>
     </left>
     <center>
-        <AnchorPane fx:id="ap" prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <Label layoutX="187.0" layoutY="274.0" text="DASHBOARD">
+        <AnchorPane fx:id="ap" prefHeight="900.0" prefWidth="900.0" BorderPane.alignment="CENTER">
+         <Label layoutX="337.0" layoutY="424.0" text="DASHBOARD">
             <font>
                <Font name="System Bold" size="36.0" />
             </font>
