@@ -78,7 +78,7 @@ public class AuthController implements Initializable {
 
     private void navigateToHome(ActionEvent event) {
         try {
-            Main.changeStage(PathViews.HOME, "Moustache Shop", event);
+            Main.changeStage(PathViews.HOME, event);
         } catch (Exception e) {
             AlertManager.showErrorMessage(e.getMessage());
         }

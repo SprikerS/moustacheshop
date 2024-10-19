@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.burningwave.core.assembler.StaticComponentContainer;
 
 import dev.sprikers.moustacheshop.constants.PathImages;
@@ -41,14 +42,7 @@ public class Main extends Application {
         String viewPath = determineViewPath();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(viewPath));
-        Scene scene = new Scene(fxmlLoader.load());
-
-        stage.getIcons().addAll(loadIcons());
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-
-        centerOnScreen(stage);
+        configureStage(stage, fxmlLoader);
     }
 
     private String determineViewPath() {
@@ -84,19 +78,23 @@ public class Main extends Application {
         currentStage.setScene(newScene);
     }
 
-    public static void changeStage(String fxmlFile, String title, Event event) throws IOException {
+    public static void changeStage(String fxmlFile, Event event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxmlFile));
         Stage newStage = new Stage();
-        Scene scene = new Scene(fxmlLoader.load());
+        configureStage(newStage, fxmlLoader);
 
-        newStage.getIcons().addAll(loadIcons());
-        newStage.setScene(scene);
-        newStage.setTitle(title);
-        newStage.setResizable(false);
-        newStage.show();
-
-        centerOnScreen(newStage);
         Platform.runLater(() -> ((Stage) (((Node) event.getSource()).getScene().getWindow())).close());
+    }
+
+    private static void configureStage(Stage stage, FXMLLoader fxmlLoader) throws IOException {
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.getIcons().addAll(loadIcons());
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+
+        centerOnScreen(stage);
     }
 
     private static List<Image> loadIcons() {
