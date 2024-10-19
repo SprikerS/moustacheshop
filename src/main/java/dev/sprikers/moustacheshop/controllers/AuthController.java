@@ -13,6 +13,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 import dev.sprikers.moustacheshop.application.Main;
 import dev.sprikers.moustacheshop.constants.PathViews;
@@ -20,33 +22,42 @@ import dev.sprikers.moustacheshop.helpers.PasswordToggleManager;
 import dev.sprikers.moustacheshop.services.AuthService;
 import dev.sprikers.moustacheshop.utils.AlertManager;
 import dev.sprikers.moustacheshop.utils.JwtPreferencesManager;
+import dev.sprikers.moustacheshop.utils.WindowDragHandler;
 
 public class AuthController implements Initializable {
 
     private final AuthService authService = new AuthService();
+    private final WindowDragHandler windowDragHandler = new WindowDragHandler();
 
     @FXML
-    private TextField txtEmail, txtVisiblePass;
+    private HBox hbTitleBar;
 
     @FXML
-    private PasswordField txtHiddenPass;
+    private ImageView btnClose, btnMinimize, imgToggleEye;
+
+    @FXML
+    private JFXButton btnLogin;
 
     @FXML
     private JFXCheckBox chkRemember;
 
     @FXML
+    private PasswordField txtHiddenPass;
+
+    @FXML
+    private TextField txtEmail, txtVisiblePass;
+
+    @FXML
     private ToggleButton toggleDisplayPass;
-
-    @FXML
-    private ImageView imgToggleEye;
-
-    @FXML
-    private JFXButton btnLogin;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         PasswordToggleManager.configureVisibility(txtHiddenPass, txtVisiblePass, toggleDisplayPass, imgToggleEye);
+        Platform.runLater(() -> windowDragHandler.enableWindowDragging(hbTitleBar));
+
         btnLogin.setOnAction(this::handleLogin);
+        btnClose.setOnMouseClicked(event -> System.exit(0));
+        btnMinimize.setOnMouseClicked(event -> ((Stage) btnMinimize.getScene().getWindow()).setIconified(true));
     }
 
     private void handleLogin(ActionEvent event) {

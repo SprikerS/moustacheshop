@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.*;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -27,22 +29,23 @@ import dev.sprikers.moustacheshop.constants.PathSVG;
 import dev.sprikers.moustacheshop.constants.PathViews;
 import dev.sprikers.moustacheshop.enums.UserRole;
 import dev.sprikers.moustacheshop.models.UserModel;
-import dev.sprikers.moustacheshop.utils.AlertManager;
-import dev.sprikers.moustacheshop.utils.DateTimeUpdater;
-import dev.sprikers.moustacheshop.utils.JwtPreferencesManager;
-import dev.sprikers.moustacheshop.utils.UserSession;
+import dev.sprikers.moustacheshop.utils.*;
 
 public class HomeController implements Initializable {
 
     private final Map<String, Parent> pageCache = new HashMap<>();
     private final UserModel user = UserSession.getInstance().getUserModel();
     private final List<SidebarButtonController> buttonControllers = new ArrayList<>();
+    private final WindowDragHandler windowDragHandler = new WindowDragHandler();
 
     @FXML
     private AnchorPane ap;
 
     @FXML
     private BorderPane bp;
+
+    @FXML
+    private HBox hbTitleBar;
 
     @FXML
     private ImageView btnClose, btnMinimize;
@@ -59,6 +62,7 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DateTimeUpdater.configureDateTimeLabels(lblDate, lblTime);
+        Platform.runLater(() -> windowDragHandler.enableWindowDragging(hbTitleBar));
 
         btnLogout.setOnMouseClicked(this::logout);
         btnClose.setOnMouseClicked(event -> System.exit(0));
