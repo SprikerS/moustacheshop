@@ -10,11 +10,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import dev.sprikers.moustacheshop.application.Main;
 import dev.sprikers.moustacheshop.components.SidebarButton;
 import dev.sprikers.moustacheshop.components.SidebarButtonController;
 import dev.sprikers.moustacheshop.constants.PathComponents;
@@ -23,6 +28,8 @@ import dev.sprikers.moustacheshop.constants.PathViews;
 import dev.sprikers.moustacheshop.enums.UserRole;
 import dev.sprikers.moustacheshop.models.UserModel;
 import dev.sprikers.moustacheshop.utils.AlertManager;
+import dev.sprikers.moustacheshop.utils.DateTimeUpdater;
+import dev.sprikers.moustacheshop.utils.JwtPreferencesManager;
 import dev.sprikers.moustacheshop.utils.UserSession;
 
 public class HomeController implements Initializable {
@@ -32,21 +39,33 @@ public class HomeController implements Initializable {
     private final List<SidebarButtonController> buttonControllers = new ArrayList<>();
 
     @FXML
-    private Label lblDni, lblEmail, lblMaternalSurname, lblNames, lblPaternalSurname;
-
-    @FXML
     private AnchorPane ap;
 
     @FXML
     private BorderPane bp;
 
     @FXML
+    private ImageView btnClose, btnMinimize;
+
+    @FXML
+    private JFXButton btnLogout;
+
+    @FXML
+    private Label lblDate, lblTime, sbDNI, sbNames;
+
+    @FXML
     private VBox sidebarVBox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        DateTimeUpdater.configureDateTimeLabels(lblDate, lblTime);
+
+        btnLogout.setOnMouseClicked(this::logout);
+        btnClose.setOnMouseClicked(event -> System.exit(0));
+        btnMinimize.setOnMouseClicked(event -> ((Stage) btnMinimize.getScene().getWindow()).setIconified(true));
+
         loadSidebar();
-        loadUserInfo();
+        updateUserInfoUI();
     }
 
     private void loadSidebar() {
@@ -73,7 +92,7 @@ public class HomeController implements Initializable {
     private List<SidebarButton> getSidebarButtons() {
         List<SidebarButton> list = new ArrayList<>();
 
-        SidebarButton sbHome = new SidebarButton(PathSVG.HOUSE, "Inicio", () -> setView(PathViews.HOME));
+        SidebarButton sbHome = new SidebarButton(PathSVG.LAYOUT_GRID, "Inicio", () -> setView(PathViews.HOME));
         SidebarButton sbUsers = new SidebarButton(PathSVG.USERS_ROUND, "Usuarios", () -> setView(PathViews.USERS));
         SidebarButton sbProducts = new SidebarButton(PathSVG.PACKAGE, "Productos", () -> setView(PathViews.PRODUCTS));
         SidebarButton sbSettings = new SidebarButton(PathSVG.BOLT, "Configuración", () -> setView(PathViews.SETTINGS));
@@ -88,6 +107,19 @@ public class HomeController implements Initializable {
 
         list.add(sbSettings);
         return list;
+    }
+
+    private void logout(MouseEvent event) {
+        boolean confirmed = AlertManager.showConfirmation("¿Estás seguro de que deseas cerrar sesión?", Alert.AlertType.WARNING);
+        btnLogout.getParent().requestFocus();
+        if (!confirmed) return;
+
+        try {
+            JwtPreferencesManager.removeJwt();
+            Main.changeStage(PathViews.AUTH, event);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void setView(String view) {
@@ -106,12 +138,9 @@ public class HomeController implements Initializable {
         }
     }
 
-    private void loadUserInfo() {
-        lblNames.setText(user.getNames());
-        lblPaternalSurname.setText(user.getPaternalSurname());
-        lblMaternalSurname.setText(user.getMaternalSurname());
-        lblEmail.setText(user.getEmail());
-        lblDni.setText(user.getDni());
+    private void updateUserInfoUI() {
+        sbNames.setText(user.getNames());
+        sbDNI.setText(user.getDni());
     }
 
     private void loadView(String view) {
