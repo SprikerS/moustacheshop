@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import lombok.Getter;
 import org.burningwave.core.assembler.StaticComponentContainer;
 
 import dev.sprikers.moustacheshop.constants.PathImages;
@@ -26,6 +27,8 @@ import dev.sprikers.moustacheshop.utils.JwtPreferencesManager;
 
 public class Main extends Application {
 
+    @Getter
+    private static Stage applicationStage;
     private static final AuthService authService = new AuthService();
 
     public static void main(String[] args) {
@@ -94,6 +97,7 @@ public class Main extends Application {
         stage.setResizable(false);
         stage.show();
 
+        applicationStage = stage;
         centerOnScreen(stage);
     }
 

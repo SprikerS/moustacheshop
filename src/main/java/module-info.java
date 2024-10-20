@@ -1,4 +1,5 @@
 module dev.sprikers.moustacheshop {
+    requires java.desktop;
     requires java.net.http;
     requires java.prefs;
 
