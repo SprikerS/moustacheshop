@@ -6,6 +6,7 @@
     -fx-cursor: hand;
     -fx-faint-focus-color: transparent;
     -fx-padding: 10px 20px;
+    -fx-text-fill: #71717A;
 }
 
 .button-primary {
@@ -52,6 +53,16 @@
 
 .button-ghost:hover {
     -fx-background-color: #F4F4F5;
+}
+
+.button-tab-pane {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 5;
+    -fx-text-fill: #09090B;
+}
+
+.button-ghost:hover {
+    -fx-background-color: #FFFFFF;
 }
 
 .button-content-icon {

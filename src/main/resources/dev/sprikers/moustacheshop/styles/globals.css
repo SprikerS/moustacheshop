@@ -40,6 +40,18 @@
     -fx-pref-height: 20;
 }
 
+/* TabPane */
+
+.tab-pane {
+    -fx-tab-max-height: 0 ;
+}
+
+.tab-pane .tab-header-area {
+    -fx-max-height: 0;
+    -fx-padding: -20 0 0 0;
+    visibility: hidden ;
+}
+
 /* CheckComboBox */
 
 .combo-box-base {
