@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="900.0" spacing="20.0" styleClass="background" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.controllers.SettingsController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="900.0" spacing="20.0" styleClass="background" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.controllers.SettingsController">
    <children>
       <HBox alignment="CENTER_LEFT" spacing="10.0">
          <children>
@@ -22,18 +30,25 @@
                   <Image url="@../images/user-pen.png" />
                </image>
             </ImageView>
-            <Label maxWidth="1.7976931348623157E308" styleClass="text-muted" text="Configuración de la cuenta:">
+            <Label maxWidth="1.7976931348623157E308" styleClass="text-muted" text="Configuración de la cuenta">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
          </children>
       </HBox>
-      <VBox alignment="TOP_CENTER" spacing="20.0" VBox.vgrow="ALWAYS">
+      <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="500.0" spacing="10.0">
          <children>
-            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="4.0" style="-fx-background-color: #F4F4F5; -fx-background-radius: 2;">
+            <GridPane hgap="4.0" style="-fx-background-color: #F4F4F5; -fx-background-radius: 2;" VBox.vgrow="ALWAYS">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints vgrow="SOMETIMES" />
+               </rowConstraints>
                <children>
-                  <Button fx:id="btnTabRegister" mnemonicParsing="false" prefWidth="150.0" style="-fx-padding: 7 0;" text="Cuenta">
+                  <Button fx:id="btnTabAccount" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-padding: 7 0;" text="Cuenta">
                      <styleClass>
                         <String fx:value="button-reset" />
                         <String fx:value="button-tab-pane" />
@@ -42,7 +57,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnTabManage" mnemonicParsing="false" prefWidth="150.0" style="-fx-padding: 7 0;" styleClass="button-reset" text="Contraseña">
+                  <Button fx:id="btnTabPassword" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-padding: 7 0;" styleClass="button-reset" text="Contraseña" GridPane.columnIndex="1">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -51,36 +66,318 @@
                <padding>
                   <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                </padding>
-            </HBox>
-            <TabPane fx:id="tabPane" prefHeight="50.0" prefWidth="860.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
-               <tabs>
-                  <Tab fx:id="tabRegister">
-                     <content>
-                        <VBox alignment="CENTER" spacing="10.0">
-                           <children>
-                              <Label layoutX="216.0" layoutY="274.0" text="CUENTA">
-                                 <font>
-                                    <Font name="System Bold" size="36.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </content>
-                  </Tab>
-                  <Tab fx:id="tabManage">
-                     <content>
-                        <VBox alignment="CENTER" spacing="10.0">
-                           <children>
-                              <Label text="CONTRASEÑA">
-                                 <font>
-                                    <Font name="System Bold" size="36.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </content>
-                  </Tab>
-               </tabs>
+            </GridPane>
+            <TabPane fx:id="tabProfile" VBox.vgrow="ALWAYS">
+              <tabs>
+                <Tab fx:id="tabAccount">
+                  <content>
+                     <VBox styleClass="container">
+                        <children>
+                           <VBox spacing="5.0">
+                              <children>
+                                 <Label text="Modificar perfil">
+                                    <font>
+                                       <Font name="System Bold" size="18.0" />
+                                    </font>
+                                 </Label>
+                                 <Label styleClass="text-muted" text="Realice los cambios de los datos de su su cuenta aquí." />
+                              </children>
+                           </VBox>
+                           <HBox spacing="20.0">
+                              <children>
+                                 <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                       <Label styleClass="text-muted" text="Nombres">
+                                          <font>
+                                             <Font name="System Bold" size="12.0" />
+                                          </font>
+                                       </Label>
+                                       <HBox alignment="CENTER" styleClass="textbox-container">
+                                          <children>
+                                             <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                   <Image url="@../images/user.png" />
+                                                </image>
+                                                <HBox.margin>
+                                                   <Insets />
+                                                </HBox.margin>
+                                             </ImageView>
+                                             <TextField fx:id="txtNames" maxHeight="-Infinity" promptText="Matthew Alexander" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                                 <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                       <Label styleClass="text-muted" text="DNI">
+                                          <font>
+                                             <Font name="System Bold" size="12.0" />
+                                          </font>
+                                       </Label>
+                                       <HBox alignment="CENTER" styleClass="textbox-container">
+                                          <children>
+                                             <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                   <Image url="@../images/id-card.png" />
+                                                </image>
+                                                <HBox.margin>
+                                                   <Insets />
+                                                </HBox.margin>
+                                             </ImageView>
+                                             <TextField fx:id="txtDNI" promptText="43627084" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                              </children>
+                           </HBox>
+                           <HBox spacing="20.0">
+                              <children>
+                                 <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                       <Label styleClass="text-muted" text="Apellido Paterno">
+                                          <font>
+                                             <Font name="System Bold" size="12.0" />
+                                          </font>
+                                       </Label>
+                                       <HBox alignment="CENTER" styleClass="textbox-container">
+                                          <children>
+                                             <ImageView fitHeight="16.0" fitWidth="16.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                   <Image url="@../images/file-user.png" />
+                                                </image>
+                                                <HBox.margin>
+                                                   <Insets />
+                                                </HBox.margin>
+                                             </ImageView>
+                                             <TextField fx:id="txtPaternalSurname" promptText="Ruiz" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                                 <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                       <Label styleClass="text-muted" text="Apellido Materno">
+                                          <font>
+                                             <Font name="System Bold" size="12.0" />
+                                          </font>
+                                       </Label>
+                                       <HBox alignment="CENTER" styleClass="textbox-container">
+                                          <children>
+                                             <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                   <Image url="@../images/file-user.png" />
+                                                </image>
+                                                <HBox.margin>
+                                                   <Insets />
+                                                </HBox.margin>
+                                             </ImageView>
+                                             <TextField fx:id="txtMaternalSurname" promptText="Gomez" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                              </children>
+                           </HBox>
+                           <HBox alignment="CENTER_LEFT" spacing="20.0">
+                              <children>
+                                 <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                    <children>
+                                       <Label styleClass="text-muted" text="Correo Electrónico">
+                                          <font>
+                                             <Font name="System Bold" size="12.0" />
+                                          </font>
+                                       </Label>
+                                       <HBox alignment="CENTER" styleClass="textbox-container">
+                                          <children>
+                                             <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                <image>
+                                                   <Image url="@../images/at-sign.png" />
+                                                </image>
+                                                <HBox.margin>
+                                                   <Insets />
+                                                </HBox.margin>
+                                             </ImageView>
+                                             <TextField fx:id="txtEmail" promptText="example@gmail.com" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                                          </children>
+                                       </HBox>
+                                    </children>
+                                 </VBox>
+                                    <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label styleClass="text-muted" text="Teléfono">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <HBox alignment="CENTER" styleClass="textbox-container">
+                                             <children>
+                                                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../images/phone.png" />
+                                                   </image>
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                </ImageView>
+                                                <TextField fx:id="txtPhone" promptText="905 405 253" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                              </children>
+                           </HBox>
+                              <HBox alignment="TOP_RIGHT" prefWidth="500.0" spacing="20.0">
+                                 <children>
+                                    <JFXButton fx:id="btnSubmitAccount" prefWidth="100.0" text="Guardar">
+                                       <styleClass>
+                                          <String fx:value="button-reset" />
+                                          <String fx:value="button-primary" />
+                                       </styleClass>
+                                    </JFXButton>
+                                 </children>
+                              </HBox>
+                        </children>
+                     </VBox>
+                  </content>
+                </Tab>
+                <Tab fx:id="tabPassword">
+                  <content>
+                     <VBox styleClass="container">
+                        <children>
+                           <VBox spacing="5.0">
+                              <children>
+                                 <Label text="Actualizar contraseña">
+                                    <font>
+                                       <Font name="System Bold" size="18.0" />
+                                    </font>
+                                 </Label>
+                                 <Label styleClass="text-muted" text="Realice los cambios de su contraseña aquí." />
+                              </children>
+                           </VBox>
+                              <VBox spacing="10.0">
+                                 <children>
+                                    <Label styleClass="text-muted" text="Contraseña actual">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="CENTER" styleClass="textbox-container">
+                                       <children>
+                                          <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/lock-keyhole.png" />
+                                             </image>
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <StackPane HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <PasswordField fx:id="passOld" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
+                                                <TextField fx:id="textOld" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
+                                             </children>
+                                          </StackPane>
+                                          <ToggleButton fx:id="toggleOld" mnemonicParsing="false" style="-fx-padding: 0;" styleClass="button-reset" visible="false">
+                                             <graphic>
+                                                <ImageView fx:id="eyeOld" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../images/eye-off.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </ToggleButton>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox spacing="10.0">
+                                 <children>
+                                    <Label styleClass="text-muted" text="Nueva contraseña">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="CENTER" styleClass="textbox-container">
+                                       <children>
+                                          <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/lock-keyhole.png" />
+                                             </image>
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <StackPane HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <PasswordField fx:id="passNew" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
+                                                <TextField fx:id="textNew" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
+                                             </children>
+                                          </StackPane>
+                                          <ToggleButton fx:id="toggleNew" mnemonicParsing="false" style="-fx-padding: 0;" styleClass="button-reset" visible="false">
+                                             <graphic>
+                                                <ImageView fx:id="eyeNew" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../images/eye-off.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </ToggleButton>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox spacing="10.0">
+                                 <children>
+                                    <Label styleClass="text-muted" text="Confirmar nueva contraseña">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="CENTER" styleClass="textbox-container">
+                                       <children>
+                                          <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/lock-keyhole.png" />
+                                             </image>
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <StackPane HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <PasswordField fx:id="passNewConf" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
+                                                <TextField fx:id="textNewConf" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
+                                             </children>
+                                          </StackPane>
+                                          <ToggleButton fx:id="toggleNewConf" mnemonicParsing="false" style="-fx-padding: 0;" styleClass="button-reset" visible="false">
+                                             <graphic>
+                                                <ImageView fx:id="eyeNewConf" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../images/eye-off.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </ToggleButton>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <HBox alignment="TOP_RIGHT" prefWidth="500.0" spacing="20.0">
+                                 <children>
+                                    <JFXButton fx:id="btnSubmitPass" prefWidth="100.0" text="Guardar">
+                                       <styleClass>
+                                          <String fx:value="button-reset" />
+                                          <String fx:value="button-primary" />
+                                       </styleClass>
+                                    </JFXButton>
+                                 </children>
+                              </HBox>
+                        </children>
+                     </VBox>
+                  </content>
+                </Tab>
+              </tabs>
             </TabPane>
          </children>
       </VBox>
