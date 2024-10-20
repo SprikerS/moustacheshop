@@ -15,6 +15,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import org.controlsfx.control.CheckComboBox;
 
 import dev.sprikers.moustacheshop.helpers.PasswordToggleManager;
@@ -23,6 +24,9 @@ public class UserController implements Initializable {
 
     @FXML
     private CheckComboBox<String> chkcbRoles;
+
+    @FXML
+    private HBox hbProductSpinner;
 
     @FXML
     private ImageView imgToggleEye;
