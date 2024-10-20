@@ -1,10 +1,4 @@
-.container {
-    -fx-cursor: hand;
-    -fx-faint-focus-color: transparent;
-    -fx-padding: 0 10px;
-    -fx-pref-height: 40px;
-    -fx-pref-width: 200px;
-}
+
 
 .sidebar {
     -fx-border-color: #E4E4E7;
