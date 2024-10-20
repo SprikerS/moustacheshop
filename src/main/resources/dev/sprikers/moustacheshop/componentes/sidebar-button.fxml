@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.net.URL?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.SVGPath?>
+
+<JFXButton fx:id="button" alignment="BASELINE_LEFT" graphicTextGap="20.0" styleClass="sidebar-button" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.componentes.BotonMenuControlador">
+   <stylesheets>
+      <URL value="@../estilos/globals.css" />
+      <URL value="@../estilos/button.css" />
+      <URL value="@sidebar.css" />
+   </stylesheets>
+   <graphic>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="16.0" prefWidth="16.0">
+         <children>
+            <SVGPath fx:id="svgIcon" styleClass="sidebar-svg-icon" />
+         </children>
+      </AnchorPane>
+   </graphic>
+</JFXButton>

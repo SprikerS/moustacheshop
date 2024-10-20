@@ -12,16 +12,15 @@ module dev.sprikers.moustacheshop {
     requires static lombok;
 
 
-    exports dev.sprikers.moustacheshop.application;
-    opens dev.sprikers.moustacheshop.application to javafx.fxml;
-    exports dev.sprikers.moustacheshop.controllers;
-    opens dev.sprikers.moustacheshop.controllers to javafx.fxml;
+    exports dev.sprikers.moustacheshop.aplicacion;
+    opens dev.sprikers.moustacheshop.aplicacion to javafx.fxml;
+    exports dev.sprikers.moustacheshop.controladores;
+    opens dev.sprikers.moustacheshop.controladores to javafx.fxml;
 
 
-    exports dev.sprikers.moustacheshop.models to com.fasterxml.jackson.databind;
-    opens dev.sprikers.moustacheshop.dto to com.fasterxml.jackson.databind;
+    exports dev.sprikers.moustacheshop.modelos to com.fasterxml.jackson.databind;
 
 
-    exports dev.sprikers.moustacheshop.components;
-    opens dev.sprikers.moustacheshop.components to javafx.fxml, com.fasterxml.jackson.databind;
+    exports dev.sprikers.moustacheshop.componentes;
+    opens dev.sprikers.moustacheshop.componentes to javafx.fxml, com.fasterxml.jackson.databind;
 }
