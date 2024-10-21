@@ -3,12 +3,12 @@ package dev.sprikers.moustacheshop.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
@@ -30,13 +30,13 @@ public class AuthController implements Initializable {
     private final WindowDragHandler windowDragHandler = new WindowDragHandler();
 
     @FXML
+    private Button btnLogin;
+
+    @FXML
     private HBox hbTitleBar;
 
     @FXML
     private ImageView btnClose, btnMinimize, imgToggleEye;
-
-    @FXML
-    private JFXButton btnLogin;
 
     @FXML
     private JFXCheckBox chkRemember;

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,13 +21,10 @@ public class SettingsController implements Initializable {
     private final UserModel user = UserSession.getInstance().getUserModel();
 
     @FXML
-    private Button btnTabAccount, btnTabPassword;
+    private Button btnTabAccount, btnTabPassword, btnSubmitAccount, btnSubmitPass;
 
     @FXML
     private ImageView eyeNew, eyeNewConf, eyeOld;
-
-    @FXML
-    private JFXButton btnSubmitAccount, btnSubmitPass;
 
     @FXML
     private PasswordField passNew, passNewConf, passOld;
@@ -65,9 +61,9 @@ public class SettingsController implements Initializable {
         tabProfile.getSelectionModel().select(buttonTabMap.get(selectedButton));
 
         for (Button button : buttonTabMap.keySet())
-            button.getStyleClass().remove("button-tab-pane");
+            button.getStyleClass().remove("tab-active");
 
-        selectedButton.getStyleClass().add("button-tab-pane");
+        selectedButton.getStyleClass().add("tab-active");
     }
 
     private void configurePasswordVisibility() {

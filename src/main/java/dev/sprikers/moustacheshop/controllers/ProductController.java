@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
-import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,13 +24,10 @@ public class ProductController implements Initializable {
     private ProductModel productSelected;
 
     @FXML
+    private Button btnClean, btnDelete, btnReload, btnSubmit;
+
+    @FXML
     private Label lblTotalProducts;
-
-    @FXML
-    private JFXButton btnClean, btnDelete, btnSubmit;
-
-    @FXML
-    private Button btnReload;
 
     @FXML
     private TextField txtName, txtPrice, txtStock, txtSearch;

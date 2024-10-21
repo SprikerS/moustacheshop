@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXSpinner?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -40,10 +40,7 @@
                   </Label>
                </children>
             </HBox>
-            <VBox alignment="TOP_RIGHT" spacing="20.0" styleClass="card">
-               <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </padding>
+            <VBox alignment="TOP_RIGHT" spacing="20.0">
                <children>
                   <HBox alignment="CENTER_RIGHT" spacing="20.0">
                      <children>
@@ -61,10 +58,11 @@
                            </children>
                         </HBox>
                         <Region HBox.hgrow="ALWAYS" />
-                        <JFXButton fx:id="btnReloadProducts" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-padding: 10;">
+                        <Button fx:id="btnReloadProducts">
                            <styleClass>
                               <String fx:value="button-reset" />
                               <String fx:value="button-outline" />
+                              <String fx:value="button-icon" />
                            </styleClass>
                            <graphic>
                               <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
@@ -73,7 +71,7 @@
                                  </image>
                               </ImageView>
                            </graphic>
-                        </JFXButton>
+                        </Button>
                      </children>
                   </HBox>
                   <StackPane alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
@@ -119,10 +117,7 @@
                   </Label>
                </children>
             </HBox>
-            <VBox alignment="TOP_RIGHT" focusTraversable="true" spacing="20.0" styleClass="card">
-               <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </padding>
+            <VBox alignment="TOP_RIGHT" focusTraversable="true" spacing="20.0" styleClass="container">
                <children>
                   <HBox alignment="CENTER_RIGHT" spacing="20.0">
                      <children>
@@ -140,18 +135,18 @@
                            </children>
                         </HBox>
                         <Region HBox.hgrow="ALWAYS" />
-                        <JFXButton fx:id="btnCleanCustomer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Limpiar">
+                        <Button fx:id="btnCleanCustomer" text="Limpiar">
                            <styleClass>
                               <String fx:value="button-reset" />
                               <String fx:value="button-outline" />
                            </styleClass>
-                        </JFXButton>
-                        <JFXButton fx:id="btnFetchCustomer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Rellenar">
+                        </Button>
+                        <Button fx:id="btnFetchCustomer" text="Rellenar">
                            <styleClass>
                               <String fx:value="button-reset" />
                               <String fx:value="button-outline" />
                            </styleClass>
-                        </JFXButton>
+                        </Button>
                      </children>
                   </HBox>
                   <HBox spacing="20.0">
@@ -265,10 +260,7 @@
                   </Label>
                </children>
             </HBox>
-            <VBox alignment="TOP_RIGHT" spacing="20.0" styleClass="card">
-               <padding>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </padding>
+            <VBox alignment="TOP_RIGHT">
                <children>
                   <TableView prefHeight="145.0">
                      <columns>
@@ -285,12 +277,12 @@
             </VBox>
             <HBox spacing="20.0">
                <children>
-                  <JFXButton fx:id="btnOrderSubmit" graphicTextGap="0.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Registrar">
+                  <Button fx:id="btnOrderSubmit" graphicTextGap="0.0" text="Registrar">
                      <styleClass>
                         <String fx:value="button-reset" />
                         <String fx:value="button-primary" />
                      </styleClass>
-                  </JFXButton>
+                  </Button>
                </children>
             </HBox>
          </children>

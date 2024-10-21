@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
@@ -48,19 +47,24 @@
                   <RowConstraints vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button fx:id="btnTabAccount" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-padding: 7 0;" text="Cuenta">
+                  <Button fx:id="btnTabAccount" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Cuenta">
                      <styleClass>
                         <String fx:value="button-reset" />
                         <String fx:value="button-tab-pane" />
+                        <String fx:value="tab-active" />
                      </styleClass>
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnTabPassword" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-padding: 7 0;" styleClass="button-reset" text="Contraseña" GridPane.columnIndex="1">
+                  <Button fx:id="btnTabPassword" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Contraseña" GridPane.columnIndex="1">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
+                     <styleClass>
+                        <String fx:value="button-reset" />
+                        <String fx:value="button-tab-pane" />
+                     </styleClass>
                   </Button>
                </children>
                <padding>
@@ -229,12 +233,12 @@
                            </HBox>
                               <HBox alignment="TOP_RIGHT" prefWidth="500.0" spacing="20.0">
                                  <children>
-                                    <JFXButton fx:id="btnSubmitAccount" prefWidth="100.0" text="Guardar">
+                                    <Button fx:id="btnSubmitAccount" prefWidth="100.0" text="Guardar">
                                        <styleClass>
                                           <String fx:value="button-reset" />
                                           <String fx:value="button-primary" />
                                        </styleClass>
-                                    </JFXButton>
+                                    </Button>
                                  </children>
                               </HBox>
                         </children>
@@ -278,7 +282,7 @@
                                                 <TextField fx:id="textOld" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
                                              </children>
                                           </StackPane>
-                                          <ToggleButton fx:id="toggleOld" mnemonicParsing="false" style="-fx-padding: 0;" styleClass="button-reset" visible="false">
+                                          <ToggleButton fx:id="toggleOld" mnemonicParsing="false" visible="false">
                                              <graphic>
                                                 <ImageView fx:id="eyeOld" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -286,6 +290,10 @@
                                                    </image>
                                                 </ImageView>
                                              </graphic>
+                                             <styleClass>
+                                                <String fx:value="button-reset" />
+                                                <String fx:value="button-toggle-icon" />
+                                             </styleClass>
                                           </ToggleButton>
                                        </children>
                                     </HBox>
@@ -314,7 +322,7 @@
                                                 <TextField fx:id="textNew" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
                                              </children>
                                           </StackPane>
-                                          <ToggleButton fx:id="toggleNew" mnemonicParsing="false" style="-fx-padding: 0;" styleClass="button-reset" visible="false">
+                                          <ToggleButton fx:id="toggleNew" mnemonicParsing="false" visible="false">
                                              <graphic>
                                                 <ImageView fx:id="eyeNew" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -322,6 +330,10 @@
                                                    </image>
                                                 </ImageView>
                                              </graphic>
+                                             <styleClass>
+                                                <String fx:value="button-reset" />
+                                                <String fx:value="button-toggle-icon" />
+                                             </styleClass>
                                           </ToggleButton>
                                        </children>
                                     </HBox>
@@ -350,7 +362,7 @@
                                                 <TextField fx:id="textNewConf" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
                                              </children>
                                           </StackPane>
-                                          <ToggleButton fx:id="toggleNewConf" mnemonicParsing="false" style="-fx-padding: 0;" styleClass="button-reset" visible="false">
+                                          <ToggleButton fx:id="toggleNewConf" mnemonicParsing="false" visible="false">
                                              <graphic>
                                                 <ImageView fx:id="eyeNewConf" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
@@ -358,6 +370,10 @@
                                                    </image>
                                                 </ImageView>
                                              </graphic>
+                                             <styleClass>
+                                                <String fx:value="button-reset" />
+                                                <String fx:value="button-toggle-icon" />
+                                             </styleClass>
                                           </ToggleButton>
                                        </children>
                                     </HBox>
@@ -365,12 +381,12 @@
                               </VBox>
                               <HBox alignment="TOP_RIGHT" prefWidth="500.0" spacing="20.0">
                                  <children>
-                                    <JFXButton fx:id="btnSubmitPass" prefWidth="100.0" text="Guardar">
+                                    <Button fx:id="btnSubmitPass" prefWidth="100.0" text="Guardar">
                                        <styleClass>
                                           <String fx:value="button-reset" />
                                           <String fx:value="button-primary" />
                                        </styleClass>
-                                    </JFXButton>
+                                    </Button>
                                  </children>
                               </HBox>
                         </children>
