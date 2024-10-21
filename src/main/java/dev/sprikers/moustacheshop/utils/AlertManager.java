@@ -68,6 +68,8 @@ public class AlertManager {
         Toolkit.getDefaultToolkit().beep();
 
         Alert confirmationAlert = new Alert(alertType);
+        confirmationAlert.initOwner(Main.getApplicationStage());
+
         confirmationAlert.setHeaderText(null);
         confirmationAlert.setContentText(contentText);
 
