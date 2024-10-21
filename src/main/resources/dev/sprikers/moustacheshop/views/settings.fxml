@@ -87,9 +87,18 @@
                                  <Label styleClass="text-muted" text="Realice los cambios de los datos de su su cuenta aquí." />
                               </children>
                            </VBox>
-                           <HBox spacing="20.0">
-                              <children>
-                                 <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                              <GridPane hgap="20.0" vgap="20.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                    <RowConstraints vgrow="SOMETIMES" />
+                                  <RowConstraints vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                 <VBox spacing="10.0">
                                     <children>
                                        <Label styleClass="text-muted" text="Nombres">
                                           <font>
@@ -111,7 +120,7 @@
                                        </HBox>
                                     </children>
                                  </VBox>
-                                 <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                 <VBox spacing="10.0" GridPane.columnIndex="1">
                                     <children>
                                        <Label styleClass="text-muted" text="DNI">
                                           <font>
@@ -133,11 +142,7 @@
                                        </HBox>
                                     </children>
                                  </VBox>
-                              </children>
-                           </HBox>
-                           <HBox spacing="20.0">
-                              <children>
-                                 <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                 <VBox spacing="10.0" GridPane.rowIndex="1">
                                     <children>
                                        <Label styleClass="text-muted" text="Apellido Paterno">
                                           <font>
@@ -159,7 +164,7 @@
                                        </HBox>
                                     </children>
                                  </VBox>
-                                 <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                 <VBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                     <children>
                                        <Label styleClass="text-muted" text="Apellido Materno">
                                           <font>
@@ -181,33 +186,29 @@
                                        </HBox>
                                     </children>
                                  </VBox>
-                              </children>
-                           </HBox>
-                           <HBox alignment="CENTER_LEFT" spacing="20.0">
-                              <children>
-                                 <VBox spacing="10.0" HBox.hgrow="ALWAYS">
-                                    <children>
-                                       <Label styleClass="text-muted" text="Correo Electrónico">
-                                          <font>
-                                             <Font name="System Bold" size="12.0" />
-                                          </font>
-                                       </Label>
-                                       <HBox alignment="CENTER" styleClass="textbox-container">
-                                          <children>
-                                             <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                                <image>
-                                                   <Image url="@../images/at-sign.png" />
-                                                </image>
-                                                <HBox.margin>
-                                                   <Insets />
-                                                </HBox.margin>
-                                             </ImageView>
-                                             <TextField fx:id="txtEmail" promptText="example@gmail.com" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
-                                          </children>
-                                       </HBox>
-                                    </children>
-                                 </VBox>
-                                    <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+                                    <VBox spacing="10.0" GridPane.rowIndex="2">
+                                       <children>
+                                          <Label styleClass="text-muted" text="Correo Electrónico">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <HBox alignment="CENTER" styleClass="textbox-container">
+                                             <children>
+                                                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../images/at-sign.png" />
+                                                   </image>
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                </ImageView>
+                                                <TextField fx:id="txtEmail" promptText="example@gmail.com" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <VBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <children>
                                           <Label styleClass="text-muted" text="Teléfono">
                                              <font>
@@ -224,16 +225,32 @@
                                                       <Insets />
                                                    </HBox.margin>
                                                 </ImageView>
-                                                <TextField fx:id="txtPhone" promptText="905 405 253" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                                                <HBox alignment="CENTER" style="-fx-border-width: 0 0 0 1;" styleClass="border">
+                                                   <children>
+                                                      <ImageView fitHeight="9.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../images/flag-pe.png" />
+                                                         </image>
+                                                         <HBox.margin>
+                                                            <Insets right="8.0" />
+                                                         </HBox.margin>
+                                                      </ImageView>
+                                                      <Label minWidth="-Infinity" styleClass="text" text="+51 " />
+                                                      <TextField fx:id="txtPhone" promptText="905 405 253" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </HBox>
                                              </children>
                                           </HBox>
                                        </children>
                                     </VBox>
-                              </children>
-                           </HBox>
+                                 </children>
+                              </GridPane>
                               <HBox alignment="TOP_RIGHT" prefWidth="500.0" spacing="20.0">
                                  <children>
-                                    <Button fx:id="btnSubmitAccount" prefWidth="100.0" text="Guardar">
+                                    <Button fx:id="btnSubmitAccount" prefWidth="100.0" text="Actualizar">
                                        <styleClass>
                                           <String fx:value="button-reset" />
                                           <String fx:value="button-primary" />
@@ -259,129 +276,141 @@
                                  <Label styleClass="text-muted" text="Realice los cambios de su contraseña aquí." />
                               </children>
                            </VBox>
-                              <VBox spacing="10.0">
+                              <GridPane vgap="20.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints vgrow="SOMETIMES" />
+                                  <RowConstraints vgrow="SOMETIMES" />
+                                  <RowConstraints vgrow="SOMETIMES" />
+                                </rowConstraints>
                                  <children>
-                                    <Label styleClass="text-muted" text="Contraseña actual">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <HBox alignment="CENTER" styleClass="textbox-container">
+                                    <VBox spacing="10.0">
                                        <children>
-                                          <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../images/lock-keyhole.png" />
-                                             </image>
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                          </ImageView>
-                                          <StackPane HBox.hgrow="ALWAYS">
+                                          <Label styleClass="text-muted" text="Contraseña actual">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <HBox alignment="CENTER" styleClass="textbox-container">
                                              <children>
-                                                <PasswordField fx:id="passOld" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
-                                                <TextField fx:id="textOld" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
-                                             </children>
-                                          </StackPane>
-                                          <ToggleButton fx:id="toggleOld" mnemonicParsing="false" visible="false">
-                                             <graphic>
-                                                <ImageView fx:id="eyeOld" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
-                                                      <Image url="@../images/eye-off.png" />
+                                                      <Image url="@../images/lock-keyhole.png" />
                                                    </image>
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
                                                 </ImageView>
-                                             </graphic>
-                                             <styleClass>
-                                                <String fx:value="button-reset" />
-                                                <String fx:value="button-toggle-icon" />
-                                             </styleClass>
-                                          </ToggleButton>
+                                                <StackPane HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <PasswordField fx:id="passOld" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
+                                                      <TextField fx:id="textOld" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
+                                                   </children>
+                                                </StackPane>
+                                                <ToggleButton fx:id="toggleOld" mnemonicParsing="false" visible="false">
+                                                   <graphic>
+                                                      <ImageView fx:id="eyeOld" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../images/eye-off.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <styleClass>
+                                                      <String fx:value="button-reset" />
+                                                      <String fx:value="button-toggle-icon" />
+                                                   </styleClass>
+                                                </ToggleButton>
+                                             </children>
+                                          </HBox>
                                        </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                              <VBox spacing="10.0">
-                                 <children>
-                                    <Label styleClass="text-muted" text="Nueva contraseña">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <HBox alignment="CENTER" styleClass="textbox-container">
+                                    </VBox>
+                                    <VBox spacing="10.0" GridPane.rowIndex="1">
                                        <children>
-                                          <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../images/lock-keyhole.png" />
-                                             </image>
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                          </ImageView>
-                                          <StackPane HBox.hgrow="ALWAYS">
+                                          <Label styleClass="text-muted" text="Nueva contraseña">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <HBox alignment="CENTER" styleClass="textbox-container">
                                              <children>
-                                                <PasswordField fx:id="passNew" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
-                                                <TextField fx:id="textNew" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
-                                             </children>
-                                          </StackPane>
-                                          <ToggleButton fx:id="toggleNew" mnemonicParsing="false" visible="false">
-                                             <graphic>
-                                                <ImageView fx:id="eyeNew" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
-                                                      <Image url="@../images/eye-off.png" />
+                                                      <Image url="@../images/lock-keyhole.png" />
                                                    </image>
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
                                                 </ImageView>
-                                             </graphic>
-                                             <styleClass>
-                                                <String fx:value="button-reset" />
-                                                <String fx:value="button-toggle-icon" />
-                                             </styleClass>
-                                          </ToggleButton>
+                                                <StackPane HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <PasswordField fx:id="passNew" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
+                                                      <TextField fx:id="textNew" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
+                                                   </children>
+                                                </StackPane>
+                                                <ToggleButton fx:id="toggleNew" mnemonicParsing="false" visible="false">
+                                                   <graphic>
+                                                      <ImageView fx:id="eyeNew" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../images/eye-off.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <styleClass>
+                                                      <String fx:value="button-reset" />
+                                                      <String fx:value="button-toggle-icon" />
+                                                   </styleClass>
+                                                </ToggleButton>
+                                             </children>
+                                          </HBox>
                                        </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                              <VBox spacing="10.0">
-                                 <children>
-                                    <Label styleClass="text-muted" text="Confirmar nueva contraseña">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <HBox alignment="CENTER" styleClass="textbox-container">
+                                    </VBox>
+                                    <VBox spacing="10.0" GridPane.rowIndex="2">
                                        <children>
-                                          <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../images/lock-keyhole.png" />
-                                             </image>
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                          </ImageView>
-                                          <StackPane HBox.hgrow="ALWAYS">
+                                          <Label styleClass="text-muted" text="Confirmar nueva contraseña">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <HBox alignment="CENTER" styleClass="textbox-container">
                                              <children>
-                                                <PasswordField fx:id="passNewConf" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
-                                                <TextField fx:id="textNewConf" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
-                                             </children>
-                                          </StackPane>
-                                          <ToggleButton fx:id="toggleNewConf" mnemonicParsing="false" visible="false">
-                                             <graphic>
-                                                <ImageView fx:id="eyeNewConf" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
-                                                      <Image url="@../images/eye-off.png" />
+                                                      <Image url="@../images/lock-keyhole.png" />
                                                    </image>
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
                                                 </ImageView>
-                                             </graphic>
-                                             <styleClass>
-                                                <String fx:value="button-reset" />
-                                                <String fx:value="button-toggle-icon" />
-                                             </styleClass>
-                                          </ToggleButton>
+                                                <StackPane HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <PasswordField fx:id="passNewConf" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
+                                                      <TextField fx:id="textNewConf" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
+                                                   </children>
+                                                </StackPane>
+                                                <ToggleButton fx:id="toggleNewConf" mnemonicParsing="false" visible="false">
+                                                   <graphic>
+                                                      <ImageView fx:id="eyeNewConf" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../images/eye-off.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <styleClass>
+                                                      <String fx:value="button-reset" />
+                                                      <String fx:value="button-toggle-icon" />
+                                                   </styleClass>
+                                                </ToggleButton>
+                                             </children>
+                                          </HBox>
                                        </children>
-                                    </HBox>
+                                    </VBox>
                                  </children>
-                              </VBox>
+                              </GridPane>
                               <HBox alignment="TOP_RIGHT" prefWidth="500.0" spacing="20.0">
                                  <children>
-                                    <Button fx:id="btnSubmitPass" prefWidth="100.0" text="Guardar">
+                                    <Button fx:id="btnSubmitPass" prefWidth="100.0" text="Actualizar">
                                        <styleClass>
                                           <String fx:value="button-reset" />
                                           <String fx:value="button-primary" />
