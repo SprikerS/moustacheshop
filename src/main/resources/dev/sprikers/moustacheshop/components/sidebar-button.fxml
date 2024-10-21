@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
+<?import java.lang.String?>
 <?import java.net.URL?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.SVGPath?>
 
-<JFXButton fx:id="button" alignment="BASELINE_LEFT" graphicTextGap="20.0" styleClass="sidebar-button" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.components.SidebarButtonController">
+<Button fx:id="button" alignment="BASELINE_LEFT" graphicTextGap="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.components.SidebarButtonController">
    <stylesheets>
       <URL value="@../styles/globals.css" />
       <URL value="@../styles/button.css" />
@@ -18,4 +19,8 @@
          </children>
       </AnchorPane>
    </graphic>
-</JFXButton>
+   <styleClass>
+      <String fx:value="button-reset" />
+      <String fx:value="sidebar-button" />
+   </styleClass>
+</Button>

@@ -1,29 +1,31 @@
 .button-reset {
     -fx-background-color: transparent;
     -fx-background-insets: 0;
-    -fx-background-radius: 0;
+    -fx-background-radius: 5;
     -fx-border-width: 0;
     -fx-cursor: hand;
     -fx-faint-focus-color: transparent;
-    -fx-padding: 10px 20px;
+    -fx-padding: 0 20px;
+    -fx-pref-height: 38px;
     -fx-text-fill: #71717A;
 }
 
 .button-primary {
     -fx-background-color: #18181B;
-    -fx-background-radius: 5;
     -fx-text-fill: #FFFFFF;
+}
+
+.button-primary:hover {
+    -fx-background-color: #18181BE6;
 }
 
 .button-secondary {
     -fx-background-color: #F4F4F5;
-    -fx-background-radius: 5;
     -fx-text-fill: #18181B;
 }
 
 .button-destructive {
     -fx-background-color: #EF4444;
-    -fx-background-radius: 5;
     -fx-text-fill: #FAFAFA;
 }
 
@@ -33,11 +35,9 @@
 
 .button-outline {
     -fx-background-color: #FFFFFF;
-    -fx-background-radius: 5;
     -fx-border-color: #E4E4E7;
     -fx-border-radius: 5;
     -fx-border-width: 1;
-    -fx-padding: 9px 20px;
     -fx-text-fill: #09090B;
 }
 
@@ -47,7 +47,6 @@
 
 .button-ghost {
     -fx-background-color: #FFFFFF;
-    -fx-background-radius: 5;
     -fx-text-fill: #09090B;
 }
 
@@ -55,22 +54,26 @@
     -fx-background-color: #F4F4F5;
 }
 
-.button-tab-pane {
-    -fx-background-color: #FFFFFF;
-    -fx-background-radius: 5;
-    -fx-text-fill: #09090B;
-}
+/* Buttons Custom */
 
-.button-ghost:hover {
-    -fx-background-color: #FFFFFF;
-}
-
-.button-content-icon {
+.button-icon {
     -fx-padding: 0 10px;
-    -fx-pref-height: 37px;
 }
 
-.image-view-icon-button {
-    -fx-fit-height: 20px;
-    -fx-fit-width: 20px;
+.button-toggle-icon {
+    -fx-padding: 0;
+    -fx-pref-height: 16px;
+}
+
+/* Button TabPane */
+
+.button-tab-pane {
+    -fx-background-radius: 5;
+    -fx-padding: 7px 0;
+    -fx-pref-height: 32px;
+}
+
+.button-tab-pane.tab-active {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #09090B;
 }

@@ -1,18 +1,9 @@
-
-
 .sidebar {
     -fx-border-color: #E4E4E7;
     -fx-border-width: 0 1 0 0;
 }
 
 .sidebar-button {
-    -fx-background-color: transparent;
-    -fx-background-insets: 0;
-    -fx-background-radius: 5;
-    -fx-border-width: 0;
-    -fx-cursor: hand;
-    -fx-faint-focus-color: transparent;
-    -fx-padding: 10px 20px;
     -fx-pref-width: 180px;
     -fx-text-fill: #09090B;
 }

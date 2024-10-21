@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -12,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -45,13 +45,13 @@ public class HomeController implements Initializable {
     private BorderPane bp;
 
     @FXML
+    private Button btnLogout;
+
+    @FXML
     private HBox hbTitleBar;
 
     @FXML
     private ImageView btnClose, btnMinimize;
-
-    @FXML
-    private JFXButton btnLogout;
 
     @FXML
     private Label lblDate, lblTime, sbDNI, sbNames;
@@ -80,11 +80,11 @@ public class HomeController implements Initializable {
             FXMLLoader fxml = new FXMLLoader();
             fxml.setLocation(getClass().getResource(PathComponents.SIDEBAR_BUTTON));
             try {
-                JFXButton jfxButton = fxml.load();
+                Button button = fxml.load();
                 SidebarButtonController controller = fxml.getController();
                 controller.setData(sb);
                 if (i == 0) controller.activateButton();
-                sidebarVBox.getChildren().add(jfxButton);
+                sidebarVBox.getChildren().add(button);
                 buttonControllers.add(controller);
             } catch (IOException e) {
                 System.out.println("Error loading sidebar button: " + e.getMessage());
