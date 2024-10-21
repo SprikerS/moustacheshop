@@ -107,7 +107,7 @@
                                  <children>
                                     <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../images/at-sign.png" />
+                                          <Image url="@../images/mail.png" />
                                        </image>
                                        <HBox.margin>
                                           <Insets />
