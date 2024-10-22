@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 
 import dev.sprikers.moustacheshop.helpers.PasswordToggleManager;
 import dev.sprikers.moustacheshop.models.UserModel;
+import dev.sprikers.moustacheshop.utils.TextFieldFormatter;
 import dev.sprikers.moustacheshop.utils.UserSession;
 
 public class SettingsController implements Initializable {
@@ -46,6 +47,9 @@ public class SettingsController implements Initializable {
         initializeButtonTabMap();
         configurePasswordVisibility();
         populateUserDetails();
+
+        TextFieldFormatter.applyNumericFormat(txtDNI, 8);
+        TextFieldFormatter.applyNumericFormat(txtPhone, 9);
     }
 
     private void initializeButtonTabMap() {
