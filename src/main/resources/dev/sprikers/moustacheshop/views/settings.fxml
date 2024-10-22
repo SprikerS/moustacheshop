@@ -305,7 +305,7 @@
                                                 </ImageView>
                                                 <StackPane HBox.hgrow="ALWAYS">
                                                    <children>
-                                                      <PasswordField fx:id="passOld" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
+                                                      <PasswordField fx:id="txtPassOld" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
                                                       <TextField fx:id="textOld" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
                                                    </children>
                                                 </StackPane>
@@ -345,7 +345,7 @@
                                                 </ImageView>
                                                 <StackPane HBox.hgrow="ALWAYS">
                                                    <children>
-                                                      <PasswordField fx:id="passNew" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
+                                                      <PasswordField fx:id="txtPassNew" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
                                                       <TextField fx:id="textNew" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
                                                    </children>
                                                 </StackPane>
@@ -385,7 +385,7 @@
                                                 </ImageView>
                                                 <StackPane HBox.hgrow="ALWAYS">
                                                    <children>
-                                                      <PasswordField fx:id="passNewConf" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
+                                                      <PasswordField fx:id="txtPassNewConf" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
                                                       <TextField fx:id="textNewConf" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
                                                    </children>
                                                 </StackPane>

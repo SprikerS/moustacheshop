@@ -8,5 +8,6 @@ public class ApiEndpoints {
     public static final String CHECK_AUTH_STATUS = BASE_URL + "/user/check-auth-status";
 
     public static final String PRODUCT = BASE_URL + "/products";
+    public static final String USER = BASE_URL + "/user";
 
 }

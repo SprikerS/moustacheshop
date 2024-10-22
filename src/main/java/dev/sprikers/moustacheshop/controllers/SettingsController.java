@@ -4,15 +4,21 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 
+import dev.sprikers.moustacheshop.dto.ChangePasswordRequest;
+import dev.sprikers.moustacheshop.dto.UpdateProfileRequest;
 import dev.sprikers.moustacheshop.helpers.PasswordToggleManager;
 import dev.sprikers.moustacheshop.models.UserModel;
+import dev.sprikers.moustacheshop.services.UserService;
+import dev.sprikers.moustacheshop.utils.AlertManager;
 import dev.sprikers.moustacheshop.utils.TextFieldFormatter;
 import dev.sprikers.moustacheshop.utils.UserSession;
 
@@ -20,6 +26,7 @@ public class SettingsController implements Initializable {
 
     private final Map<Button, Tab> buttonTabMap = new HashMap<>();
     private final UserModel user = UserSession.getInstance().getUserModel();
+    private final UserService userService = new UserService();
 
     @FXML
     private Button btnTabAccount, btnTabPassword, btnSubmitAccount, btnSubmitPass;
@@ -28,7 +35,7 @@ public class SettingsController implements Initializable {
     private ImageView eyeNew, eyeNewConf, eyeOld;
 
     @FXML
-    private PasswordField passNew, passNewConf, passOld;
+    private PasswordField txtPassNew, txtPassNewConf, txtPassOld;
 
     @FXML
     private Tab tabAccount, tabPassword;
@@ -50,6 +57,71 @@ public class SettingsController implements Initializable {
 
         TextFieldFormatter.applyNumericFormat(txtDNI, 8);
         TextFieldFormatter.applyNumericFormat(txtPhone, 9);
+
+        btnSubmitAccount.setOnAction(event -> handleUpdateProfile());
+        btnSubmitPass.setOnAction(event -> handleChangePassword());
+    }
+
+    private void handleUpdateProfile() {
+        String dni = txtDNI.getText().trim();
+        String email = txtEmail.getText().trim();
+        String maternalSurname = txtMaternalSurname.getText().trim();
+        String names = txtNames.getText().trim();
+        String paternalSurname = txtPaternalSurname.getText().trim();
+
+        if (dni.isEmpty() ||  email.isEmpty() || maternalSurname.isEmpty() || names.isEmpty() || paternalSurname.isEmpty())  {
+            AlertManager.showErrorMessage("Por favor, complete todos los campos");
+            return;
+        }
+
+        String valPhone = txtPhone.getText().trim();
+        Integer phone = valPhone.isEmpty() ? null : Integer.parseInt(valPhone);
+
+        UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(names, paternalSurname, maternalSurname, dni, email, phone);
+        userService.update(updateProfileRequest, user.getId())
+            .thenAccept(updatedUser -> {
+                UserSession.getInstance().setUserModel(updatedUser);
+                System.out.println("Perfil actualizado!" + updatedUser);
+            })
+            .exceptionally(ex -> {
+                Platform.runLater(() -> AlertManager.showErrorMessage("Error al actualizar el perfil: " + ex.getCause().getMessage()));
+                return null;
+            });
+    }
+
+    private void handleChangePassword() {
+        String passOld = txtPassOld.getText().trim();
+        String passNew = txtPassNew.getText().trim();
+        String passNewConf = txtPassNewConf.getText().trim();
+
+        if (passOld.isEmpty() ||  passNew.isEmpty() || passNewConf.isEmpty())  {
+            AlertManager.showErrorMessage("Por favor, complete todos los campos");
+            return;
+        }
+
+        // Regex para validar la contraseña antigua
+        String regex = "(?:(?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$";
+        Pattern pattern = Pattern.compile(regex);
+
+        if (!pattern.matcher(passOld).matches() || !pattern.matcher(passNew).matches() || !pattern.matcher(passNewConf).matches()) {
+            AlertManager.showErrorMessage("Las contraseñas deben tener al menos una letra mayúscula, una letra minúscula y un número.");
+            return;
+        }
+
+        if (!passNew.equals(passNewConf)) {
+            AlertManager.showErrorMessage("La nueva contraseña y su confirmación no coinciden");
+            return;
+        }
+
+        ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(user.getEmail(), passOld, passNew);
+        userService.changePassword(changePasswordRequest)
+            .thenRun(() -> {
+                System.out.println("Contraseña actualizada!");
+            })
+            .exceptionally(ex -> {
+                Platform.runLater(() -> AlertManager.showErrorMessage("Error al actualizar el perfil: " + ex.getCause().getMessage()));
+                return null;
+            });
     }
 
     private void initializeButtonTabMap() {
@@ -71,9 +143,9 @@ public class SettingsController implements Initializable {
     }
 
     private void configurePasswordVisibility() {
-        PasswordToggleManager.configureVisibility(passOld, textOld, toggleOld, eyeOld);
-        PasswordToggleManager.configureVisibility(passNew, textNew, toggleNew, eyeNew);
-        PasswordToggleManager.configureVisibility(passNewConf, textNewConf, toggleNewConf, eyeNewConf);
+        PasswordToggleManager.configureVisibility(txtPassOld, textOld, toggleOld, eyeOld);
+        PasswordToggleManager.configureVisibility(txtPassNew, textNew, toggleNew, eyeNew);
+        PasswordToggleManager.configureVisibility(txtPassNewConf, textNewConf, toggleNewConf, eyeNewConf);
     }
 
     private void populateUserDetails() {
