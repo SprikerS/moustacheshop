@@ -1,19 +1,14 @@
 package dev.sprikers.moustacheshop.components;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -35,13 +30,14 @@ public class ToasterController {
     private static final int FADE_IN_DELAY = 500;
     private static final int FADE_OUT_DELAY = 500;
 
-    private final Map<ToastType, Image> imageCache = new HashMap<>();
+    @FXML
+    private HBox toaster;
 
     @FXML
-    private ImageView imgType;
+    private Label lblMessage;
 
     @FXML
-    private Label lblTitle, lblMessage;
+    private SVGPath svgData;
 
     /**
      * Muestra un mensaje de éxito en formato *toast*.
@@ -87,13 +83,9 @@ public class ToasterController {
      * @param toastType El tipo de toast (éxito, información, advertencia, error).
      */
     private void setToast(String message, ToastType toastType) {
-        lblTitle.setText(toastType.getTitle());
         lblMessage.setText(message);
-
-        Image image = imageCache.computeIfAbsent(toastType, type -> new Image(
-            Objects.requireNonNull(getClass().getResourceAsStream(type.getImagePath()))
-        ));
-        imgType.setImage(image);
+        svgData.setContent(toastType.getSvgPathData());
+        toaster.getStyleClass().add(toastType.getCssClass());
     }
 
     /**
@@ -149,8 +141,8 @@ public class ToasterController {
         double dialogW = dialog.getOwner().getWidth();
         double dialogH = dialog.getOwner().getHeight();
 
-        double toastWidth = 300;  // Ancho del toast
-        double toastHeight = 81;  // Alto del toast
+        double toastWidth = 308;  // Ancho del toast
+        double toastHeight = 70;  // Alto del toast
         double marginRight = 20;  // Margen a la derecha
         double marginBottom = 51; // Margen inferior
 

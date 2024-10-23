@@ -1,0 +1,67 @@
+.container-toaster {
+    -fx-padding: 6px 4px;
+    -fx-background-color: transparent;
+}
+
+.toaster {
+    -fx-background-radius: 8px;
+    -fx-border-color: transparent;
+    -fx-border-radius: 8px;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.05), 4, 0, 0, 2);
+    -fx-padding: 16px;
+    -fx-spacing: 8px;
+}
+
+.success {
+    -fx-background-color: #ECFDF3;
+    -fx-border-color: #D3FDE5;
+    -fx-text-fill: #008A2E;
+}
+
+.success #lblMessage {
+    -fx-text-fill: #008A2E;
+}
+
+.success #svgData {
+    -fx-fill: #008A2E;
+}
+
+.error {
+    -fx-background-color: #FFF0F0;
+    -fx-border-color: #FFE0E1;
+}
+
+.error #lblMessage {
+    -fx-text-fill: #E60000;
+}
+
+.error #svgData {
+    -fx-fill: #E60000;
+}
+
+.info {
+    -fx-background-color: #F0F8FF;
+    -fx-border-color: #D3E0FD;
+}
+
+.info #lblMessage {
+    -fx-text-fill: #0973DC;
+}
+
+.info #svgData {
+    -fx-fill: #0973DC;
+}
+
+.warning {
+    -fx-background-color: #FFFCF0;
+    -fx-border-color: #FDF5D3;
+}
+
+.warning #lblMessage {
+    -fx-text-fill: #DC7609;
+}
+
+.warning #svgData {
+    -fx-fill: #DC7609;
+}

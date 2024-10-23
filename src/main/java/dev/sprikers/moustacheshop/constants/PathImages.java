@@ -16,8 +16,4 @@ public class PathImages {
     public static final String EYE = IMAGES_PATH + "eye.png";
     public static final String EYE_OFF = IMAGES_PATH + "eye-off.png";
 
-    public static final String TOAST_CANCEL = IMAGES_PATH + "toast-cancel.png";
-    public static final String TOAST_INFO = IMAGES_PATH + "toast-info.png";
-    public static final String TOAST_OK = IMAGES_PATH + "toast-ok.png";
-    public static final String TOAST_WARN = IMAGES_PATH + "toast-warn.png";
 }

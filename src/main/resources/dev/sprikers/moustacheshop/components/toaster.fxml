@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER_LEFT" prefWidth="300.0" style="-fx-padding: 20 15; -fx-spacing: 15;" stylesheets="@../styles/globals.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.components.ToasterController">
+<HBox styleClass="container-toaster" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.components.ToasterController">
    <children>
-      <ImageView fx:id="imgType" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true" />
-      <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+      <HBox fx:id="toaster" alignment="CENTER_LEFT" prefWidth="300.0" styleClass="toaster">
          <children>
-            <Label fx:id="lblTitle" styleClass="text" text="title" textAlignment="CENTER" textFill="RED">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <Label fx:id="lblMessage" styleClass="text-muted" text="message" />
+            <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="24.0" prefWidth="24.0">
+               <children>
+                  <SVGPath fx:id="svgData" fillRule="EVEN_ODD" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label fx:id="lblMessage" text="message">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
          </children>
-      </VBox>
+      </HBox>
    </children>
-   <styleClass>
-      <String fx:value="container" />
-      <String fx:value="background" />
-   </styleClass>
+   <stylesheets>
+      <URL value="@../styles/globals.css" />
+      <URL value="@toaster.css" />
+   </stylesheets>
 </HBox>
