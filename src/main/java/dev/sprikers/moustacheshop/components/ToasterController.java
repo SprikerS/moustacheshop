@@ -1,6 +1,7 @@
 package dev.sprikers.moustacheshop.components;
 
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -96,46 +97,44 @@ public class ToasterController {
      * @param type    El tipo de toast a mostrar.
      */
     private void showToast(String message, ToastType type) {
+        Platform.runLater(() -> {
+            Stage dialog = createAndPositionToastStage();
+
+            try {
+                FXMLLoader fxml = new FXMLLoader();
+                fxml.setLocation(ToasterController.class.getResource(PathComponents.TOASTER));
+
+                HBox root = fxml.load();
+                ToasterController controller = fxml.getController();
+                controller.setToast(message, type);
+
+                Scene scene = new Scene(root);
+                scene.setFill(Color.TRANSPARENT);
+                dialog.setScene(scene);
+
+                // Obtener la animación de transición completa
+                SequentialTransition transition = createToastFadeTransition(root);
+                transition.setOnFinished(ae -> dialog.close());
+
+                dialog.show();
+                transition.play();
+            } catch (Exception ex) {
+                System.out.println("Error al mostrar el toast: " + ex.getMessage());
+            }
+        });
+    }
+
+    /**
+     * Crea un nuevo escenario para el toast y lo posiciona en la esquina inferior derecha de la ventana principal.
+     *
+     * @return El escenario del toast configurado.
+     */
+    private Stage createAndPositionToastStage() {
         Stage dialog = new Stage();
         dialog.initOwner(Main.getApplicationStage());
         dialog.initStyle(StageStyle.TRANSPARENT);
         dialog.setResizable(false);
-        positionToast(dialog);
 
-        try {
-            FXMLLoader fxml = new FXMLLoader();
-            fxml.setLocation(ToasterController.class.getResource(PathComponents.TOASTER));
-
-            HBox root = fxml.load();
-            ToasterController controller = fxml.getController();
-            controller.setToast(message, type);
-
-            Scene scene = new Scene(root);
-            scene.setFill(Color.TRANSPARENT);
-            dialog.setScene(scene);
-
-            // Animaciones de fade-in y fade-out
-            FadeTransition fadeIn = createFadeTransition(root, FADE_IN_DELAY, true);
-            FadeTransition fadeOut = createFadeTransition(root, FADE_OUT_DELAY, false);
-
-            // Transición que incluye pausa entre las animaciones
-            PauseTransition pause = new PauseTransition(Duration.millis(TOAST_DELAY));
-            SequentialTransition transition = new SequentialTransition(fadeIn, pause, fadeOut);
-            transition.setOnFinished(ae -> dialog.close());
-
-            dialog.show();
-            transition.play();
-        } catch (Exception ex) {
-            System.out.println("Error al mostrar el toast: " + ex.getMessage());
-        }
-    }
-
-    /**
-     * Calcula y establece la posición del toast en la esquina inferior derecha de la ventana principal.
-     *
-     * @param dialog La ventana del toast a posicionar.
-     */
-    private void positionToast(Stage dialog) {
         double dialogX = dialog.getOwner().getX();
         double dialogY = dialog.getOwner().getY();
         double dialogW = dialog.getOwner().getWidth();
@@ -150,6 +149,23 @@ public class ToasterController {
         double posY = dialogY + dialogH - toastHeight - marginBottom;
         dialog.setX(posX);
         dialog.setY(posY);
+
+        return dialog;
+    }
+
+    /**
+     * Crea una secuencia de transiciones para el toast especificado.
+     * La secuencia incluye una transición de fade-in, una pausa y una transición de fade-out.
+     *
+     * @param node El nodo que se animará con las transiciones de fade.
+     * @return Una secuencia de transiciones configurada.
+     */
+    private SequentialTransition createToastFadeTransition(Node node) {
+        FadeTransition fadeIn = createFadeTransition(node, FADE_IN_DELAY, true);
+        FadeTransition fadeOut = createFadeTransition(node, FADE_OUT_DELAY, false);
+        PauseTransition pause = new PauseTransition(Duration.millis(TOAST_DELAY));
+
+        return new SequentialTransition(fadeIn, pause, fadeOut);
     }
 
     /**
