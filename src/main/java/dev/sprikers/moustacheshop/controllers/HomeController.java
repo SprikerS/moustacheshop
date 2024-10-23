@@ -28,13 +28,13 @@ import dev.sprikers.moustacheshop.constants.PathComponents;
 import dev.sprikers.moustacheshop.constants.PathSVG;
 import dev.sprikers.moustacheshop.constants.PathViews;
 import dev.sprikers.moustacheshop.enums.UserRole;
-import dev.sprikers.moustacheshop.models.UserModel;
+import dev.sprikers.moustacheshop.models.UserBindingModel;
 import dev.sprikers.moustacheshop.utils.*;
 
 public class HomeController implements Initializable {
 
     private final Map<String, Parent> pageCache = new HashMap<>();
-    private final UserModel user = UserSession.getInstance().getUserModel();
+    private final UserBindingModel user = UserSession.getInstance().getUserBindingModel();
     private final List<SidebarButtonController> buttonControllers = new ArrayList<>();
     private final WindowDragHandler windowDragHandler = new WindowDragHandler();
 
@@ -62,14 +62,17 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DateTimeUpdater.configureDateTimeLabels(lblDate, lblTime);
-        Platform.runLater(() -> windowDragHandler.enableWindowDragging(hbTitleBar));
 
         btnLogout.setOnMouseClicked(this::logout);
         btnClose.setOnMouseClicked(event -> System.exit(0));
         btnMinimize.setOnMouseClicked(event -> ((Stage) btnMinimize.getScene().getWindow()).setIconified(true));
 
-        loadSidebar();
-        updateUserInfoUI();
+        Platform.runLater(() -> {
+            loadSidebar();
+            windowDragHandler.enableWindowDragging(hbTitleBar);
+        });
+
+        bindUserInfoToSidebar();
     }
 
     private void loadSidebar() {
@@ -144,9 +147,9 @@ public class HomeController implements Initializable {
         }
     }
 
-    private void updateUserInfoUI() {
-        sbNames.setText(user.getNames());
-        sbDNI.setText(user.getDni());
+    private void bindUserInfoToSidebar() {
+        sbNames.textProperty().bind(user.getNames());
+        sbDNI.textProperty().bind(user.getDni());
     }
 
     private void loadView(String view) {
