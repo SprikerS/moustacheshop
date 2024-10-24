@@ -12,16 +12,20 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
+import dev.sprikers.moustacheshop.components.ToasterController;
 import dev.sprikers.moustacheshop.dto.ProductRequest;
 import dev.sprikers.moustacheshop.models.ProductModel;
 import dev.sprikers.moustacheshop.services.ProductService;
 import dev.sprikers.moustacheshop.utils.AlertManager;
+import dev.sprikers.moustacheshop.utils.TextFieldFormatter;
 
 public class ProductController implements Initializable {
 
-    private final ProductService productService = new ProductService();
     private List<ProductModel> products;
     private ProductModel productSelected;
+
+    private final ProductService productService = new ProductService();
+    private final ToasterController toaster = new ToasterController();
 
     @FXML
     private Button btnClean, btnDelete, btnReload, btnSubmit;
@@ -51,9 +55,12 @@ public class ProductController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeTableColumns();
         initializeEventHandlers();
-        loadProducts();
+        loadProductTable();
         btnClean.setVisible(false);
         btnDelete.setVisible(false);
+
+        TextFieldFormatter.applyIntegerFormat(txtStock);
+        TextFieldFormatter.applyDecimalFormat(txtPrice, 2, 3);
     }
 
     private void initializeTableColumns() {
@@ -64,9 +71,12 @@ public class ProductController implements Initializable {
 
     private void initializeEventHandlers() {
         btnClean.setOnAction(event -> resetForm());
-        btnDelete.setOnAction(event -> handleDelete());
-        btnReload.setOnAction(event -> handleReload());
-        btnSubmit.setOnAction(event -> handleSubmit());
+        btnDelete.setOnAction(event -> deleteProduct());
+        btnSubmit.setOnAction(event -> submitProductForm());
+        btnReload.setOnAction(event -> {
+            toaster.showInfo("Lista de productos actualizada");
+            handleReload();
+        });
 
         tblProducts.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -80,7 +90,7 @@ public class ProductController implements Initializable {
         txtSearch.setOnKeyReleased(event -> handleSearch());
     }
 
-    private void loadProducts() {
+    private void loadProductTable() {
         hbSpinner.setVisible(true);
         lblTotalProducts.setText("0");
 
@@ -98,26 +108,7 @@ public class ProductController implements Initializable {
             });
     }
 
-    private void setProductsList(List<ProductModel> products) {
-        tblProducts.getItems().clear();
-        tblProducts.getItems().addAll(products);
-        lblTotalProducts.setText(String.valueOf(products.size()));
-    }
-
-    private void searchProduct(String name) {
-        try {
-            List<ProductModel> results = products.stream()
-                .filter(product -> product.getName().toLowerCase().contains(name.toLowerCase()))
-                .toList();
-            tblProducts.getItems().clear();
-            tblProducts.getItems().addAll(results);
-            lblTotalProducts.setText(String.valueOf(results.size()));
-        } catch (Exception e) {
-            AlertManager.showErrorMessage("Error al buscar el producto: " + e.getMessage());
-        }
-    }
-
-    private void handleSubmit() {
+    private void submitProductForm() {
         String name = txtName.getText().trim().toLowerCase();
         String valPrice = txtPrice.getText().trim();
         String valStock = txtStock.getText().trim();
@@ -145,16 +136,20 @@ public class ProductController implements Initializable {
 
     private void saveOrUpdateProduct(ProductRequest productRequest) {
         submitButtonState(true);
-        CompletableFuture<ProductModel> productFuture;
-        String action = (productSelected != null) ? "actualizar" : "registrar";
+        boolean isUpdating = (productSelected != null);
 
-        productFuture = (productSelected != null)
+        String action = isUpdating ? "actualizar" : "registrar";
+        CompletableFuture<ProductModel> productFuture = isUpdating
             ? productService.update(productRequest, productSelected.getId())
             : productService.register(productRequest);
 
         productFuture
             .thenAccept(producto -> Platform.runLater(() -> {
                 submitButtonState(false);
+                String messageToast = isUpdating
+                    ? "Producto %s actualizado con éxito".formatted(producto.getName())
+                    : "Producto %s registrado con éxito".formatted(producto.getName());
+                toaster.showSucessOrInfo(messageToast, isUpdating);
                 handleReload();
             }))
             .exceptionally(ex -> {
@@ -164,6 +159,65 @@ public class ProductController implements Initializable {
                 });
                 return null;
             });
+    }
+
+    private void deleteProduct() {
+        boolean confirmed = AlertManager.showConfirmation("¿Estás seguro de que deseas eliminar este producto?", Alert.AlertType.WARNING);
+        if (!confirmed) return;
+
+        productService.delete(productSelected.getId())
+            .thenRun(() -> Platform.runLater(() -> {
+                toaster.showNeutral("Producto %s eliminado con éxito".formatted(productSelected.getName()));
+                handleReload();
+            }))
+            .exceptionally(ex -> {
+                Platform.runLater(() -> AlertManager.showErrorMessage("Error al eliminar el producto: " + ex.getCause().getMessage()));
+                return null;
+            });
+    }
+
+    private void searchProduct(String name) {
+        try {
+            List<ProductModel> results = products.stream()
+                .filter(product -> product.getName().toLowerCase().contains(name.toLowerCase()))
+                .toList();
+            tblProducts.getItems().clear();
+            tblProducts.getItems().addAll(results);
+            lblTotalProducts.setText(String.valueOf(results.size()));
+        } catch (Exception e) {
+            AlertManager.showErrorMessage("Error al buscar el producto: " + e.getMessage());
+        }
+    }
+
+    private void setProductSelected(ProductModel product) {
+        productSelected = product;
+        txtName.setText(product.getName());
+        txtPrice.setText(String.valueOf(product.getPrice()));
+        txtStock.setText(String.valueOf(product.getStock()));
+
+        btnClean.setVisible(true);
+        btnDelete.setVisible(true);
+        btnSubmit.setText("Actualizar");
+    }
+
+    private void setProductsList(List<ProductModel> products) {
+        tblProducts.getItems().clear();
+        tblProducts.getItems().addAll(products);
+        lblTotalProducts.setText(String.valueOf(products.size()));
+    }
+
+    private void resetForm() {
+        productSelected = null;
+        txtName.clear();
+        txtPrice.clear();
+        txtSearch.clear();
+        txtStock.clear();
+        tblProducts.getSelectionModel().clearSelection();
+
+        btnClean.setVisible(false);
+        btnDelete.setVisible(false);
+        btnSubmit.setText("Registrar");
+        lblTotalProducts.requestFocus();
     }
 
     private void submitButtonState(boolean isLoading) {
@@ -184,46 +238,9 @@ public class ProductController implements Initializable {
         }
     }
 
-    private void handleDelete() {
-        boolean confirmed = AlertManager.showConfirmation("¿Estás seguro de que deseas eliminar este producto?", Alert.AlertType.WARNING);
-        if (!confirmed) return;
-
-        productService.delete(productSelected.getId())
-            .thenRun(() -> Platform.runLater(this::handleReload))
-            .exceptionally(ex -> {
-                Platform.runLater(() -> AlertManager.showErrorMessage("Error al eliminar el producto: " + ex.getCause().getMessage()));
-                return null;
-            });
-    }
-
     private void handleReload() {
         resetForm();
-        loadProducts();
-    }
-
-    private void setProductSelected(ProductModel product) {
-        productSelected = product;
-        txtName.setText(product.getName());
-        txtPrice.setText(String.valueOf(product.getPrice()));
-        txtStock.setText(String.valueOf(product.getStock()));
-
-        btnClean.setVisible(true);
-        btnDelete.setVisible(true);
-        btnSubmit.setText("Actualizar");
-    }
-
-    private void resetForm() {
-        productSelected = null;
-        txtName.clear();
-        txtPrice.clear();
-        txtSearch.clear();
-        txtStock.clear();
-        tblProducts.getSelectionModel().clearSelection();
-
-        btnClean.setVisible(false);
-        btnDelete.setVisible(false);
-        btnSubmit.setText("Registrar");
-        lblTotalProducts.requestFocus();
+        loadProductTable();
     }
 
 }
