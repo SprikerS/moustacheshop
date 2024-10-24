@@ -55,8 +55,8 @@ public class SettingsController implements Initializable {
         configurePasswordVisibility();
         populateUserDetails();
 
-        TextFieldFormatter.applyNumericFormat(txtDNI, 8);
-        TextFieldFormatter.applyNumericFormat(txtPhone, 9);
+        TextFieldFormatter.applyIntegerFormat(txtDNI, 8);
+        TextFieldFormatter.applyIntegerFormat(txtPhone, 9);
 
         btnSubmitAccount.setOnAction(event -> handleUpdateProfile());
         btnSubmitPass.setOnAction(event -> handleChangePassword());
@@ -153,4 +153,5 @@ public class SettingsController implements Initializable {
         Platform.runLater(() -> AlertManager.showErrorMessage(message + ex.getCause().getMessage()));
         return null;
     }
+
 }

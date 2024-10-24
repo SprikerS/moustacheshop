@@ -15,12 +15,21 @@ import javafx.scene.control.TextFormatter;
 public class TextFieldFormatter {
 
     /**
+     * Aplica un filtro que permite solo números enteros.
+     *
+     * @param textField El campo de texto al que se aplicará el filtro.
+     */
+    public static void applyIntegerFormat(TextField textField) {
+        applyIntegerFormat(textField, Integer.MAX_VALUE);
+    }
+
+    /**
      * Aplica un filtro que permite solo números enteros, limitando la longitud de la entrada.
      *
      * @param textField El campo de texto al que se aplicará el filtro.
      * @param maxLength La cantidad máxima de dígitos permitidos.
      */
-    public static void applyNumericFormat(TextField textField, int maxLength) {
+    public static void applyIntegerFormat(TextField textField, int maxLength) {
         UnaryOperator<TextFormatter.Change> numericFilter = change -> {
             String newText = change.getControlNewText();
             if (!isValidPart(newText, maxLength)) {
