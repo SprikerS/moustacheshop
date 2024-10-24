@@ -26,7 +26,7 @@
                <children>
                   <ImageView fitHeight="29.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../images/logo-sidebar.png" />
+                        <Image url="@../images/sidebar-logo.png" />
                      </image>
                   </ImageView>
                   <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="text" text="TIENDA BIGOTES">

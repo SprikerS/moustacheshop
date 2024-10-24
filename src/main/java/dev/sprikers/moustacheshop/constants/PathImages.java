@@ -12,7 +12,7 @@ public class PathImages {
     public static final String LOGOx512 = IMAGES_PATH + "logo-512x512.png";
 
     public static final String[] ALL_LOGOS = { LOGOx16, LOGOx32, LOGOx64, LOGOx128, LOGOx256, LOGOx512 };
-    
+
     public static final String EYE = IMAGES_PATH + "eye.png";
     public static final String EYE_OFF = IMAGES_PATH + "eye-off.png";
 

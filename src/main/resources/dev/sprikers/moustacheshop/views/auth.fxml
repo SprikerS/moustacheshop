@@ -75,7 +75,7 @@
                            <children>
                               <ImageView fitHeight="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../images/bigote.png" />
+                                    <Image url="@../images/auth-logo.png" />
                                  </image>
                                  <HBox.margin>
                                     <Insets right="20.0" />
