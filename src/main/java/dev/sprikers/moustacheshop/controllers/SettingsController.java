@@ -13,18 +13,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 
+import dev.sprikers.moustacheshop.components.ToasterController;
 import dev.sprikers.moustacheshop.dto.ChangePasswordRequest;
 import dev.sprikers.moustacheshop.dto.UpdateProfileRequest;
 import dev.sprikers.moustacheshop.helpers.PasswordToggleManager;
 import dev.sprikers.moustacheshop.models.UserModel;
 import dev.sprikers.moustacheshop.services.UserService;
-import dev.sprikers.moustacheshop.utils.AlertManager;
-import dev.sprikers.moustacheshop.utils.TextFieldFormatter;
-import dev.sprikers.moustacheshop.utils.UserSession;
+import dev.sprikers.moustacheshop.utils.*;
 
 public class SettingsController implements Initializable {
 
     private final Map<Button, Tab> buttonTabMap = new HashMap<>();
+    private final ToasterController toaster = new ToasterController();
     private final UserModel user = UserSession.getInstance().getUserModel();
     private final UserService userService = new UserService();
 
@@ -69,7 +69,7 @@ public class SettingsController implements Initializable {
         String names = txtNames.getText().trim();
         String paternalSurname = txtPaternalSurname.getText().trim();
 
-        if (dni.isEmpty() ||  email.isEmpty() || maternalSurname.isEmpty() || names.isEmpty() || paternalSurname.isEmpty())  {
+        if (dni.isEmpty() || email.isEmpty() || maternalSurname.isEmpty() || names.isEmpty() || paternalSurname.isEmpty()) {
             AlertManager.showErrorMessage("Por favor, complete todos los campos");
             return;
         }
@@ -81,12 +81,9 @@ public class SettingsController implements Initializable {
         userService.update(updateProfileRequest, user.getId())
             .thenAccept(updatedUser -> {
                 UserSession.getInstance().setUserModel(updatedUser);
-                System.out.println("Perfil actualizado!" + updatedUser);
+                toaster.showSuccess("Perfil actualizado con éxito");
             })
-            .exceptionally(ex -> {
-                Platform.runLater(() -> AlertManager.showErrorMessage("Error al actualizar el perfil: " + ex.getCause().getMessage()));
-                return null;
-            });
+            .exceptionally(ex -> handleException(ex, "Error al actualizar el perfil"));
     }
 
     private void handleChangePassword() {
@@ -94,7 +91,7 @@ public class SettingsController implements Initializable {
         String passNew = txtPassNew.getText().trim();
         String passNewConf = txtPassNewConf.getText().trim();
 
-        if (passOld.isEmpty() ||  passNew.isEmpty() || passNewConf.isEmpty())  {
+        if (passOld.isEmpty() || passNew.isEmpty() || passNewConf.isEmpty())  {
             AlertManager.showErrorMessage("Por favor, complete todos los campos");
             return;
         }
@@ -115,13 +112,8 @@ public class SettingsController implements Initializable {
 
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(user.getEmail(), passOld, passNew);
         userService.changePassword(changePasswordRequest)
-            .thenRun(() -> {
-                System.out.println("Contraseña actualizada!");
-            })
-            .exceptionally(ex -> {
-                Platform.runLater(() -> AlertManager.showErrorMessage("Error al actualizar el perfil: " + ex.getCause().getMessage()));
-                return null;
-            });
+            .thenRun(() -> toaster.showSuccess("Contraseña actualizada con éxito"))
+            .exceptionally(ex -> handleException(ex, "Error al actualizar la contraseña"));
     }
 
     private void initializeButtonTabMap() {
@@ -157,4 +149,8 @@ public class SettingsController implements Initializable {
         txtPhone.setText(user.getPhoneNumber() != null ? String.valueOf(user.getPhoneNumber()) : "");
     }
 
+    private static Void handleException(Throwable ex, String message) {
+        Platform.runLater(() -> AlertManager.showErrorMessage(message + ex.getCause().getMessage()));
+        return null;
+    }
 }
