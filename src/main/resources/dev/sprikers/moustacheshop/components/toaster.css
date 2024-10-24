@@ -16,7 +16,6 @@
 .success {
     -fx-background-color: #ECFDF3;
     -fx-border-color: #D3FDE5;
-    -fx-text-fill: #008A2E;
 }
 
 .success #lblMessage {
@@ -64,4 +63,17 @@
 
 .warning #svgData {
     -fx-fill: #DC7609;
+}
+
+.neutral {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #EDEDED;
+}
+
+.neutral #lblMessage {
+    -fx-text-fill: #171717;
+}
+
+.neutral #svgData {
+    -fx-fill: #171717;
 }

@@ -77,6 +77,31 @@ public class ToasterController {
     }
 
     /**
+     * Muestra un mensaje neutro en formato *toast*.
+     *
+     * @param text El mensaje neutro a mostrar.
+     */
+    public void showNeutral(String text) {
+        showToast(text, ToastType.NEUTRAL);
+    }
+
+    /**
+     * Muestra un mensaje de éxito o información en formato *toast*.
+     * Si el parámetro `update` es verdadero, se mostrará un mensaje de información.
+     * De lo contrario, se mostrará un mensaje de éxito.
+     *
+     * @param text   El mensaje a mostrar.
+     * @param update Indica si se mostrará un mensaje de información o éxito.
+     */
+    public void showSucessOrInfo(String text, boolean update) {
+        if (update) {
+            showInfo(text);
+        } else {
+            showSuccess(text);
+        }
+    }
+
+    /**
      * Configura el contenido del toast con el mensaje y el tipo proporcionado.
      * Establece el título, mensaje e imagen correspondiente al tipo de toast.
      *
