@@ -7,6 +7,7 @@ import dev.sprikers.moustacheshop.clients.ApiClient;
 import dev.sprikers.moustacheshop.constants.ApiEndpoints;
 import dev.sprikers.moustacheshop.dto.ChangePasswordRequest;
 import dev.sprikers.moustacheshop.dto.UpdateProfileRequest;
+import dev.sprikers.moustacheshop.models.ReniecModel;
 import dev.sprikers.moustacheshop.models.UserModel;
 import dev.sprikers.moustacheshop.utils.JsonParserUtils;
 
@@ -22,6 +23,11 @@ public class UserService {
     public CompletableFuture<String> changePassword(ChangePasswordRequest changePasswordRequest) {
         return apiClient.postAsync(ApiEndpoints.USER + "/change-password", changePasswordRequest)
             .thenApply(HttpResponse::body);
+    }
+
+    public CompletableFuture<ReniecModel> reniec(String dni) {
+        return apiClient.getAsync(ApiEndpoints.USER + "/reniec?dni=" + dni)
+            .thenApply(response -> JsonParserUtils.parseResponse(response.body(), ReniecModel.class));
     }
 
 }
