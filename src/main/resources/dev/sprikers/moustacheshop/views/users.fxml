@@ -15,8 +15,10 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -38,270 +40,262 @@
             </Label>
          </children>
       </HBox>
-      <VBox alignment="CENTER" spacing="30.0">
+      <GridPane hgap="20.0" styleClass="container" vgap="20.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+          <RowConstraints vgrow="SOMETIMES" />
+          <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <VBox focusTraversable="true" prefWidth="500.0" styleClass="container">
+            <VBox spacing="10.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" spacing="20.0">
+                  <Label styleClass="text-muted" text="DNI">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" styleClass="textbox-container">
                      <children>
-                        <VBox spacing="10.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label styleClass="text-muted" text="Nombres">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <HBox alignment="CENTER" styleClass="textbox-container">
-                                 <children>
-                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../images/user.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <TextField fx:id="txtNames" maxHeight="-Infinity" promptText="Matthew Alexander" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                        <VBox spacing="10.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label styleClass="text-muted" text="Apellido Paterno">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <HBox alignment="CENTER" styleClass="textbox-container">
-                                 <children>
-                                    <ImageView fitHeight="16.0" fitWidth="16.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../images/file-user.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <TextField fx:id="txtPaternalSurname" maxHeight="-Infinity" promptText="Ruiz" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                        <VBox spacing="10.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label styleClass="text-muted" text="Apellido Materno">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <HBox alignment="CENTER" styleClass="textbox-container">
-                                 <children>
-                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../images/file-user.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <TextField fx:id="txtMaternalSurname" maxHeight="-Infinity" promptText="Gomez" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER_LEFT" spacing="20.0">
-                     <children>
-                        <VBox spacing="10.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label styleClass="text-muted" text="Correo Electrónico">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <HBox alignment="CENTER" styleClass="textbox-container">
-                                 <children>
-                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../images/mail.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <TextField fx:id="txtEmail" maxHeight="-Infinity" promptText="example@gmail.com" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                        <VBox spacing="10.0" HBox.hgrow="ALWAYS">
-                           <children>
-                              <Label styleClass="text-muted" text="Contraseña">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <HBox alignment="CENTER" styleClass="textbox-container">
-                                 <children>
-                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../images/lock-keyhole.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <StackPane HBox.hgrow="ALWAYS">
-                                       <PasswordField fx:id="txtHiddenPass" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
-                                       <TextField fx:id="txtVisiblePass" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
-                                    </StackPane>
-                                    <ToggleButton fx:id="toggleDisplayPass" mnemonicParsing="false" visible="false">
-                                       <graphic>
-                                          <ImageView fx:id="imgToggleEye" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../images/eye-off.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <styleClass>
-                                          <String fx:value="button-reset" />
-                                          <String fx:value="button-toggle-icon" />
-                                       </styleClass>
-                                    </ToggleButton>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox spacing="20.0">
-                     <children>
-                        <VBox spacing="10.0">
-                           <children>
-                              <Label styleClass="text-muted" text="DNI">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <HBox alignment="CENTER" styleClass="textbox-container">
-                                 <children>
-                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../images/id-card.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <TextField fx:id="txtDNI" maxHeight="-Infinity" prefWidth="70.0" promptText="43627084" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                        <VBox spacing="10.0">
-                           <children>
-                              <Label styleClass="text-muted" text="Roles">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <VBox alignment="CENTER" styleClass="textbox-container">
-                                 <children>
-                                    <HBox alignment="CENTER" spacing="10.0">
-                                       <children>
-                                          <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../images/shield-plus.png" />
-                                             </image>
-                                          </ImageView>
-                                          <CheckComboBox fx:id="chkcbRoles" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="150.0" showCheckedCount="true" title="seleccionados">
-                                             <cursor>
-                                                <Cursor fx:constant="HAND" />
-                                             </cursor>
-                                          </CheckComboBox>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                           </children>
-                        </VBox>
-                        <VBox spacing="10.0">
-                           <children>
-                              <Label styleClass="text-muted" text="Teléfono">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <HBox alignment="CENTER" styleClass="textbox-container">
-                                 <children>
-                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../images/phone.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <TextField fx:id="txtPhone" prefWidth="70.0" promptText="905 405 253" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                        <VBox spacing="10.0">
-                           <children>
-                              <Label styleClass="text-muted" text="Estado">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <HBox alignment="CENTER_RIGHT" prefHeight="38.0">
-                                 <children>
-                                    <JFXCheckBox fx:id="chkActive" checkedColor="#18181b" styleClass="text-muted" text="Activo" unCheckedColor="#71717a">
-                                       <cursor>
-                                          <Cursor fx:constant="HAND" />
-                                       </cursor>
-                                    </JFXCheckBox>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox prefWidth="500.0" spacing="20.0">
-                     <children>
-                        <Button fx:id="btnDelete" text="Eliminar">
-                           <styleClass>
-                              <String fx:value="button-reset" />
-                              <String fx:value="button-destructive" />
-                           </styleClass>
-                        </Button>
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Button fx:id="btnClean" text="Limpiar">
-                           <styleClass>
-                              <String fx:value="button-reset" />
-                              <String fx:value="button-outline" />
-                           </styleClass>
-                        </Button>
-                        <Button fx:id="btnSubmit" prefWidth="100.0" text="Registrar">
-                           <styleClass>
-                              <String fx:value="button-reset" />
-                              <String fx:value="button-primary" />
-                           </styleClass>
-                        </Button>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/id-card.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                        <TextField fx:id="txtDNI" promptText="43627084" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                        <ImageView fx:id="imgBtnFetchReniec" fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                           <image>
+                              <Image url="@../images/globe.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
                      </children>
                   </HBox>
                </children>
             </VBox>
+            <VBox spacing="10.0" GridPane.columnIndex="1">
+               <children>
+                  <Label styleClass="text-muted" text="Nombres">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" styleClass="textbox-container">
+                     <children>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/user.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                        <TextField fx:id="txtNames" promptText="Matthew Alexander" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox spacing="10.0" GridPane.rowIndex="1">
+               <children>
+                  <Label styleClass="text-muted" text="Apellido Paterno">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" styleClass="textbox-container">
+                     <children>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/file-user.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                        <TextField fx:id="txtPaternalSurname" promptText="Ruiz" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <Label styleClass="text-muted" text="Apellido Materno">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" styleClass="textbox-container">
+                     <children>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/file-user.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                        <TextField fx:id="txtMaternalSurname" promptText="Gomez" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox spacing="10.0" GridPane.rowIndex="2">
+               <children>
+                  <Label styleClass="text-muted" text="Correo Electrónico">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" styleClass="textbox-container">
+                     <children>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/mail.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                        <TextField fx:id="txtEmail" promptText="example@gmail.com" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <Label styleClass="text-muted" text="Contraseña">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" styleClass="textbox-container">
+                     <children>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/lock-keyhole.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                        <StackPane HBox.hgrow="ALWAYS">
+                           <PasswordField fx:id="txtHiddenPass" promptText="●●●●●●●●●●" styleClass="text-field-custom" />
+                           <TextField fx:id="txtVisiblePass" promptText="●●●●●●●●●●" styleClass="text-field-custom" visible="false" />
+                        </StackPane>
+                        <ToggleButton fx:id="toggleDisplayPass" mnemonicParsing="false" visible="false">
+                           <graphic>
+                              <ImageView fx:id="imgToggleEye" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/eye-off.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <styleClass>
+                              <String fx:value="button-reset" />
+                              <String fx:value="button-toggle-icon" />
+                           </styleClass>
+                        </ToggleButton>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox spacing="10.0" GridPane.rowIndex="3">
+               <children>
+                  <Label styleClass="text-muted" text="Roles">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <VBox alignment="CENTER" styleClass="textbox-container">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/shield-plus.png" />
+                                 </image>
+                              </ImageView>
+                              <CheckComboBox fx:id="chkcbRoles" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="20.0" prefWidth="351.0" showCheckedCount="true" title="seleccionados">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
+                              </CheckComboBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+            <VBox spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <Label styleClass="text-muted" text="Teléfono">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER" styleClass="textbox-container">
+                     <children>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/phone.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                        <TextField fx:id="txtPhone" prefWidth="70.0" promptText="905 405 253" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <children>
+                  <JFXCheckBox fx:id="chkActive" checkedColor="#18181b" styleClass="text-muted" text="Activo" unCheckedColor="#71717a">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXCheckBox>
+               </children>
+            </HBox>
+            <HBox GridPane.rowIndex="5">
+               <children>
+                  <Button fx:id="btnDelete" text="Eliminar">
+                     <styleClass>
+                        <String fx:value="button-reset" />
+                        <String fx:value="button-destructive" />
+                     </styleClass>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <children>
+                  <Button fx:id="btnClean" text="Limpiar">
+                     <styleClass>
+                        <String fx:value="button-reset" />
+                        <String fx:value="button-outline" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="btnSubmit" prefWidth="100.0" text="Registrar">
+                     <styleClass>
+                        <String fx:value="button-reset" />
+                        <String fx:value="button-primary" />
+                     </styleClass>
+                  </Button>
+               </children>
+            </HBox>
          </children>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-         <padding>
-            <Insets left="128.0" right="128.0" />
-         </padding>
-      </VBox>
+      </GridPane>
       <HBox alignment="CENTER_LEFT" spacing="10.0">
          <children>
             <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
@@ -316,39 +310,35 @@
             </Label>
          </children>
       </HBox>
-      <VBox alignment="CENTER">
+      <StackPane alignment="BOTTOM_CENTER" prefHeight="265.0">
          <children>
-            <StackPane alignment="BOTTOM_CENTER">
+            <TableView>
+               <columns>
+                  <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="DNI" />
+                  <TableColumn editable="false" maxWidth="-Infinity" minWidth="150.0" prefWidth="150.0" resizable="false" text="Nombres" />
+                  <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="A. Paterno" />
+                  <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="A. Materno" />
+                  <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Correo" />
+                  <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Roles" />
+                  <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Telefono" />
+                  <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Estado" />
+               </columns>
+            </TableView>
+            <HBox fx:id="hbProductSpinner" alignment="CENTER" spacing="10.0" styleClass="background" visible="false">
                <children>
-                  <HBox fx:id="hbProductSpinner" alignment="CENTER" spacing="10.0" styleClass="background" visible="false">
-                     <children>
-                        <JFXSpinner maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="15.0" prefWidth="15.0" />
-                        <Label styleClass="text-muted" text="Loading...">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <StackPane.margin>
-                        <Insets bottom="1.0" />
-                     </StackPane.margin>
-                  </HBox>
-                  <TableView prefHeight="265.0" prefWidth="860.0">
-                     <columns>
-                        <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="DNI" />
-                        <TableColumn editable="false" maxWidth="-Infinity" minWidth="150.0" prefWidth="150.0" resizable="false" text="Nombres" />
-                        <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="A. Paterno" />
-                        <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="A. Materno" />
-                        <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Correo" />
-                        <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Roles" />
-                        <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Telefono" />
-                        <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Estado" />
-                     </columns>
-                  </TableView>
+                  <JFXSpinner maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="15.0" prefWidth="15.0" />
+                  <Label styleClass="text-muted" text="Loading...">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
                </children>
-            </StackPane>
+               <StackPane.margin>
+                  <Insets bottom="1.0" />
+               </StackPane.margin>
+            </HBox>
          </children>
-      </VBox>
+      </StackPane>
    </children>
    <stylesheets>
       <URL value="@../styles/globals.css" />
