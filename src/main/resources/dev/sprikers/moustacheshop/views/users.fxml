@@ -18,6 +18,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -72,14 +73,11 @@
                            </HBox.margin>
                         </ImageView>
                         <TextField fx:id="txtDNI" promptText="43627084" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
-                        <ImageView fx:id="btnReniec" fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                           <image>
-                              <Image url="@../images/globe.png" />
-                           </image>
+                        <Region fx:id="btnReniec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="14.0" prefWidth="14.0" styleClass="spinner-loader">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
-                        </ImageView>
+                        </Region>
                      </children>
                   </HBox>
                </children>

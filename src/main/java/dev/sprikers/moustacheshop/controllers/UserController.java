@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import org.controlsfx.control.CheckComboBox;
 
 import dev.sprikers.moustacheshop.components.ToasterController;
@@ -28,14 +29,16 @@ import dev.sprikers.moustacheshop.models.ReniecModel;
 import dev.sprikers.moustacheshop.models.UserModel;
 import dev.sprikers.moustacheshop.services.UserService;
 import dev.sprikers.moustacheshop.utils.AlertManager;
+import dev.sprikers.moustacheshop.utils.SpinnerLoader;
 import dev.sprikers.moustacheshop.utils.TextFieldFormatter;
 
 public class UserController implements Initializable {
 
-    private final ToasterController toaster = new ToasterController();
     private final UserService userService = new UserService();
 
     private final Map<String, String> roleTextToValueMap = new LinkedHashMap<>();
+    private final SpinnerLoader spinnerReniec = new SpinnerLoader();
+    private final ToasterController toaster = new ToasterController();
 
     @FXML
     private Button btnClean, btnDelete, btnSubmit;
@@ -47,13 +50,16 @@ public class UserController implements Initializable {
     private HBox hbProductSpinner;
 
     @FXML
-    private ImageView btnToggleEye, btnReniec;
+    private ImageView btnToggleEye;
 
     @FXML
     private JFXCheckBox chkActive;
 
     @FXML
     private PasswordField txtHiddenPass;
+
+    @FXML
+    private Region btnReniec;
 
     @FXML
     private TextField txtDNI, txtEmail, txtMaternalSurname, txtNames, txtPaternalSurname, txtPhone, txtVisiblePass;
@@ -63,6 +69,7 @@ public class UserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        spinnerReniec.setNode(btnReniec);
         PasswordToggleManager.configureVisibility(txtHiddenPass, txtVisiblePass, toggleDisplayPass, btnToggleEye);
 
         Platform.runLater(() -> {
@@ -90,6 +97,7 @@ public class UserController implements Initializable {
     }
 
     private void handleFetchReniec() {
+        spinnerReniec.start();
         String dni = txtDNI.getText().trim();
         userService.reniec(dni)
             .thenAccept(this::populateFieldsReniec)
@@ -100,6 +108,7 @@ public class UserController implements Initializable {
     }
 
     private void populateFieldsReniec(ReniecModel reniec) {
+        spinnerReniec.stop();
         toaster.showInfo("Datos obtenidos de la RENIEC con éxito");
         Platform.runLater(() -> {
             txtMaternalSurname.setText(reniec.getMaternalSurname());
