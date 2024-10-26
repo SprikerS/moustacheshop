@@ -4,14 +4,16 @@ import lombok.Getter;
 
 @Getter
 public enum UserRole {
-    CUSTOMER("customer"),
-    EMPLOYEE("employee"),
-    ADMIN("admin"),
-    SUPERUSER("super-user");
+    CUSTOMER("customer", "Cliente"),
+    EMPLOYEE("employee", "Empleado"),
+    ADMIN("admin", "Admin"),
+    SUPERUSER("super-user", "Super Usuario");
 
     private final String role;
+    private final String text;
 
-    UserRole(String role) {
+    UserRole(String role, String text) {
         this.role = role;
+        this.text = text;
     }
 }

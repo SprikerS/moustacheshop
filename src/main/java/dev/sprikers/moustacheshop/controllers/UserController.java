@@ -1,14 +1,14 @@
 package dev.sprikers.moustacheshop.controllers;
 
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import com.jfoenix.controls.JFXCheckBox;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -20,6 +20,7 @@ import javafx.scene.layout.HBox;
 import org.controlsfx.control.CheckComboBox;
 
 import dev.sprikers.moustacheshop.components.ToasterController;
+import dev.sprikers.moustacheshop.enums.UserRole;
 import dev.sprikers.moustacheshop.helpers.PasswordToggleManager;
 import dev.sprikers.moustacheshop.models.ReniecModel;
 import dev.sprikers.moustacheshop.services.UserService;
@@ -30,6 +31,8 @@ public class UserController implements Initializable {
 
     private final ToasterController toaster = new ToasterController();
     private final UserService userService = new UserService();
+
+    private final Map<String, String> roleTextToValueMap = new LinkedHashMap<>();
 
     @FXML
     private Button btnClean, btnDelete, btnSubmit;
@@ -59,14 +62,14 @@ public class UserController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         PasswordToggleManager.configureVisibility(txtHiddenPass, txtVisiblePass, toggleDisplayPass, imgToggleEye);
 
-        ObservableList<String> validRoles = FXCollections.observableArrayList(
-            "Cliente",
-            "Trabajador",
-            "Administrador"
-        );
+        Platform.runLater(() -> {
+            for (UserRole role : UserRole.values()) {
+                if (role != UserRole.SUPERUSER) roleTextToValueMap.put(role.getText(), role.getRole());
+            }
 
-        chkcbRoles.getItems().addAll(validRoles);
-        chkcbRoles.getCheckModel().check(0);
+            chkcbRoles.getItems().addAll(roleTextToValueMap.keySet());
+            chkcbRoles.getCheckModel().check(0);
+        });
 
         TextFieldFormatter.applyIntegerFormat(txtDNI, 8);
         TextFieldFormatter.applyIntegerFormat(txtPhone, 9);
@@ -77,7 +80,9 @@ public class UserController implements Initializable {
     }
 
     private List<String> getSelectedRoles() {
-        return new ArrayList<>(chkcbRoles.getCheckModel().getCheckedItems());
+        return chkcbRoles.getCheckModel().getCheckedItems().stream()
+            .map(roleTextToValueMap::get)
+            .collect(Collectors.toList());
     }
 
     private void handleFetchReniec() {
