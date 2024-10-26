@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 import com.jfoenix.controls.JFXCheckBox;
@@ -20,9 +21,11 @@ import javafx.scene.layout.HBox;
 import org.controlsfx.control.CheckComboBox;
 
 import dev.sprikers.moustacheshop.components.ToasterController;
+import dev.sprikers.moustacheshop.dto.UserRequest;
 import dev.sprikers.moustacheshop.enums.UserRole;
 import dev.sprikers.moustacheshop.helpers.PasswordToggleManager;
 import dev.sprikers.moustacheshop.models.ReniecModel;
+import dev.sprikers.moustacheshop.models.UserModel;
 import dev.sprikers.moustacheshop.services.UserService;
 import dev.sprikers.moustacheshop.utils.AlertManager;
 import dev.sprikers.moustacheshop.utils.TextFieldFormatter;
@@ -44,7 +47,7 @@ public class UserController implements Initializable {
     private HBox hbProductSpinner;
 
     @FXML
-    private ImageView imgToggleEye, imgBtnFetchReniec;
+    private ImageView btnToggleEye, btnReniec;
 
     @FXML
     private JFXCheckBox chkActive;
@@ -60,7 +63,7 @@ public class UserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        PasswordToggleManager.configureVisibility(txtHiddenPass, txtVisiblePass, toggleDisplayPass, imgToggleEye);
+        PasswordToggleManager.configureVisibility(txtHiddenPass, txtVisiblePass, toggleDisplayPass, btnToggleEye);
 
         Platform.runLater(() -> {
             for (UserRole role : UserRole.values()) {
@@ -74,9 +77,10 @@ public class UserController implements Initializable {
         TextFieldFormatter.applyIntegerFormat(txtDNI, 8);
         TextFieldFormatter.applyIntegerFormat(txtPhone, 9);
 
-        imgBtnFetchReniec.visibleProperty().bind(txtDNI.textProperty().length().isEqualTo(8));
+        btnReniec.visibleProperty().bind(txtDNI.textProperty().length().isEqualTo(8));
 
-        imgBtnFetchReniec.setOnMouseClicked(event -> handleFetchReniec());
+        btnReniec.setOnMouseClicked(event -> handleFetchReniec());
+        btnSubmit.setOnMouseClicked(event -> handleSubmit());
     }
 
     private List<String> getSelectedRoles() {
@@ -101,8 +105,42 @@ public class UserController implements Initializable {
             txtMaternalSurname.setText(reniec.getMaternalSurname());
             txtNames.setText(reniec.getNames());
             txtPaternalSurname.setText(reniec.getPaternalSurname());
-            txtEmail.requestFocus();
+            if (txtEmail.getText().isEmpty()) txtEmail.requestFocus();
         });
+    }
+
+    private void handleSubmit() {
+        String dni = txtDNI.getText().trim();
+        String names = txtNames.getText().trim();
+        String paternalSurname = txtPaternalSurname.getText().trim();
+        String maternalSurname = txtMaternalSurname.getText().trim();
+        String email = txtEmail.getText().trim();
+        String password = txtHiddenPass.getText().trim();
+        String phoneText = txtPhone.getText().trim();
+        Integer phone = phoneText.isEmpty() ? null : Integer.parseInt(phoneText);
+        List<String> roles = getSelectedRoles();
+
+        if (dni.isEmpty() || names.isEmpty() || paternalSurname.isEmpty() || maternalSurname.isEmpty() || email.isEmpty() || password.isEmpty() || roles.isEmpty()) {
+            toaster.showWarning("Por favor, complete todos los campos");
+            return;
+        }
+
+        UserRequest userRequest = new UserRequest(dni, names, paternalSurname, maternalSurname, email, password, phone, roles);
+        saveOrUpdateUser(userRequest);
+    }
+
+    private void saveOrUpdateUser(UserRequest userRequest) {
+        CompletableFuture<UserModel> userFuture = userService.register(userRequest);
+
+        userFuture
+            .thenAccept(user -> Platform.runLater(() -> {
+                String messageToast = "Usuario %s registrado".formatted(user.getNames());
+                toaster.showSuccess(messageToast);
+            }))
+            .exceptionally(ex -> {
+                Platform.runLater(() -> AlertManager.showErrorMessage("Error al registrar el usuario: %s".formatted(ex.getCause().getMessage())));
+                return null;
+            });
     }
 
 }

@@ -7,6 +7,7 @@ import dev.sprikers.moustacheshop.clients.ApiClient;
 import dev.sprikers.moustacheshop.constants.ApiEndpoints;
 import dev.sprikers.moustacheshop.dto.ChangePasswordRequest;
 import dev.sprikers.moustacheshop.dto.UpdateProfileRequest;
+import dev.sprikers.moustacheshop.dto.UserRequest;
 import dev.sprikers.moustacheshop.models.ReniecModel;
 import dev.sprikers.moustacheshop.models.UserModel;
 import dev.sprikers.moustacheshop.utils.JsonParserUtils;
@@ -28,6 +29,11 @@ public class UserService {
     public CompletableFuture<ReniecModel> reniec(String dni) {
         return apiClient.getAsync(ApiEndpoints.USER + "/reniec?dni=" + dni)
             .thenApply(response -> JsonParserUtils.parseResponse(response.body(), ReniecModel.class));
+    }
+
+    public CompletableFuture<UserModel> register(UserRequest userRequest) {
+        return apiClient.postAsync(ApiEndpoints.USER + "/register", userRequest)
+            .thenApply(response -> JsonParserUtils.parseResponse(response.body(), UserModel.class));
     }
 
 }

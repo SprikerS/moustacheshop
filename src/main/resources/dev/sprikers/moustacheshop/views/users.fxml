@@ -72,7 +72,7 @@
                            </HBox.margin>
                         </ImageView>
                         <TextField fx:id="txtDNI" promptText="43627084" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
-                        <ImageView fx:id="imgBtnFetchReniec" fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                        <ImageView fx:id="btnReniec" fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true" visible="false">
                            <image>
                               <Image url="@../images/globe.png" />
                            </image>
@@ -195,7 +195,7 @@
                         </StackPane>
                         <ToggleButton fx:id="toggleDisplayPass" mnemonicParsing="false" visible="false">
                            <graphic>
-                              <ImageView fx:id="imgToggleEye" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="btnToggleEye" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../images/eye-off.png" />
                                  </image>
