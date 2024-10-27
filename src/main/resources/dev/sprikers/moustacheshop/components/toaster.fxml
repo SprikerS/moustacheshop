@@ -6,7 +6,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<HBox styleClass="container-toaster" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.components.ToasterController">
+<HBox styleClass="container-toaster" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.components.Toaster">
    <children>
       <HBox fx:id="toaster" alignment="CENTER_LEFT" prefWidth="300.0" styleClass="toaster">
          <children>

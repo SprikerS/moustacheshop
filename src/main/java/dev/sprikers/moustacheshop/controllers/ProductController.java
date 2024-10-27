@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 
-import dev.sprikers.moustacheshop.components.ToasterController;
+import dev.sprikers.moustacheshop.components.Toaster;
 import dev.sprikers.moustacheshop.dto.ProductRequest;
 import dev.sprikers.moustacheshop.models.ProductModel;
 import dev.sprikers.moustacheshop.services.ProductService;
@@ -25,7 +25,6 @@ public class ProductController implements Initializable {
     private ProductModel productSelected;
 
     private final ProductService productService = new ProductService();
-    private final ToasterController toaster = new ToasterController();
 
     @FXML
     private Button btnClean, btnDelete, btnReload, btnSubmit;
@@ -74,7 +73,7 @@ public class ProductController implements Initializable {
         btnDelete.setOnAction(event -> deleteProduct());
         btnSubmit.setOnAction(event -> submitProductForm());
         btnReload.setOnAction(event -> {
-            toaster.showInfo("Lista de productos actualizada");
+            Toaster.showInfo("Lista de productos actualizada");
             handleReload();
         });
 
@@ -149,7 +148,7 @@ public class ProductController implements Initializable {
                 String messageToast = isUpdating
                     ? "Producto %s actualizado con éxito".formatted(producto.getName())
                     : "Producto %s registrado con éxito".formatted(producto.getName());
-                toaster.showSucessOrInfo(messageToast, isUpdating);
+                Toaster.showSucessOrInfo(messageToast, isUpdating);
                 handleReload();
             }))
             .exceptionally(ex -> {
@@ -167,7 +166,7 @@ public class ProductController implements Initializable {
 
         productService.delete(productSelected.getId())
             .thenRun(() -> Platform.runLater(() -> {
-                toaster.showNeutral("Producto %s eliminado con éxito".formatted(productSelected.getName()));
+                Toaster.showNeutral("Producto %s eliminado con éxito".formatted(productSelected.getName()));
                 handleReload();
             }))
             .exceptionally(ex -> {

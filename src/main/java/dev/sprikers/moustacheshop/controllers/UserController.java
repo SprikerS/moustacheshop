@@ -21,7 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import org.controlsfx.control.CheckComboBox;
 
-import dev.sprikers.moustacheshop.components.ToasterController;
+import dev.sprikers.moustacheshop.components.Toaster;
 import dev.sprikers.moustacheshop.dto.UserRequest;
 import dev.sprikers.moustacheshop.enums.UserRole;
 import dev.sprikers.moustacheshop.helpers.PasswordToggleManager;
@@ -38,7 +38,6 @@ public class UserController implements Initializable {
 
     private final Map<String, String> roleTextToValueMap = new LinkedHashMap<>();
     private final SpinnerLoader spinnerReniec = new SpinnerLoader();
-    private final ToasterController toaster = new ToasterController();
 
     @FXML
     private Button btnClean, btnDelete, btnSubmit;
@@ -109,7 +108,7 @@ public class UserController implements Initializable {
 
     private void populateFieldsReniec(ReniecModel reniec) {
         spinnerReniec.stop();
-        toaster.showInfo("Datos obtenidos de la RENIEC con éxito");
+        Toaster.showInfo("Datos obtenidos de la RENIEC con éxito");
         Platform.runLater(() -> {
             txtMaternalSurname.setText(reniec.getMaternalSurname());
             txtNames.setText(reniec.getNames());
@@ -130,7 +129,7 @@ public class UserController implements Initializable {
         List<String> roles = getSelectedRoles();
 
         if (dni.isEmpty() || names.isEmpty() || paternalSurname.isEmpty() || maternalSurname.isEmpty() || email.isEmpty() || password.isEmpty() || roles.isEmpty()) {
-            toaster.showWarning("Por favor, complete todos los campos");
+            Toaster.showWarning("Por favor, complete todos los campos");
             return;
         }
 
@@ -144,7 +143,7 @@ public class UserController implements Initializable {
         userFuture
             .thenAccept(user -> Platform.runLater(() -> {
                 String messageToast = "Usuario %s registrado".formatted(user.getNames());
-                toaster.showSuccess(messageToast);
+                Toaster.showSuccess(messageToast);
             }))
             .exceptionally(ex -> {
                 Platform.runLater(() -> AlertManager.showErrorMessage("Error al registrar el usuario: %s".formatted(ex.getCause().getMessage())));

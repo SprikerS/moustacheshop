@@ -25,7 +25,7 @@ import dev.sprikers.moustacheshop.enums.ToastType;
  *
  * @author SprikerS
  */
-public class ToasterController {
+public class Toaster {
 
     private static final int TOAST_DELAY = 2500;
     private static final int FADE_IN_DELAY = 500;
@@ -127,10 +127,10 @@ public class ToasterController {
 
             try {
                 FXMLLoader fxml = new FXMLLoader();
-                fxml.setLocation(ToasterController.class.getResource(PathComponents.TOASTER));
+                fxml.setLocation(Toaster.class.getResource(PathComponents.TOASTER));
 
                 HBox root = fxml.load();
-                ToasterController controller = fxml.getController();
+                Toaster controller = fxml.getController();
                 controller.setToast(message, type);
 
                 Scene scene = new Scene(root);

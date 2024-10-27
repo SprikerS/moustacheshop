@@ -13,7 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 
-import dev.sprikers.moustacheshop.components.ToasterController;
+import dev.sprikers.moustacheshop.components.Toaster;
 import dev.sprikers.moustacheshop.dto.ChangePasswordRequest;
 import dev.sprikers.moustacheshop.dto.UpdateProfileRequest;
 import dev.sprikers.moustacheshop.helpers.PasswordToggleManager;
@@ -24,7 +24,6 @@ import dev.sprikers.moustacheshop.utils.*;
 public class SettingsController implements Initializable {
 
     private final Map<Button, Tab> buttonTabMap = new HashMap<>();
-    private final ToasterController toaster = new ToasterController();
     private final UserModel user = UserSession.getInstance().getUserModel();
     private final UserService userService = new UserService();
 
@@ -81,7 +80,7 @@ public class SettingsController implements Initializable {
         userService.update(updateProfileRequest, user.getId())
             .thenAccept(updatedUser -> {
                 UserSession.getInstance().setUserModel(updatedUser);
-                toaster.showSuccess("Perfil actualizado con éxito");
+                Toaster.showSuccess("Perfil actualizado con éxito");
             })
             .exceptionally(ex -> handleException(ex, "Error al actualizar el perfil"));
     }
@@ -112,7 +111,7 @@ public class SettingsController implements Initializable {
 
         ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(user.getEmail(), passOld, passNew);
         userService.changePassword(changePasswordRequest)
-            .thenRun(() -> toaster.showSuccess("Contraseña actualizada con éxito"))
+            .thenRun(() -> Toaster.showSuccess("Contraseña actualizada con éxito"))
             .exceptionally(ex -> handleException(ex, "Error al actualizar la contraseña"));
     }
 
