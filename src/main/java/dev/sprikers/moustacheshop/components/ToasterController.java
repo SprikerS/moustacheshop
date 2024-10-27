@@ -45,7 +45,7 @@ public class ToasterController {
      *
      * @param text El mensaje de éxito a mostrar.
      */
-    public void showSuccess(String text) {
+    public static void showSuccess(String text) {
         showToast(text, ToastType.SUCCESS);
     }
 
@@ -54,7 +54,7 @@ public class ToasterController {
      *
      * @param text El mensaje informativo a mostrar.
      */
-    public void showInfo(String text) {
+    public static void showInfo(String text) {
         showToast(text, ToastType.INFO);
     }
 
@@ -63,7 +63,7 @@ public class ToasterController {
      *
      * @param text El mensaje de advertencia a mostrar.
      */
-    public void showWarning(String text) {
+    public static void showWarning(String text) {
         showToast(text, ToastType.WARNING);
     }
 
@@ -72,7 +72,7 @@ public class ToasterController {
      *
      * @param text El mensaje de error a mostrar.
      */
-    public void showError(String text) {
+    public static void showError(String text) {
         showToast(text, ToastType.ERROR);
     }
 
@@ -81,7 +81,7 @@ public class ToasterController {
      *
      * @param text El mensaje neutro a mostrar.
      */
-    public void showNeutral(String text) {
+    public static void showNeutral(String text) {
         showToast(text, ToastType.NEUTRAL);
     }
 
@@ -93,7 +93,7 @@ public class ToasterController {
      * @param text   El mensaje a mostrar.
      * @param update Indica si se mostrará un mensaje de información o éxito.
      */
-    public void showSucessOrInfo(String text, boolean update) {
+    public static void showSucessOrInfo(String text, boolean update) {
         if (update) {
             showInfo(text);
         } else {
@@ -121,7 +121,7 @@ public class ToasterController {
      * @param message El mensaje a mostrar en el toast.
      * @param type    El tipo de toast a mostrar.
      */
-    private void showToast(String message, ToastType type) {
+    private static void showToast(String message, ToastType type) {
         Platform.runLater(() -> {
             Stage dialog = createAndPositionToastStage();
 
@@ -138,7 +138,7 @@ public class ToasterController {
                 dialog.setScene(scene);
 
                 // Obtener la animación de transición completa
-                SequentialTransition transition = createToastFadeTransition(root);
+                SequentialTransition transition = controller.createToastFadeTransition(root);
                 transition.setOnFinished(ae -> dialog.close());
 
                 dialog.show();
@@ -154,7 +154,7 @@ public class ToasterController {
      *
      * @return El escenario del toast configurado.
      */
-    private Stage createAndPositionToastStage() {
+    private static Stage createAndPositionToastStage() {
         Stage dialog = new Stage();
         dialog.initOwner(Main.getApplicationStage());
         dialog.initStyle(StageStyle.TRANSPARENT);
