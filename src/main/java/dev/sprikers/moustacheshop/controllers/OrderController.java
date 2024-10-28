@@ -10,9 +10,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import dev.sprikers.moustacheshop.components.StepNavigator;
+import dev.sprikers.moustacheshop.utils.ReniecFetch;
 
 public class OrderController implements Initializable {
 
@@ -22,22 +24,27 @@ public class OrderController implements Initializable {
     private Button btnNextTwo, btnNextThree, btnPrevOne, btnPrevTwo, btnSubmit;
 
     @FXML
-    private Button btnCleanCustomer, btnFetchCustomer, btnReloadProducts;
+    private Button btnReloadProducts;
 
     @FXML
     private HBox hbProductSpinner;
 
     @FXML
+    private Region btnReniec;
+
+    @FXML
     private Tab tabOne, tabTwo, tabThree;
 
     @FXML
-    private TextField txtDNI, txtMaternalSurname, txtNames, txtPaternalSurname, txtSearchCustomer, txtSearchProducts;
+    private TextField txtDNI, txtMaternalSurname, txtNames, txtPaternalSurname, txtSearchProducts;
 
     @FXML
     private VBox stepOne, stepTwo, stepThree;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ReniecFetch.configureFields(btnReniec, txtDNI, txtNames, txtPaternalSurname, txtMaternalSurname);
+
         stepNavigator.setSteps(List.of(stepOne, stepTwo, stepThree));
         stepNavigator.setTabs(List.of(tabOne, tabTwo, tabThree));
 

@@ -4,6 +4,7 @@
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
@@ -119,36 +120,6 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_RIGHT" spacing="20.0">
-                           <children>
-                              <HBox alignment="CENTER" prefWidth="400.0" spacing="10.0" styleClass="textbox-container">
-                                 <children>
-                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../images/user-search.png" />
-                                       </image>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </ImageView>
-                                    <TextField fx:id="txtSearchCustomer" maxHeight="-Infinity" minHeight="-Infinity" promptText="Buscar cliente mediante su numero de DNI..." styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
-                                 </children>
-                              </HBox>
-                              <Region HBox.hgrow="ALWAYS" />
-                              <Button fx:id="btnCleanCustomer" text="Limpiar">
-                                 <styleClass>
-                                    <String fx:value="button-reset" />
-                                    <String fx:value="button-outline" />
-                                 </styleClass>
-                              </Button>
-                              <Button fx:id="btnFetchCustomer" text="Rellenar">
-                                 <styleClass>
-                                    <String fx:value="button-reset" />
-                                    <String fx:value="button-outline" />
-                                 </styleClass>
-                              </Button>
-                           </children>
-                        </HBox>
                         <GridPane hgap="20.0" styleClass="container" vgap="20.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -160,28 +131,6 @@
                            </rowConstraints>
                            <children>
                               <VBox spacing="10.0">
-                                 <children>
-                                    <Label styleClass="text-muted" text="Nombres">
-                                       <font>
-                                          <Font name="System Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <HBox alignment="CENTER" styleClass="textbox-container">
-                                       <children>
-                                          <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../images/user.png" />
-                                             </image>
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                          </ImageView>
-                                          <TextField fx:id="txtNames" promptText="Matthew Alexander" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
-                              <VBox spacing="10.0" GridPane.columnIndex="1">
                                  <children>
                                     <Label styleClass="text-muted" text="DNI">
                                        <font>
@@ -199,6 +148,11 @@
                                              </HBox.margin>
                                           </ImageView>
                                           <TextField fx:id="txtDNI" promptText="43627084" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                                          <Region fx:id="btnReniec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="14.0" prefWidth="14.0" styleClass="spinner-loader" visible="false">
+                                             <cursor>
+                                                <Cursor fx:constant="HAND" />
+                                             </cursor>
+                                          </Region>
                                        </children>
                                     </HBox>
                                  </children>
@@ -243,6 +197,28 @@
                                              </HBox.margin>
                                           </ImageView>
                                           <TextField fx:id="txtMaternalSurname" promptText="Gomez" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox spacing="10.0" GridPane.columnIndex="1">
+                                 <children>
+                                    <Label styleClass="text-muted" text="Nombres">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox alignment="CENTER" styleClass="textbox-container">
+                                       <children>
+                                          <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../images/user.png" />
+                                             </image>
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </ImageView>
+                                          <TextField fx:id="txtNames" promptText="Matthew Alexander" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
                                        </children>
                                     </HBox>
                                  </children>
