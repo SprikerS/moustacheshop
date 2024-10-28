@@ -25,11 +25,10 @@ import dev.sprikers.moustacheshop.components.Toaster;
 import dev.sprikers.moustacheshop.dto.UserRequest;
 import dev.sprikers.moustacheshop.enums.UserRole;
 import dev.sprikers.moustacheshop.helpers.PasswordToggleManager;
-import dev.sprikers.moustacheshop.models.ReniecModel;
 import dev.sprikers.moustacheshop.models.UserModel;
 import dev.sprikers.moustacheshop.services.UserService;
 import dev.sprikers.moustacheshop.utils.AlertManager;
-import dev.sprikers.moustacheshop.utils.SpinnerLoader;
+import dev.sprikers.moustacheshop.utils.ReniecFetch;
 import dev.sprikers.moustacheshop.utils.TextFieldFormatter;
 
 public class UserController implements Initializable {
@@ -37,7 +36,6 @@ public class UserController implements Initializable {
     private final UserService userService = new UserService();
 
     private final Map<String, String> roleTextToValueMap = new LinkedHashMap<>();
-    private final SpinnerLoader spinnerReniec = new SpinnerLoader();
 
     @FXML
     private Button btnClean, btnDelete, btnSubmit;
@@ -68,8 +66,9 @@ public class UserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        spinnerReniec.setNode(btnReniec);
         PasswordToggleManager.configureVisibility(txtHiddenPass, txtVisiblePass, toggleDisplayPass, btnToggleEye);
+        ReniecFetch.configureFields(btnReniec, txtDNI, txtNames, txtPaternalSurname, txtMaternalSurname);
+        TextFieldFormatter.applyIntegerFormat(txtPhone, 9);
 
         Platform.runLater(() -> {
             for (UserRole role : UserRole.values()) {
@@ -80,12 +79,6 @@ public class UserController implements Initializable {
             chkcbRoles.getCheckModel().check(0);
         });
 
-        TextFieldFormatter.applyIntegerFormat(txtDNI, 8);
-        TextFieldFormatter.applyIntegerFormat(txtPhone, 9);
-
-        btnReniec.visibleProperty().bind(txtDNI.textProperty().length().isEqualTo(8));
-
-        btnReniec.setOnMouseClicked(event -> handleFetchReniec());
         btnSubmit.setOnMouseClicked(event -> handleSubmit());
     }
 
@@ -93,28 +86,6 @@ public class UserController implements Initializable {
         return chkcbRoles.getCheckModel().getCheckedItems().stream()
             .map(roleTextToValueMap::get)
             .collect(Collectors.toList());
-    }
-
-    private void handleFetchReniec() {
-        spinnerReniec.start();
-        String dni = txtDNI.getText().trim();
-        userService.reniec(dni)
-            .thenAccept(this::populateFieldsReniec)
-            .exceptionally(ex -> {
-                AlertManager.showErrorMessage("No se pudo obtener los datos de reniec: %s".formatted(ex.getCause().getMessage()));
-                return null;
-            });
-    }
-
-    private void populateFieldsReniec(ReniecModel reniec) {
-        spinnerReniec.stop();
-        Toaster.showInfo("Datos obtenidos de la RENIEC con éxito");
-        Platform.runLater(() -> {
-            txtMaternalSurname.setText(reniec.getMaternalSurname());
-            txtNames.setText(reniec.getNames());
-            txtPaternalSurname.setText(reniec.getPaternalSurname());
-            if (txtEmail.getText().isEmpty()) txtEmail.requestFocus();
-        });
     }
 
     private void handleSubmit() {
