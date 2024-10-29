@@ -55,21 +55,34 @@ public class SpinnerLoader {
     /**
      * Detiene la animación del spinner, removiendo la clase "spinner-active" y añadiendo la clase
      * "spinner-success" para indicar la finalización de la operación.
-     * La clase "spinner-success" se elimina después de 3 segundos.
+     *
+     * @param immediate Indica si la finalización de la animación debe ser inmediata.
      */
-    public void stop() {
+    public void stop(boolean immediate) {
         if (node != null && spinnerAnimation != null) {
             spinnerAnimation.stop();
             node.getStyleClass().remove(ACTIVE_CLASS);
             node.getStyleClass().add(SUCCESS_CLASS);
 
+            if (immediate) {
+                finalizeSpinnerAnimation();
+                return;
+            }
+
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
-            pause.setOnFinished(event -> {
-                node.getStyleClass().remove(SUCCESS_CLASS);
-                node.setDisable(false);
-            });
+            pause.setOnFinished(event -> finalizeSpinnerAnimation());
             pause.play();
         }
+    }
+
+    /**
+     * Detiene la animación del spinner, removiendo la clase "spinner-active" y añadiendo la clase
+     * "spinner-success" para indicar la finalización de la operación.
+     *
+     * <p>Este metodo es equivalente a {@link #stop(boolean)} con el parámetro {@code false}.</p>
+     */
+    public void stop() {
+        stop(false);
     }
 
     /**
@@ -81,6 +94,14 @@ public class SpinnerLoader {
         spinnerAnimation.setByAngle(360);
         spinnerAnimation.setCycleCount(RotateTransition.INDEFINITE);
         spinnerAnimation.setInterpolator(Interpolator.LINEAR);
+    }
+
+    /**
+     * Finaliza la animación del spinner, removiendo la clase "spinner-success" y habilitando el nodo.
+     */
+    private void finalizeSpinnerAnimation() {
+        node.getStyleClass().remove(SUCCESS_CLASS);
+        node.setDisable(false);
     }
 
 }
