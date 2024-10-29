@@ -73,7 +73,7 @@
                            </HBox.margin>
                         </ImageView>
                         <TextField fx:id="txtDNI" promptText="43627084" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
-                        <Region fx:id="btnReniec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="14.0" prefWidth="14.0" styleClass="spinner-loader">
+                        <Region fx:id="btnReniec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="14.0" prefWidth="14.0" styleClass="svg-icon-globe">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
