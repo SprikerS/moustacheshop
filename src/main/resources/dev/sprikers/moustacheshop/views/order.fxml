@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXSpinner?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
@@ -22,6 +21,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="900.0" spacing="20.0" styleClass="background" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dev.sprikers.moustacheshop.controllers.OrderController">
@@ -148,7 +148,7 @@
                                              </HBox.margin>
                                           </ImageView>
                                           <TextField fx:id="txtDNI" promptText="43627084" styleClass="text-field-custom" HBox.hgrow="ALWAYS" />
-                                          <Region fx:id="btnReniec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="14.0" prefWidth="14.0" styleClass="spinner-loader" visible="false">
+                                          <Region fx:id="btnReniec" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="14.0" prefWidth="14.0" styleClass="svg-icon-globe" visible="false">
                                              <cursor>
                                                 <Cursor fx:constant="HAND" />
                                              </cursor>
@@ -236,7 +236,8 @@
                               </Button>
                            </children>
                         </HBox>
-                     </children></VBox>
+                     </children>
+                  </VBox>
                </content>
             </Tab>
             <Tab fx:id="tabTwo">
@@ -273,46 +274,52 @@
                                  </children>
                               </HBox>
                               <Region HBox.hgrow="ALWAYS" />
-                              <Button fx:id="btnReloadProducts">
+                              <Button fx:id="btnReloadProducts" mnemonicParsing="false">
                                  <styleClass>
                                     <String fx:value="button-reset" />
                                     <String fx:value="button-outline" />
                                     <String fx:value="button-icon" />
                                  </styleClass>
                                  <graphic>
-                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../images/rotate-ccw.png" />
-                                       </image>
-                                    </ImageView>
+                                    <SVGPath content="M12.0302 11.4809C10.7679 12.7403 9.05768 13.4476 7.27462 13.4476C5.49156 13.4476 3.78131 12.7403 2.51905 11.4809C2.3677 11.3296 2.28268 11.1243 2.28268 10.9103C2.28268 10.6962 2.3677 10.491 2.51905 10.3396C2.67041 10.1883 2.87568 10.1032 3.08973 10.1032C3.30377 10.1032 3.50904 10.1883 3.6604 10.3396C4.37522 11.0544 5.28596 11.5412 6.27746 11.7385C7.26895 11.9357 8.29666 11.8345 9.23062 11.4476C10.1646 11.0607 10.9629 10.4056 11.5245 9.56506C12.0861 8.72451 12.3859 7.7363 12.3859 6.72538C12.3859 5.71447 12.0861 4.72625 11.5245 3.88571C10.9629 3.04516 10.1646 2.39004 9.23062 2.00318C8.29666 1.61631 7.26895 1.51509 6.27746 1.71231C5.28596 1.90953 4.37522 2.39634 3.6604 3.11116L2.75543 4.01613H4.03522C4.24926 4.01613 4.45453 4.10115 4.60588 4.2525C4.75723 4.40385 4.84226 4.60913 4.84226 4.82317C4.84226 5.03721 4.75723 5.24248 4.60588 5.39383C4.45453 5.54518 4.24926 5.63021 4.03522 5.63021H0.807389C0.780634 5.63022 0.753895 5.62882 0.727246 5.62618C0.715999 5.62508 0.705105 5.62295 0.694005 5.62139C0.679022 5.61928 0.664015 5.6175 0.649156 5.61454C0.636234 5.61198 0.623706 5.6084 0.611006 5.60523C0.598141 5.60202 0.585235 5.59918 0.57251 5.59533C0.560081 5.59156 0.548086 5.58688 0.535912 5.58253C0.523219 5.57801 0.510462 5.57381 0.497966 5.56864C0.486654 5.56394 0.475833 5.55843 0.464792 5.55324C0.451927 5.54722 0.438988 5.54149 0.426395 5.53475C0.415919 5.52913 0.405969 5.52272 0.395773 5.51666C0.38336 5.50928 0.370815 5.50224 0.358723 5.49414C0.347615 5.4867 0.337173 5.47839 0.32645 5.47042C0.316065 5.46269 0.305434 5.45545 0.295344 5.44715C0.276224 5.43145 0.257932 5.41479 0.240331 5.39742C0.239053 5.39616 0.237647 5.39512 0.236374 5.39384C0.235102 5.39257 0.234043 5.39115 0.232778 5.38986C0.21539 5.37225 0.198724 5.35394 0.183011 5.3348C0.174932 5.32498 0.167905 5.31463 0.160368 5.30452C0.152183 5.29355 0.14367 5.28284 0.136043 5.27144C0.128071 5.25953 0.121143 5.24717 0.113868 5.23494C0.107681 5.22455 0.101143 5.21442 0.0954296 5.20374C0.0887802 5.19133 0.0831484 5.17857 0.0772038 5.16591C0.0719251 5.15469 0.0663175 5.14367 0.0615479 5.13218C0.0564366 5.11983 0.0522958 5.10721 0.0478134 5.09467C0.043413 5.08236 0.0386837 5.07023 0.0348744 5.05765C0.0310322 5.04499 0.0282083 5.03213 0.0250151 5.01933C0.0218213 5.0066 0.0182419 4.99404 0.0156721 4.98107C0.0127251 4.96622 0.0109436 4.95123 0.00883388 4.93627C0.00727359 4.92515 0.00513084 4.91422 0.0040225 4.90296C0.00139557 4.87632 -1.6665e-05 4.84958 1.48406e-07 4.82283V1.595C1.48406e-07 1.38096 0.0850275 1.17568 0.236377 1.02433C0.387727 0.872985 0.593002 0.787957 0.807043 0.787957C1.02108 0.787957 1.22636 0.872985 1.37771 1.02433C1.52906 1.17568 1.61409 1.38096 1.61409 1.595V2.87479L2.51905 1.96982C3.7803 0.708566 5.49093 4.41437e-07 7.27461 0C9.0583 -4.41437e-07 10.7689 0.708564 12.0302 1.96982C13.2914 3.23107 14 4.9417 14 6.72538C14 8.50907 13.2914 10.2197 12.0302 11.4809Z" fill="#71717a" />
                                  </graphic>
                               </Button>
                            </children>
                         </HBox>
-                        <StackPane alignment="BOTTOM_CENTER" prefHeight="200.0">
+                        <StackPane alignment="BOTTOM_CENTER" focusTraversable="true" prefHeight="194.0">
                            <children>
-                              <TableView>
+                              <TableView fx:id="tblProducts">
                                  <columns>
-                                    <TableColumn editable="false" maxWidth="-Infinity" minWidth="150.0" prefWidth="150.0" resizable="false" text="Nombre" />
-                                    <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Precio" />
-                                    <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Stock" />
+                                    <TableColumn fx:id="colProductName" editable="false" maxWidth="-Infinity" minWidth="150.0" prefWidth="150.0" resizable="false" text="Nombre" />
+                                    <TableColumn fx:id="colProductPrice" editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Precio" />
+                                    <TableColumn fx:id="colProductStock" editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Stock" />
                                  </columns>
                               </TableView>
                               <HBox fx:id="hbProductSpinner" alignment="CENTER" spacing="10.0" styleClass="background" visible="false">
                                  <children>
-                                    <JFXSpinner maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="RIGHT_TO_LEFT" prefHeight="15.0" prefWidth="15.0" />
-                                    <Label styleClass="text-muted" text="Loading...">
+                                    <Region maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="14.0" prefWidth="14.0" styleClass="spinner-active" />
+                                    <Label styleClass="text-muted" text="Cargando productos...">
                                        <font>
-                                          <Font size="14.0" />
+                                          <Font name="System Bold" size="12.0" />
                                        </font>
                                     </Label>
                                  </children>
                                  <StackPane.margin>
-                                    <Insets bottom="1.0" />
+                                    <Insets bottom="1.0" left="1.0" right="1.0" top="25.0" />
                                  </StackPane.margin>
                               </HBox>
                            </children>
                         </StackPane>
+                        <HBox spacing="10.0">
+                           <children>
+                              <Label styleClass="text-muted" text="Total">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblProducts" text="--" />
+                           </children>
+                        </HBox>
                         <HBox alignment="CENTER_LEFT" spacing="10.0">
                            <children>
                               <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
@@ -327,7 +334,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <TableView prefHeight="145.0">
+                        <TableView prefHeight="194.0">
                            <columns>
                               <TableColumn editable="false" maxWidth="-Infinity" minWidth="150.0" prefWidth="150.0" resizable="false" text="Nombre" />
                               <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Precio" />
@@ -353,7 +360,8 @@
                               </Button>
                            </children>
                         </HBox>
-                     </children></VBox>
+                     </children>
+                  </VBox>
                </content>
             </Tab>
             <Tab fx:id="tabThree">
@@ -379,7 +387,8 @@
                               </Button>
                            </children>
                         </HBox>
-                     </children></VBox>
+                     </children>
+                  </VBox>
                </content>
             </Tab>
          </tabs>
