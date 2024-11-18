@@ -1,10 +1,9 @@
 package dev.sprikers.moustacheshop.controllers;
 
 import java.net.URL;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
@@ -22,7 +21,9 @@ import javafx.util.converter.IntegerStringConverter;
 import dev.sprikers.moustacheshop.components.StepNavigator;
 import dev.sprikers.moustacheshop.components.Toaster;
 import dev.sprikers.moustacheshop.dto.OrderProductRequest;
+import dev.sprikers.moustacheshop.dto.OrderRequest;
 import dev.sprikers.moustacheshop.models.ProductModel;
+import dev.sprikers.moustacheshop.services.OrderService;
 import dev.sprikers.moustacheshop.utils.ReniecFetch;
 import dev.sprikers.moustacheshop.utils.TableProducts;
 import dev.sprikers.moustacheshop.utils.TextFieldFormatter;
@@ -30,6 +31,7 @@ import dev.sprikers.moustacheshop.utils.TextFieldFormatter;
 public class OrderController implements Initializable {
 
     private final ObservableList<OrderProductRequest> listProductsOrder = FXCollections.observableArrayList();
+    private static final OrderService orderService = new OrderService();
 
     private final StepNavigator stepNavigator = new StepNavigator();
 
@@ -101,6 +103,7 @@ public class OrderController implements Initializable {
         stepNavigator.lastStep(btnPrevTwo);
 
         initializeOrderTableColumns();
+        initializeEventHandlers();
         setupBindingsLabels();
     }
 
@@ -112,6 +115,10 @@ public class OrderController implements Initializable {
 
         tblOrder.setItems(listProductsOrder);
         setupQuantityColumnWithFilter();
+    }
+
+    private void initializeEventHandlers() {
+        btnNextThree.setOnAction(event -> createOrder());
     }
 
     private void setupQuantityColumnWithFilter() {
@@ -183,4 +190,30 @@ public class OrderController implements Initializable {
         label.textProperty().bind(Bindings.createStringBinding(valueSupplier::get, listProductsOrder));
     }
 
+    private void createOrder() {
+        String dni = txtDNI.getText().trim();
+        String names = txtNames.getText().trim();
+        String paternalSurname = txtPaternalSurname.getText().trim();
+        String maternalSurname = txtMaternalSurname.getText().trim();
+
+        List<Map<String, Object>> productsOrder = listProductsOrder.stream()
+            .map(product -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("productId", product.getId());
+                map.put("quantity", product.getQuantity());
+                return map;
+            })
+            .collect(Collectors.toList());
+
+        OrderRequest orderRequest = new OrderRequest("2024-09-26", dni, names, paternalSurname, maternalSurname, productsOrder);
+        orderService.create(orderRequest)
+            .thenAccept(response -> {
+                Toaster.showSuccess("Orden registrada con éxito");
+            })
+            .exceptionally(ex -> {
+                Toaster.showError("No se pudo crear la orden: %s".formatted(ex.getCause().getMessage()));
+                ex.printStackTrace();
+                return null;
+            });
+    }
 }
