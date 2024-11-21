@@ -58,6 +58,10 @@ public class ApiClient {
         return ApiExceptionHandler.handleApiCallAsync(() -> httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenCompose(this::handleResponseAsync));
     }
 
+    private CompletableFuture<HttpResponse<byte[]>> dispatchAsyncBytesRequest(HttpRequest request) {
+        return ApiExceptionHandler.handleApiCallAsync(() -> httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofByteArray()).thenCompose(this::handleBytesResponseAsync));
+    }
+
     private Exception buildApiException(HttpResponse<String> response) throws JsonProcessingException {
         JsonNode errorResponse = objectMapper.readTree(response.body());
         JsonNode messageNode = errorResponse.get("message");
@@ -86,6 +90,19 @@ public class ApiClient {
                 return CompletableFuture.failedFuture(buildApiException(response));
             } catch (JsonProcessingException e) {
                 return CompletableFuture.failedFuture(new RuntimeException("Error processing JSON response", e));
+            }
+        }
+        return CompletableFuture.completedFuture(response);
+    }
+
+    private CompletableFuture<HttpResponse<byte[]>> handleBytesResponseAsync(HttpResponse<byte[]> response) {
+        int statusCode = response.statusCode();
+        if (statusCode < 200 || statusCode >= 300) {
+            try {
+                String errorMessage = new String(response.body());
+                return CompletableFuture.failedFuture(new ApiException(errorMessage));
+            } catch (Exception e) {
+                return CompletableFuture.failedFuture(new RuntimeException("Error procesando la respuesta", e));
             }
         }
         return CompletableFuture.completedFuture(response);
@@ -134,6 +151,11 @@ public class ApiClient {
 
     public CompletableFuture<HttpResponse<String>> getAsync(String endpoint) {
         return processAsyncRequest(endpoint, "GET", null);
+    }
+
+    public CompletableFuture<HttpResponse<byte[]>> getAsyncBytes(String endpoint) {
+        HttpRequest request = buildHttpRequest(endpoint, "GET", null);
+        return dispatchAsyncBytesRequest(request);
     }
 
     public CompletableFuture<HttpResponse<String>> postAsync(String endpoint, Object requestBody) {
