@@ -207,12 +207,12 @@ public class OrderController implements Initializable {
 
         OrderRequest orderRequest = new OrderRequest("2024-09-26", dni, names, paternalSurname, maternalSurname, productsOrder);
         orderService.create(orderRequest)
-            .thenAccept(response -> {
+            .thenAccept(order -> {
                 Toaster.showSuccess("Orden registrada con éxito");
+                System.out.println(order);
             })
             .exceptionally(ex -> {
                 Toaster.showError("No se pudo crear la orden: %s".formatted(ex.getCause().getMessage()));
-                ex.printStackTrace();
                 return null;
             });
     }
