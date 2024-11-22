@@ -5,9 +5,12 @@ module dev.sprikers.moustacheshop {
 
 
     requires com.fasterxml.jackson.databind;
+    requires com.google.zxing.javase;
+    requires com.google.zxing;
     requires com.jfoenix;
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.swing;
     requires org.burningwave.core;
     requires org.controlsfx.controls;
     requires static lombok;

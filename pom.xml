@@ -28,6 +28,12 @@
       <version>22</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-swing</artifactId>
+      <version>22</version>
+    </dependency>
+
     <!-- Jackson Core -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -76,6 +82,20 @@
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <version>1.5.8</version>
+    </dependency>
+
+    <!-- Zxing Core -->
+    <dependency>
+      <groupId>com.google.zxing</groupId>
+      <artifactId>core</artifactId>
+      <version>3.5.3</version>
+    </dependency>
+
+    <!-- Zxing Javase -->
+    <dependency>
+      <groupId>com.google.zxing</groupId>
+      <artifactId>javase</artifactId>
+      <version>3.5.3</version>
     </dependency>
 
     <!-- Maven Shade Plugin  -->
