@@ -1,8 +1,11 @@
 package dev.sprikers.moustacheshop.utils;
 
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
@@ -30,8 +33,13 @@ public class QRGenerator {
      */
     public static Image fromText(String text, int width, int height) throws WriterException {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
+
+        Map<EncodeHintType, Object> hints = new HashMap<>();
+        hints.put(EncodeHintType.MARGIN, 0);
+
+        BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height, hints);
         BufferedImage bufferedImage = MatrixToImageWriter.toBufferedImage(bitMatrix);
+
         return SwingFXUtils.toFXImage(bufferedImage, null);
     }
 
