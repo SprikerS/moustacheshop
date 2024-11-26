@@ -1,0 +1,160 @@
+/*
+    Customize the date picker
+
+    The following CSS is based on the default Modena style.
+    https://hg.openjdk.org/openjfx/8/master/rt/file/f89b7dc932af/modules/controls/src/main/resources/com/sun/javafx/scene/control/skin/modena/modena.css
+*/
+
+.date-picker {
+    -fx-background-color: transparent;
+    -fx-border-color: #E4E4E7;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-padding: 8px 10px;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-padding: 0;
+}
+
+.date-picker .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+.date-picker > .text-field {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-focus-color: transparent;
+    -fx-padding: 0;
+    -fx-pref-height: 20;
+    -fx-text-fill: #09090B;
+    -fx-user-select: none;
+}
+
+.date-picker > .arrow-button > .arrow {
+    -fx-background-color: #71717A;
+    -fx-background-insets: 0;
+    -fx-padding: 6px;
+    -fx-scale-shape: true;
+    -fx-shape: "M15.15 2.1H13.55V1.46C13.55 1.20539 13.4489 0.961212 13.2688 0.781178C13.0888 0.601143 12.8446 0.5 12.59 0.5C12.3354 0.5 12.0912 0.601143 11.9112 0.781178C11.7311 0.961212 11.63 1.20539 11.63 1.46V2.1H5.87V1.46C5.87 1.20539 5.76886 0.961212 5.58882 0.781178C5.40879 0.601143 5.16461 0.5 4.91 0.5C4.65539 0.5 4.41121 0.601143 4.23118 0.781178C4.05114 0.961212 3.95 1.20539 3.95 1.46V2.1H2.35C1.9258 2.10047 1.51911 2.26919 1.21915 2.56915C0.919194 2.86911 0.750472 3.2758 0.75 3.7V16.5C0.750472 16.9242 0.919194 17.3309 1.21915 17.6308C1.51911 17.9308 1.9258 18.0995 2.35 18.1H15.15C15.5742 18.0995 15.9809 17.9308 16.2808 17.6308C16.5808 17.3309 16.7495 16.9242 16.75 16.5V3.7C16.7495 3.2758 16.5808 2.86911 16.2808 2.56915C15.9809 2.26919 15.5742 2.10047 15.15 2.1ZM14.83 4.02V5.94H2.67V4.02H14.83ZM2.67 16.18V7.86H14.83V16.18H2.67Z";
+}
+
+/* Customize popup content */
+
+.date-picker .cell {
+    -fx-background-color: white;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #09090B;
+}
+
+.date-picker .cell:hover {
+    -fx-background-color: #F4F4F5;
+    -fx-text-fill: #09090B;
+}
+
+.date-picker .cell:focused {
+    -fx-background-color: #18181B;
+    -fx-text-fill: white;
+}
+
+.date-picker-popup > * > .previous-month,
+.date-picker-popup > * > .next-month {
+    -fx-background-color: transparent;
+    -fx-text-fill: #71717A;
+}
+
+.date-picker-popup > * > .day-cell,
+.date-picker-popup > * > .previous-month,
+.date-picker-popup > * > .next-month {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+}
+
+.date-picker-popup > * > .day-name-cell {
+    -fx-text-fill: #71717A;
+}
+
+.date-picker-popup > * > .day-name-cell:hover {
+    -fx-background-color: transparent;
+    -fx-cursor: default;
+    -fx-text-fill: #71717A;
+}
+
+.calendar-grid {
+    -fx-background-color: transparent;
+}
+
+/* Customize the selected cell */
+
+.date-picker .selected {
+    -fx-background-color: #18181B;
+    -fx-text-fill: white;
+}
+
+.date-picker .selected:hover {
+    -fx-background-color: #18181B;
+    -fx-text-fill: white;
+}
+
+.date-picker .selected:focused {
+    -fx-background-color: #18181B;
+    -fx-text-fill: white;
+}
+
+.date-picker-popup {
+    -fx-background-insets: 0px;
+    -fx-border-color: #E4E4E7;
+    -fx-border-radius: 5px;
+    -fx-border-width: 1px;
+    -fx-effect: null;
+    -fx-padding: 12px;
+    -fx-translate-y: 7px;
+}
+
+.date-picker-popup .month-year-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 12 0;
+}
+
+.date-picker-popup > .month-year-pane > .secondary-label {
+    -fx-padding: 0;
+}
+
+.date-picker-popup .month-year-pane .label {
+    -fx-text-fill: #09090B;
+}
+
+.date-picker-popup .week-number-cell {
+    -fx-text-fill: -fx-secondary-color;
+}
+
+/* Customize left and right arrow */
+
+.date-picker-popup .spinner .button {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-faint-focus-color: transparent;
+    -fx-padding: 4px 10px;
+}
+
+.date-picker-popup .spinner .button:hover {
+    -fx-background-color: #F4F4F5;
+}
+
+.date-picker-popup .spinner .button .left-arrow,
+.date-picker-popup .spinner .button .right-arrow {
+    -fx-background-color: #71717A;
+}
+
+.date-picker-popup .spinner .button:hover .left-arrow,
+.date-picker-popup .spinner .button:hover .right-arrow {
+    -fx-background-color: #18181B;
+}
