@@ -32,16 +32,22 @@ public class ProductController implements Initializable {
     private Label lblTotalProducts;
 
     @FXML
-    private TextField txtName, txtPrice, txtStock, txtSearch;
+    private TextField txtDescription, txtName, txtPrice, txtStock, txtSearch;
 
     @FXML
     private HBox hbSpinner;
 
     @FXML
+    private TableColumn<ProductModel, String> colCategory;
+
+    @FXML
+    private TableColumn<ProductModel, String> colDescription;
+
+    @FXML
     private TableColumn<ProductModel, String> colName;
 
     @FXML
-    private TableColumn<ProductModel, String> colPrice;
+    private TableColumn<ProductModel, Double> colPrice;
 
     @FXML
     private TableColumn<ProductModel, Integer> colStock;
@@ -52,7 +58,7 @@ public class ProductController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tableProducts = new TableProducts(tblProducts, txtSearch, lblTotalProducts, btnReload, hbSpinner);
-        tableProducts.setColumns(colName, colPrice, colStock);
+        tableProducts.setColumns(colName, colPrice, colStock, colCategory, colDescription);
         tableProducts.setOnProductSelected(this::setProductSelected);
         tableProducts.loadProducts();
 
@@ -72,6 +78,7 @@ public class ProductController implements Initializable {
 
     private void submitProductForm() {
         String name = txtName.getText().trim().toLowerCase();
+        String description = txtDescription.getText().trim();
         String valPrice = txtPrice.getText().trim();
         String valStock = txtStock.getText().trim();
 
@@ -89,7 +96,7 @@ public class ProductController implements Initializable {
                 return;
             }
 
-            ProductRequest productRequest = new ProductRequest(name, price, stock);
+            ProductRequest productRequest = new ProductRequest(name, price, stock, description);
             saveOrUpdateProduct(productRequest);
         } catch (NumberFormatException e) {
             AlertManager.showErrorMessage("El precio o stock no tienen un formato válido.");
@@ -143,6 +150,7 @@ public class ProductController implements Initializable {
         txtName.setText(product.getName());
         txtPrice.setText(String.valueOf(product.getPrice()));
         txtStock.setText(String.valueOf(product.getStock()));
+        txtDescription.setText(product.getDescription());
 
         btnClean.setVisible(true);
         btnDelete.setVisible(true);
@@ -155,6 +163,7 @@ public class ProductController implements Initializable {
         txtPrice.clear();
         txtSearch.clear();
         txtStock.clear();
+        txtDescription.clear();
         tblProducts.getSelectionModel().clearSelection();
 
         btnClean.setVisible(false);

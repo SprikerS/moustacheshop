@@ -82,10 +82,16 @@ public class OrderController implements Initializable {
     private TableColumn<OrderProductRequest, Integer> colOrderTotal;
 
     @FXML
+    private TableColumn<ProductModel, String> colProductCategory;
+
+    @FXML
+    private TableColumn<ProductModel, String> colProductDescription;
+
+    @FXML
     private TableColumn<ProductModel, String> colProductName;
 
     @FXML
-    private TableColumn<ProductModel, String> colProductPrice;
+    private TableColumn<ProductModel, Double> colProductPrice;
 
     @FXML
     private TableColumn<ProductModel, Integer> colProductStock;
@@ -105,7 +111,7 @@ public class OrderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         TableProducts tableProducts = new TableProducts(tblProducts, txtSearchProducts, lblProducts, btnReloadProducts, hbProductSpinner);
-        tableProducts.setColumns(colProductName, colProductPrice, colProductStock);
+        tableProducts.setColumns(colProductName, colProductPrice, colProductStock, colProductCategory, colProductDescription);
         tableProducts.setOnProductSelected(this::setProductSelected);
         tableProducts.loadProducts();
 

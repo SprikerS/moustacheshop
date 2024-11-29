@@ -31,8 +31,10 @@ public class TableProducts {
     private final HBox hbSpinner;
 
     private TableColumn<ProductModel, String> colName;
-    private TableColumn<ProductModel, String> colPrice;
+    private TableColumn<ProductModel, Double> colPrice;
     private TableColumn<ProductModel, Integer> colStock;
+    private TableColumn<ProductModel, String> colCategory;
+    private TableColumn<ProductModel, String> colDescription;
 
     private List<ProductModel> productsList;
     private ProductModel lastSelectedProduct;
@@ -70,12 +72,16 @@ public class TableProducts {
      */
     public void setColumns(
         TableColumn<ProductModel, String> name,
-        TableColumn<ProductModel, String> price,
-        TableColumn<ProductModel, Integer> stock
+        TableColumn<ProductModel, Double> price,
+        TableColumn<ProductModel, Integer> stock,
+        TableColumn<ProductModel, String> category,
+        TableColumn<ProductModel, String> description
     ) {
         this.colName = name;
         this.colPrice = price;
         this.colStock = stock;
+        this.colCategory = category;
+        this.colDescription = description;
 
         initializeTableColumns();
     }
@@ -87,6 +93,8 @@ public class TableProducts {
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         colStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
     }
 
     /**
