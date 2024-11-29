@@ -204,7 +204,7 @@ public class OrderController implements Initializable {
             return;
         }
 
-        OrderProductRequest orderProduct = new OrderProductRequest(product.getId(), product.getName(), product.getPrice(), product.getStock(), 1, product.getPrice());
+        OrderProductRequest orderProduct = new OrderProductRequest(product.getId(), product.getName(), product.getPrice(), product.getStock(), product.getDescription(), product.getCategory(), 1, product.getPrice());
         listProductsOrder.add(orderProduct);
         tblOrder.refresh();
     }
