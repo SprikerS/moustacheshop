@@ -1,5 +1,6 @@
 package dev.sprikers.moustacheshop.services;
 
+import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 import dev.sprikers.moustacheshop.clients.ApiClient;
@@ -15,6 +16,15 @@ public class OrderService {
     public CompletableFuture<OrderModel> create(OrderRequest orderRequest) {
         return apiClient.postAsync(ApiEndpoints.ORDER, orderRequest)
             .thenApply(response -> JsonParserUtils.parseResponse(response.body(), OrderModel.class));
+    }
+
+    public CompletableFuture<byte[]> fetchReport(String orderId) {
+        return apiClient.getAsyncBytes(ApiEndpoints.REPORTS + "/" + orderId)
+            .thenApply(HttpResponse::body);
+    }
+
+    public String generateReportLink(String orderId) {
+        return ApiEndpoints.REPORTS + "/" + orderId;
     }
 
 }
