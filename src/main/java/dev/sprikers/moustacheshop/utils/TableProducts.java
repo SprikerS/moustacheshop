@@ -3,6 +3,7 @@ package dev.sprikers.moustacheshop.utils;
 import java.util.List;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
@@ -10,6 +11,7 @@ import javafx.scene.layout.Region;
 
 import dev.sprikers.moustacheshop.components.Toaster;
 import dev.sprikers.moustacheshop.interfaces.ProductSelectionHandler;
+import dev.sprikers.moustacheshop.models.CategoryModel;
 import dev.sprikers.moustacheshop.models.ProductModel;
 import dev.sprikers.moustacheshop.services.ProductService;
 
@@ -93,7 +95,10 @@ public class TableProducts {
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         colStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
-        colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        colCategory.setCellValueFactory(cellData -> {
+            CategoryModel category = cellData.getValue().getCategory();
+            return new SimpleStringProperty(category != null ? category.getName() : null);
+        });
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
     }
 

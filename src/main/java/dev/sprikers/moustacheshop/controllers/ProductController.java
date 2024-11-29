@@ -12,7 +12,9 @@ import javafx.scene.layout.HBox;
 
 import dev.sprikers.moustacheshop.components.Toaster;
 import dev.sprikers.moustacheshop.dto.ProductRequest;
+import dev.sprikers.moustacheshop.models.CategoryModel;
 import dev.sprikers.moustacheshop.models.ProductModel;
+import dev.sprikers.moustacheshop.services.CategoryService;
 import dev.sprikers.moustacheshop.services.ProductService;
 import dev.sprikers.moustacheshop.utils.AlertManager;
 import dev.sprikers.moustacheshop.utils.TableProducts;
@@ -24,9 +26,13 @@ public class ProductController implements Initializable {
     private ProductModel productSelected;
 
     private final ProductService productService = new ProductService();
+    private final CategoryService categoryService = new CategoryService();
 
     @FXML
     private Button btnClean, btnDelete, btnReload, btnSubmit;
+
+    @FXML
+    private ComboBox<CategoryModel> cbCategories;
 
     @FXML
     private Label lblTotalProducts;
@@ -63,11 +69,30 @@ public class ProductController implements Initializable {
         tableProducts.loadProducts();
 
         initializeEventHandlers();
+        loadProductCategories();
+
         btnClean.setVisible(false);
         btnDelete.setVisible(false);
 
         TextFieldFormatter.applyIntegerFormat(txtStock);
         TextFieldFormatter.applyDecimalFormat(txtPrice, 2, 3);
+    }
+
+    private void loadProductCategories() {
+        categoryService.getAll()
+            .thenAccept(categories -> Platform.runLater(() -> {
+                cbCategories.getItems().addAll(categories);
+                cbCategories.getSelectionModel().selectFirst();
+            }))
+            .exceptionally(ex -> {
+                Platform.runLater(() -> AlertManager.showErrorMessage("Error al cargar las categorías: " + ex.getCause().getMessage()));
+                return null;
+            });
+    }
+
+    private String getSelectedCategory() {
+        CategoryModel selectedCategory = cbCategories.getSelectionModel().getSelectedItem();
+        return selectedCategory != null ? selectedCategory.getId() : null;
     }
 
     private void initializeEventHandlers() {
@@ -78,7 +103,6 @@ public class ProductController implements Initializable {
 
     private void submitProductForm() {
         String name = txtName.getText().trim().toLowerCase();
-        String description = txtDescription.getText().trim();
         String valPrice = txtPrice.getText().trim();
         String valStock = txtStock.getText().trim();
 
@@ -96,7 +120,10 @@ public class ProductController implements Initializable {
                 return;
             }
 
-            ProductRequest productRequest = new ProductRequest(name, price, stock, description);
+            String categoryId = getSelectedCategory();
+            String description = txtDescription.getText() != null ? txtDescription.getText().trim() : null;
+
+            ProductRequest productRequest = new ProductRequest(name, price, stock, description, categoryId);
             saveOrUpdateProduct(productRequest);
         } catch (NumberFormatException e) {
             AlertManager.showErrorMessage("El precio o stock no tienen un formato válido.");
@@ -152,6 +179,9 @@ public class ProductController implements Initializable {
         txtStock.setText(String.valueOf(product.getStock()));
         txtDescription.setText(product.getDescription());
 
+        CategoryModel category = product.getCategory();
+        cbCategories.getSelectionModel().select(category != null ? category : cbCategories.getItems().getFirst());
+
         btnClean.setVisible(true);
         btnDelete.setVisible(true);
         btnSubmit.setText("Actualizar");
@@ -164,6 +194,7 @@ public class ProductController implements Initializable {
         txtSearch.clear();
         txtStock.clear();
         txtDescription.clear();
+        cbCategories.getSelectionModel().selectFirst();
         tblProducts.getSelectionModel().clearSelection();
 
         btnClean.setVisible(false);

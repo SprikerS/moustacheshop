@@ -13,5 +13,5 @@ public class ProductModel {
     private double price;
     private int stock;
     private String description;
-    private String category;
+    private CategoryModel category;
 }
