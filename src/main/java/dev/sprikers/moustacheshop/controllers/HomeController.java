@@ -100,12 +100,14 @@ public class HomeController implements Initializable {
         List<SidebarButton> list = new ArrayList<>();
 
         SidebarButton sbHome = new SidebarButton(PathSVG.LAYOUT_GRID, "Inicio", () -> setView(PathViews.HOME));
+        SidebarButton sbOrderRecords = new SidebarButton(PathSVG.FILE_CLOCK, "Historial de ventas", () -> setView(PathViews.ORDER_RECORDS));
         SidebarButton sbOrders = new SidebarButton(PathSVG.NOTEBOOK_TEXT, "Ordenes", () -> setView(PathViews.ORDERS));
         SidebarButton sbUsers = new SidebarButton(PathSVG.USERS_ROUND, "Usuarios", () -> setView(PathViews.USERS));
         SidebarButton sbProducts = new SidebarButton(PathSVG.PACKAGE, "Productos", () -> setView(PathViews.PRODUCTS));
         SidebarButton sbSettings = new SidebarButton(PathSVG.BOLT, "Configuración", () -> setView(PathViews.SETTINGS));
 
         list.add(sbHome);
+        list.add(sbOrderRecords);
         list.add(sbOrders);
         list.add(sbProducts);
 
