@@ -180,7 +180,10 @@ public class ProductController implements Initializable {
     }
 
     private void deleteProduct() {
-        boolean confirmed = AlertManager.showConfirmation("¿Estás seguro de que deseas eliminar este producto?", Alert.AlertType.WARNING);
+        boolean confirmed = AlertManager.showConfirmation(
+            "¿Estás seguro de que deseas continuar?\nSi este producto tiene relaciones activas, se desactivará\nDe lo contrario, será eliminado por completo",
+            Alert.AlertType.WARNING
+        );
         if (!confirmed) return;
 
         productService.delete(productSelected.getId())

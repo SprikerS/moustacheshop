@@ -27,13 +27,18 @@ public class UserService {
 
     public CompletableFuture<UserModel> updateProfile(UserUpdateRequest userRequest, String id) {
         System.out.println("id: " + id);
-        return apiClient.patchAsync(ApiEndpoints.USER + "/basic/" + id, userRequest)
+        return apiClient.patchAsync(ApiEndpoints.USER + "/" + id, userRequest)
             .thenApply(response -> JsonParserUtils.parseResponse(response.body(), UserModel.class));
     }
 
     public CompletableFuture<UserModel> update(UpdateProfileRequest updateProfileRequest, String id) {
         return apiClient.patchAsync(ApiEndpoints.USER + "/" + id, updateProfileRequest)
             .thenApply(response -> JsonParserUtils.parseResponse(response.body(), UserModel.class));
+    }
+
+    public CompletableFuture<Void> delete(String id) {
+        return apiClient.deleteAsync(ApiEndpoints.USER + "/" + id)
+            .thenAccept(response -> {});
     }
 
     public CompletableFuture<String> changePassword(ChangePasswordRequest changePasswordRequest) {

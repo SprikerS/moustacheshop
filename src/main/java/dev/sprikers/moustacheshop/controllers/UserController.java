@@ -188,6 +188,24 @@ public class UserController implements Initializable {
             });
     }
 
+    private void deleteUser() {
+        boolean confirmed = AlertManager.showConfirmation(
+            "¿Estás seguro de que deseas continuar?\nSi este usuario tiene relaciones activas, se desactivará\nDe lo contrario, será eliminado por completo",
+            Alert.AlertType.WARNING
+        );
+        if (!confirmed) return;
+
+        userService.delete(selectedUser.getId())
+            .thenRun(() -> Platform.runLater(() -> {
+                Toaster.showNeutral("Usuario %s modificado con éxito".formatted(selectedUser.getNames()));
+                handleReload();
+            }))
+            .exceptionally(ex -> {
+                Platform.runLater(() -> AlertManager.showErrorMessage("Error al modificar usuario: " + ex.getCause().getMessage()));
+                return null;
+            });
+    }
+
     /* ----------------------------------
      * Sección de configuración de la UI
      * ---------------------------------- */
@@ -224,6 +242,7 @@ public class UserController implements Initializable {
 
     private void initializeEventHandlers() {
         btnClean.setOnAction(event -> resetForm());
+        btnDelete.setOnAction(event -> deleteUser());
         btnSubmit.setOnMouseClicked(event -> handleSubmit());
     }
 
