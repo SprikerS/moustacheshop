@@ -52,7 +52,6 @@
           <RowConstraints vgrow="SOMETIMES" />
           <RowConstraints vgrow="SOMETIMES" />
             <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <VBox spacing="10.0">
@@ -257,7 +256,7 @@
                   </HBox>
                </children>
             </VBox>
-            <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <HBox alignment="CENTER_LEFT" GridPane.rowIndex="4">
                <children>
                   <JFXCheckBox fx:id="chkActive" checkedColor="#18181b" styleClass="text-muted" text="Activo" unCheckedColor="#71717a">
                      <cursor>
@@ -266,7 +265,7 @@
                   </JFXCheckBox>
                </children>
             </HBox>
-            <HBox GridPane.rowIndex="5">
+            <HBox alignment="CENTER_RIGHT" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
                   <Button fx:id="btnDelete" text="Eliminar">
                      <styleClass>
@@ -274,10 +273,6 @@
                         <String fx:value="button-destructive" />
                      </styleClass>
                   </Button>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_RIGHT" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
-               <children>
                   <Button fx:id="btnClean" text="Limpiar">
                      <styleClass>
                         <String fx:value="button-reset" />

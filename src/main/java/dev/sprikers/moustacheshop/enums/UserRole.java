@@ -16,4 +16,9 @@ public enum UserRole {
         this.role = role;
         this.text = text;
     }
+
+    @Override
+    public String toString() {
+        return text;
+    }
 }

@@ -1,9 +1,7 @@
 package dev.sprikers.moustacheshop.controllers;
 
 import java.net.URL;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
@@ -35,13 +33,11 @@ public class UserController implements Initializable {
 
     private final UserService userService = new UserService();
 
-    private final Map<String, String> roleTextToValueMap = new LinkedHashMap<>();
-
     @FXML
     private Button btnClean, btnDelete, btnSubmit;
 
     @FXML
-    private CheckComboBox<String> chkcbRoles;
+    private CheckComboBox<UserRole> chkcbRoles;
 
     @FXML
     private HBox hbProductSpinner;
@@ -72,10 +68,9 @@ public class UserController implements Initializable {
 
         Platform.runLater(() -> {
             for (UserRole role : UserRole.values()) {
-                if (role != UserRole.SUPERUSER) roleTextToValueMap.put(role.getText(), role.getRole());
+                if (role != UserRole.SUPERUSER) chkcbRoles.getItems().add(role);
             }
 
-            chkcbRoles.getItems().addAll(roleTextToValueMap.keySet());
             chkcbRoles.getCheckModel().check(0);
         });
 
@@ -84,7 +79,7 @@ public class UserController implements Initializable {
 
     private List<String> getSelectedRoles() {
         return chkcbRoles.getCheckModel().getCheckedItems().stream()
-            .map(roleTextToValueMap::get)
+            .map(UserRole::getRole)
             .collect(Collectors.toList());
     }
 
