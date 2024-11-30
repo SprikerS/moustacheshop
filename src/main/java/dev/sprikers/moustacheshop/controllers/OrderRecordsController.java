@@ -1,8 +1,11 @@
 package dev.sprikers.moustacheshop.controllers;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -26,6 +29,8 @@ import dev.sprikers.moustacheshop.utils.DatePickerFormatter;
 public class OrderRecordsController implements Initializable {
 
     private static final OrderService orderService = new OrderService();
+
+    private List<OrderModel> orders;
 
     @FXML
     private DatePicker dateFromPicker;
@@ -65,16 +70,20 @@ public class OrderRecordsController implements Initializable {
         DatePickerFormatter.configureDatePicker(dateFromPicker, lblFromDate);
         DatePickerFormatter.configureDatePicker(dateToPicker, lblToDate);
 
+        LocalDate monthAgo = LocalDate.now().minusMonths(1);
+        dateFromPicker.setValue(monthAgo);
+
         initializeTableColumns();
-        loadOrders();
+        initializeEventHandlers();
+
+        fetchOrderRecords();
     }
 
-    private void loadOrders() {
+    private void fetchOrderRecords() {
         orderService.getAll()
             .thenAccept(orders -> {
-                tblOrders.getItems().clear();
-                tblOrders.getItems().addAll(orders);
-                System.out.println(orders);
+                this.orders = orders;
+                setOrdersList(orders);
             })
             .exceptionally(ex -> {
                 Toaster.showError("No se pudo obtener la lista de reportes: %s".formatted(ex.getCause().getMessage()));
@@ -94,6 +103,31 @@ public class OrderRecordsController implements Initializable {
 
         colQuantity.setCellValueFactory(order -> getQuantityProperty(order.getValue()));
         colTotal.setCellValueFactory(order -> getTotalProperty(order.getValue()));
+    }
+
+    private void initializeEventHandlers() {
+        dateFromPicker.valueProperty().addListener((obs, oldDate, newDate) -> filterOrders());
+        dateToPicker.valueProperty().addListener((obs, oldDate, newDate) -> filterOrders());
+    }
+
+    private void filterOrders() {
+        LocalDate startDate = dateFromPicker.getValue();
+        LocalDate endDate = dateToPicker.getValue();
+
+        if (startDate != null && endDate != null) {
+            List<OrderModel> filteredOrders = orders.stream()
+                .filter(order -> {
+                    LocalDate orderDate = LocalDate.parse(order.getOrderDate());
+                    return !orderDate.isBefore(startDate) && !orderDate.isAfter(endDate);
+                })
+                .collect(Collectors.toList());
+
+            setOrdersList(filteredOrders);
+        }
+    }
+
+    private void setOrdersList(List<OrderModel> orders) {
+        tblOrders.getItems().setAll(orders);
     }
 
     private SimpleStringProperty getCustomerProperty(OrderModel order, String property) {
