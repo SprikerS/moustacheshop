@@ -14,4 +14,5 @@ public class ProductModel {
     private int stock;
     private String description;
     private CategoryModel category;
+    private boolean active;
 }

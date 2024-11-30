@@ -42,6 +42,7 @@ public class TableProducts {
     private TableColumn<ProductModel, Integer> colStock;
     private TableColumn<ProductModel, String> colCategory;
     private TableColumn<ProductModel, String> colDescription;
+    private TableColumn<ProductModel, Boolean> colActive;
 
     private List<ProductModel> productsList;
     private ProductModel lastSelectedProduct;
@@ -91,13 +92,15 @@ public class TableProducts {
         TableColumn<ProductModel, Double> price,
         TableColumn<ProductModel, Integer> stock,
         TableColumn<ProductModel, String> category,
-        TableColumn<ProductModel, String> description
+        TableColumn<ProductModel, String> description,
+        TableColumn<ProductModel, Boolean> active
     ) {
         this.colName = name;
         this.colPrice = price;
         this.colStock = stock;
         this.colCategory = category;
         this.colDescription = description;
+        this.colActive = active;
 
         initializeTableColumns();
     }
@@ -114,6 +117,7 @@ public class TableProducts {
             return new SimpleStringProperty(category != null ? category.getName() : null);
         });
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colActive.setCellValueFactory(new PropertyValueFactory<>("active"));
     }
 
     /**

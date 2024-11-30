@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
+import com.jfoenix.controls.JFXCheckBox;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -51,6 +52,9 @@ public class ProductController implements Initializable {
     private CheckComboBox<CategoryModel> chkcbFilterCategories;
 
     @FXML
+    private JFXCheckBox chkActive;
+
+    @FXML
     private Label lblTotalProducts;
 
     @FXML
@@ -58,6 +62,9 @@ public class ProductController implements Initializable {
 
     @FXML
     private HBox hbSpinner;
+
+    @FXML
+    private TableColumn<ProductModel, Boolean> colActive;
 
     @FXML
     private TableColumn<ProductModel, String> colCategory;
@@ -80,7 +87,7 @@ public class ProductController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tableProducts = new TableProducts(tblProducts, txtSearch, lblTotalProducts, btnReload, hbSpinner, chkcbFilterCategories);
-        tableProducts.setColumns(colName, colPrice, colStock, colCategory, colDescription);
+        tableProducts.setColumns(colName, colPrice, colStock, colCategory, colDescription, colActive);
         tableProducts.setOnProductSelected(this::setProductSelected);
         tableProducts.loadProducts();
 
@@ -136,8 +143,9 @@ public class ProductController implements Initializable {
 
             String categoryId = getSelectedCategory();
             String description = txtDescription.getText() != null ? txtDescription.getText().trim() : null;
+            boolean active = chkActive.isSelected();
 
-            ProductRequest productRequest = new ProductRequest(name, price, stock, description, categoryId);
+            ProductRequest productRequest = new ProductRequest(name, price, stock, description, categoryId, active);
             saveOrUpdateProduct(productRequest);
         } catch (NumberFormatException e) {
             AlertManager.showErrorMessage("El precio o stock no tienen un formato válido.");
@@ -230,6 +238,7 @@ public class ProductController implements Initializable {
 
             CategoryModel category = product.getCategory();
             cbCategories.getSelectionModel().select(category != null ? category : cbCategories.getItems().getFirst());
+            chkActive.setSelected(product.isActive());
 
             currentState.set(ProductState.EDITING);
         } else {
@@ -247,6 +256,7 @@ public class ProductController implements Initializable {
         txtDescription.clear();
         cbCategories.getSelectionModel().selectFirst();
         tblProducts.getSelectionModel().clearSelection();
+        chkActive.setSelected(false);
 
         currentState.set(ProductState.DEFAULT);
     }

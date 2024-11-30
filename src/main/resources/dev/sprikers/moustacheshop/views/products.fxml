@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
@@ -168,15 +169,20 @@
                   </VBox>
                </children>
             </GridPane>
-            <HBox alignment="TOP_RIGHT" spacing="20.0">
+            <HBox alignment="CENTER" spacing="20.0">
                <children>
+                  <JFXCheckBox fx:id="chkActive" checkedColor="#18181b" styleClass="text-muted" text="Activo" unCheckedColor="#71717a">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXCheckBox>
+                  <Region HBox.hgrow="ALWAYS" />
                   <Button fx:id="btnDelete" text="Eliminar" visible="false">
                      <styleClass>
                         <String fx:value="button-reset" />
                         <String fx:value="button-destructive" />
                      </styleClass>
                   </Button>
-                  <Region HBox.hgrow="ALWAYS" />
                   <Button fx:id="btnClean" text="Limpiar" visible="false">
                      <styleClass>
                         <String fx:value="button-reset" />
@@ -268,6 +274,7 @@
                         <TableColumn fx:id="colStock" editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Stock" />
                         <TableColumn fx:id="colCategory" editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" sortable="false" text="Categoría" />
                         <TableColumn fx:id="colDescription" editable="false" maxWidth="-1.0" minWidth="250.0" prefWidth="-1.0" sortable="false" text="Descripción" />
+                        <TableColumn fx:id="colActive" editable="false" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" sortable="false" text="Activo" />
                      </columns>
                   </TableView>
                   <HBox fx:id="hbSpinner" alignment="CENTER" spacing="10.0" styleClass="background" visible="false">

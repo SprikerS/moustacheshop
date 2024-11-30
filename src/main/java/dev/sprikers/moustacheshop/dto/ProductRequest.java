@@ -13,4 +13,5 @@ public class ProductRequest {
     private int stock;
     private String description;
     private String categoryId;
+    private boolean active;
 }

@@ -12,8 +12,18 @@ public class OrderProductRequest extends ProductModel {
     private int quantity;
     private double total;
 
-    public OrderProductRequest(String id, String name, double price, int stock, String description, CategoryModel category, int quantity, double total) {
-        super(id, name, price, stock, description, category);
+    public OrderProductRequest(
+        String id,
+        String name,
+        double price,
+        int stock,
+        String description,
+        CategoryModel category,
+        boolean active,
+        int quantity,
+        double total
+    ) {
+        super(id, name, price, stock, description, category, active);
         this.quantity = quantity;
         this.total = total;
     }

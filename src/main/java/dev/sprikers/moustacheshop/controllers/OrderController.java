@@ -87,6 +87,9 @@ public class OrderController implements Initializable {
     private TableColumn<OrderProductRequest, Integer> colOrderTotal;
 
     @FXML
+    private TableColumn<ProductModel, Boolean> colProductActive;
+
+    @FXML
     private TableColumn<ProductModel, String> colProductCategory;
 
     @FXML
@@ -116,7 +119,7 @@ public class OrderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         TableProducts tableProducts = new TableProducts(tblProducts, txtSearchProducts, lblProducts, btnReloadProducts, hbProductSpinner, chkcbFilterCategories);
-        tableProducts.setColumns(colProductName, colProductPrice, colProductStock, colProductCategory, colProductDescription);
+        tableProducts.setColumns(colProductName, colProductPrice, colProductStock, colProductCategory, colProductDescription, colProductActive);
         tableProducts.setOnProductSelected(this::setProductSelected);
         tableProducts.loadProducts();
 
@@ -215,7 +218,7 @@ public class OrderController implements Initializable {
             return;
         }
 
-        OrderProductRequest orderProduct = new OrderProductRequest(product.getId(), product.getName(), product.getPrice(), product.getStock(), product.getDescription(), product.getCategory(), 1, product.getPrice());
+        OrderProductRequest orderProduct = new OrderProductRequest(product.getId(), product.getName(), product.getPrice(), product.getStock(), product.getDescription(), product.getCategory(), product.isActive(), 1, product.getPrice());
         listProductsOrder.add(orderProduct);
         tblOrder.refresh();
     }
