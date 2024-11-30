@@ -25,4 +25,8 @@ public class UserModel {
 
     @JsonProperty("isActive")
     private boolean active;
+
+    public String getSurnames() {
+        return paternalSurname + " " + maternalSurname;
+    }
 }

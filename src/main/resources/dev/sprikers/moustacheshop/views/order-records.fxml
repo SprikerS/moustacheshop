@@ -5,10 +5,14 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -79,5 +83,54 @@
             </VBox>
          </children>
       </HBox>
+      <HBox alignment="CENTER_LEFT" spacing="10.0">
+         <children>
+            <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/blocks.png" />
+               </image>
+            </ImageView>
+            <Label maxWidth="1.7976931348623157E308" styleClass="text-muted" text="Productos registrados en el sistema">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <StackPane alignment="BOTTOM_CENTER" prefHeight="266.0">
+         <children>
+            <TableView fx:id="tblOrders">
+               <columns>
+                  <TableColumn fx:id="colOrderDate" editable="false" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" resizable="false" text="Fecha" />
+                  <TableColumn editable="false" maxWidth="222.0" minWidth="-1.0" prefWidth="222.0" resizable="false" sortable="false" text="C L I E N T E">
+                     <columns>
+                        <TableColumn fx:id="colDNI" editable="false" maxWidth="-1.0" minWidth="125.0" prefWidth="-1.0" resizable="false" text="DNI" />
+                        <TableColumn fx:id="colNames" editable="false" maxWidth="-1.0" minWidth="150.0" prefWidth="-1.0" resizable="false" text="Nombres" />
+                        <TableColumn fx:id="colSurnames" editable="false" maxWidth="-1.0" minWidth="150.0" prefWidth="-1.0" resizable="false" text="Apellidos" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn editable="false" maxWidth="-1.0" minWidth="150.0" prefWidth="-1.0" resizable="false" sortable="false" text="D E T A L L E S">
+                     <columns>
+                        <TableColumn fx:id="colQuantity" editable="false" maxWidth="-1.0" minWidth="125.0" prefWidth="-1.0" resizable="false" text="Productos" />
+                        <TableColumn fx:id="colTotal" editable="false" maxWidth="-1.0" minWidth="150.0" prefWidth="-1.0" resizable="false" text="Total" />
+                     </columns>
+                  </TableColumn>
+               </columns>
+            </TableView>
+            <HBox alignment="CENTER" spacing="10.0" styleClass="background" visible="false">
+               <children>
+                  <Region maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="14.0" prefWidth="14.0" styleClass="spinner-active" />
+                  <Label styleClass="text-muted" text="Cargando ordenes...">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+               <StackPane.margin>
+                  <Insets bottom="1.0" left="1.0" right="1.0" top="25.0" />
+               </StackPane.margin>
+            </HBox>
+         </children>
+      </StackPane>
    </children>
 </VBox>
