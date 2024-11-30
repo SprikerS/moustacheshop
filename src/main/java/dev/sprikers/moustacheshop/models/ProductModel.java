@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProductModel {
     private String id;
-    private String name;
-    private double price;
+    private String nombre;
+    private double precio;
     private int stock;
-    private String description;
-    private CategoryModel category;
-    private boolean active;
+    private String descripcion;
+    private CategoryModel categoria;
+    private boolean activo;
 }

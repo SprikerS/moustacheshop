@@ -203,7 +203,7 @@ public class OrderController implements Initializable {
             }
 
             orderProduct.setQuantity(newQuantity);
-            orderProduct.setTotal(Math.round(newQuantity * orderProduct.getPrice() * 100.0) / 100.0);
+            orderProduct.setTotal(Math.round(newQuantity * orderProduct.getPrecio() * 100.0) / 100.0);
 
             tblOrder.refresh();
             listProductsOrder.set(listProductsOrder.indexOf(orderProduct), orderProduct);
@@ -216,11 +216,11 @@ public class OrderController implements Initializable {
             .findFirst();
 
         if (existingProduct.isPresent()) {
-            Toaster.showWarning("Producto %s ya está en el carrito".formatted(product.getName()));
+            Toaster.showWarning("Producto %s ya está en el carrito".formatted(product.getNombre()));
             return;
         }
 
-        OrderProductRequest orderProduct = new OrderProductRequest(product.getId(), product.getName(), product.getPrice(), product.getStock(), product.getDescription(), product.getCategory(), product.isActive(), 1, product.getPrice());
+        OrderProductRequest orderProduct = new OrderProductRequest(product.getId(), product.getNombre(), product.getPrecio(), product.getStock(), product.getDescripcion(), product.getCategoria(), product.isActivo(), 1, product.getPrecio());
         listProductsOrder.add(orderProduct);
         tblOrder.refresh();
     }

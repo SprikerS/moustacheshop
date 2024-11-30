@@ -165,8 +165,8 @@ public class ProductController implements Initializable {
             .thenAccept(producto -> Platform.runLater(() -> {
                 submitButtonState(false);
                 String messageToast = isUpdating
-                    ? "Producto %s actualizado con éxito".formatted(producto.getName())
-                    : "Producto %s registrado con éxito".formatted(producto.getName());
+                    ? "Producto %s actualizado con éxito".formatted(producto.getNombre())
+                    : "Producto %s registrado con éxito".formatted(producto.getNombre());
                 Toaster.showSucessOrInfo(messageToast, isUpdating);
                 handleReload();
             }))
@@ -188,7 +188,7 @@ public class ProductController implements Initializable {
 
         productService.delete(productSelected.getId())
             .thenRun(() -> Platform.runLater(() -> {
-                Toaster.showNeutral("Producto %s eliminado con éxito".formatted(productSelected.getName()));
+                Toaster.showNeutral("Producto %s eliminado con éxito".formatted(productSelected.getNombre()));
                 handleReload();
             }))
             .exceptionally(ex -> {
@@ -234,14 +234,14 @@ public class ProductController implements Initializable {
         productSelected = product;
 
         if (product != null) {
-            txtName.setText(product.getName());
-            txtPrice.setText(String.valueOf(product.getPrice()));
+            txtName.setText(product.getNombre());
+            txtPrice.setText(String.valueOf(product.getPrecio()));
             txtStock.setText(String.valueOf(product.getStock()));
-            txtDescription.setText(product.getDescription());
+            txtDescription.setText(product.getDescripcion());
 
-            CategoryModel category = product.getCategory();
+            CategoryModel category = product.getCategoria();
             cbCategories.getSelectionModel().select(category != null ? category : cbCategories.getItems().getFirst());
-            chkActive.setSelected(product.isActive());
+            chkActive.setSelected(product.isActivo());
 
             currentState.set(ProductState.EDITING);
         } else {

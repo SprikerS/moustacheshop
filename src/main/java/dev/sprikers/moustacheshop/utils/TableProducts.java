@@ -109,15 +109,15 @@ public class TableProducts {
      * Inicializa las columnas de la tabla con los valores correspondientes de los productos.
      */
     private void initializeTableColumns() {
-        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colPrice.setCellValueFactory(new PropertyValueFactory<>("precio"));
         colStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
         colCategory.setCellValueFactory(cellData -> {
-            CategoryModel category = cellData.getValue().getCategory();
+            CategoryModel category = cellData.getValue().getCategoria();
             return new SimpleStringProperty(category != null ? category.getName() : null);
         });
-        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        colActive.setCellValueFactory(new PropertyValueFactory<>("active"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        colActive.setCellValueFactory(new PropertyValueFactory<>("activo"));
     }
 
     /**
@@ -262,8 +262,8 @@ public class TableProducts {
         List<CategoryModel> selectedCategories = filterCategories.getCheckModel().getCheckedItems();
 
         List<ProductModel> filteredProducts = productsList.stream()
-            .filter(product -> searchText.isEmpty() || product.getName().toLowerCase().contains(searchText))
-            .filter(product -> selectedCategories.isEmpty() || selectedCategories.contains(product.getCategory()))
+            .filter(product -> searchText.isEmpty() || product.getNombre().toLowerCase().contains(searchText))
+            .filter(product -> selectedCategories.isEmpty() || selectedCategories.contains(product.getCategoria()))
             .toList();
 
         setProductsList(filteredProducts);
