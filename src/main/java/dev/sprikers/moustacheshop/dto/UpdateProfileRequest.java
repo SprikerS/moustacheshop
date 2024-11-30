@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateProfileRequest {
-    private String names;
-    private String paternalSurname;
-    private String maternalSurname;
+    private String nombres;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
     private String dni;
     private String email;
-    private Integer phoneNumber;
+    private Integer telefono;
 }

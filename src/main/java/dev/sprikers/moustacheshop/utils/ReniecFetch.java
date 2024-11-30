@@ -83,9 +83,9 @@ public class ReniecFetch {
         spinner.stop();
         Toaster.showInfo("Datos obtenidos de la RENIEC con éxito");
         Platform.runLater(() -> {
-            txtMaternalSurname.setText(reniec.getMaternalSurname());
-            txtNames.setText(reniec.getNames());
-            txtPaternalSurname.setText(reniec.getPaternalSurname());
+            txtMaternalSurname.setText(reniec.getApellidoMaterno());
+            txtNames.setText(reniec.getNombres());
+            txtPaternalSurname.setText(reniec.getApellidoPaterno());
         });
     }
 

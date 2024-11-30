@@ -142,10 +142,10 @@ public class SettingsController implements Initializable {
     private void populateUserDetails() {
         txtDNI.setText(user.getDni());
         txtEmail.setText(user.getEmail());
-        txtMaternalSurname.setText(user.getMaternalSurname());
-        txtNames.setText(user.getNames());
-        txtPaternalSurname.setText(user.getPaternalSurname());
-        txtPhone.setText(user.getPhoneNumber() != null ? String.valueOf(user.getPhoneNumber()) : "");
+        txtMaternalSurname.setText(user.getApellidoMaterno());
+        txtNames.setText(user.getNombres());
+        txtPaternalSurname.setText(user.getApellidoPaterno());
+        txtPhone.setText(user.getTelefono() != null ? String.valueOf(user.getTelefono()) : "");
     }
 
     private static Void handleException(Throwable ex, String message) {

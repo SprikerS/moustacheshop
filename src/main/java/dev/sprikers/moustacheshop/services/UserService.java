@@ -26,7 +26,6 @@ public class UserService {
     }
 
     public CompletableFuture<UserModel> updateProfile(UserUpdateRequest userRequest, String id) {
-        System.out.println("id: " + id);
         return apiClient.patchAsync(ApiEndpoints.USER + "/" + id, userRequest)
             .thenApply(response -> JsonParserUtils.parseResponse(response.body(), UserModel.class));
     }

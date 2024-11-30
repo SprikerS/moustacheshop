@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReniecModel {
     private String dni;
-    private String names;
-    private String paternalSurname;
-    private String maternalSurname;
+    private String nombres;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
 }

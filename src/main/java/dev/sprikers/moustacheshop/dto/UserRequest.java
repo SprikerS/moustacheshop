@@ -9,11 +9,11 @@ import lombok.Data;
 @AllArgsConstructor
 public class UserRequest {
     private String dni;
-    private String names;
-    private String paternalSurname;
-    private String maternalSurname;
+    private String nombres;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
     private String email;
-    private String password;
-    private Integer phoneNumber;
+    private String clave;
+    private Integer telefono;
     private List<String> roles;
 }

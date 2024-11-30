@@ -13,17 +13,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserModel {
     private String id;
-    private String names;
-    private String paternalSurname;
-    private String maternalSurname;
+    private String nombres;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
     private String dni;
     private String email;
-    private Integer phoneNumber;
+    private Integer telefono;
     private List<String> roles;
     private String token;
-    private boolean active;
+    private boolean activo;
 
     public String getSurnames() {
-        return paternalSurname + " " + maternalSurname;
+        return apellidoPaterno + " " + apellidoMaterno;
     }
 }

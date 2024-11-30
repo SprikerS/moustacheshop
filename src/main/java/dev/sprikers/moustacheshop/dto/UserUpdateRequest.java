@@ -9,5 +9,5 @@ import java.util.List;
 @AllArgsConstructor
 public class UserUpdateRequest {
     private List<String> roles;
-    private boolean active;
+    private boolean activo;
 }

@@ -162,8 +162,8 @@ public class UserController implements Initializable {
             .thenAccept(user -> Platform.runLater(() -> {
                 submitButtonState(false);
                 String messageToast = isUpdating
-                    ? "Usuario %s actualizado con éxito".formatted(user.getNames())
-                    : "Usuario %s registrado con éxito".formatted(user.getNames());
+                    ? "Usuario %s actualizado con éxito".formatted(user.getNombres())
+                    : "Usuario %s registrado con éxito".formatted(user.getNombres());
                 Toaster.showSucessOrInfo(messageToast, isUpdating);
                 handleReload();
             }))
@@ -178,10 +178,7 @@ public class UserController implements Initializable {
 
     private void fetchUserList(){
         userService.allUsers()
-            .thenAccept(users -> {
-                setUsersList(users);
-                System.out.println(users);
-            })
+            .thenAccept(this::setUsersList)
             .exceptionally(ex -> {
                 Platform.runLater(() -> AlertManager.showErrorMessage("Error al obtener la lista de usuarios: %s".formatted(ex.getCause().getMessage())));
                 return null;
@@ -197,7 +194,7 @@ public class UserController implements Initializable {
 
         userService.delete(selectedUser.getId())
             .thenRun(() -> Platform.runLater(() -> {
-                Toaster.showNeutral("Usuario %s modificado con éxito".formatted(selectedUser.getNames()));
+                Toaster.showNeutral("Usuario %s modificado con éxito".formatted(selectedUser.getNombres()));
                 handleReload();
             }))
             .exceptionally(ex -> {
@@ -212,12 +209,12 @@ public class UserController implements Initializable {
 
     private void initializeTableColumns() {
         colDNI.setCellValueFactory(new PropertyValueFactory<>("dni"));
-        colNames.setCellValueFactory(new PropertyValueFactory<>("names"));
-        colSurPater.setCellValueFactory(new PropertyValueFactory<>("paternalSurname"));
-        colSurMater.setCellValueFactory(new PropertyValueFactory<>("maternalSurname"));
+        colNames.setCellValueFactory(new PropertyValueFactory<>("nombres"));
+        colSurPater.setCellValueFactory(new PropertyValueFactory<>("apellidoPaterno"));
+        colSurMater.setCellValueFactory(new PropertyValueFactory<>("apellidoMaterno"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        colPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-        colActive.setCellValueFactory(new PropertyValueFactory<>("active"));
+        colPhone.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+        colActive.setCellValueFactory(new PropertyValueFactory<>("activo"));
 
         colRoles.setCellValueFactory(cellData -> {
             List<String> roles = cellData.getValue().getRoles();
@@ -276,12 +273,12 @@ public class UserController implements Initializable {
 
         if (user != null) {
             txtDNI.setText(user.getDni());
-            txtNames.setText(user.getNames());
-            txtPaternalSurname.setText(user.getPaternalSurname());
-            txtMaternalSurname.setText(user.getMaternalSurname());
+            txtNames.setText(user.getNombres());
+            txtPaternalSurname.setText(user.getApellidoPaterno());
+            txtMaternalSurname.setText(user.getApellidoMaterno());
             txtEmail.setText(user.getEmail());
-            txtPhone.setText(user.getPhoneNumber() != null ? user.getPhoneNumber().toString() : null);
-            chkActive.setSelected(user.isActive());
+            txtPhone.setText(user.getTelefono() != null ? user.getTelefono().toString() : null);
+            chkActive.setSelected(user.isActivo());
 
             chkcbRoles.getCheckModel().clearChecks();
             for (String role : user.getRoles()) {

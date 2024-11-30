@@ -136,7 +136,7 @@ public class OrderRecordsController implements Initializable {
 
         return switch (property) {
             case "dni" -> new SimpleStringProperty(customer.getDni());
-            case "names" -> new SimpleStringProperty(customer.getNames());
+            case "names" -> new SimpleStringProperty(customer.getNombres());
             case "surnames" -> new SimpleStringProperty(customer.getSurnames());
             default -> new SimpleStringProperty("");
         };

@@ -38,15 +38,15 @@ public class UserBindingModel {
      */
     public void syncFromUserModel(UserModel userModel) {
         id.set(userModel.getId());
-        names.set(userModel.getNames());
-        paternalSurname.set(userModel.getPaternalSurname());
-        maternalSurname.set(userModel.getMaternalSurname());
+        names.set(userModel.getNombres());
+        paternalSurname.set(userModel.getApellidoPaterno());
+        maternalSurname.set(userModel.getApellidoMaterno());
         dni.set(userModel.getDni());
         email.set(userModel.getEmail());
-        phoneNumber.set(userModel.getPhoneNumber());
+        phoneNumber.set(userModel.getTelefono());
         roles.setAll(userModel.getRoles());
         token.set(userModel.getToken());
-        active.set(userModel.isActive());
+        active.set(userModel.isActivo());
     }
 
 }
