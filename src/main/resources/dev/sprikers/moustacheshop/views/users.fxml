@@ -267,13 +267,13 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
-                  <Button fx:id="btnDelete" text="Eliminar">
+                  <Button fx:id="btnDelete" text="Eliminar" visible="false">
                      <styleClass>
                         <String fx:value="button-reset" />
                         <String fx:value="button-destructive" />
                      </styleClass>
                   </Button>
-                  <Button fx:id="btnClean" text="Limpiar">
+                  <Button fx:id="btnClean" text="Limpiar" visible="false">
                      <styleClass>
                         <String fx:value="button-reset" />
                         <String fx:value="button-outline" />
