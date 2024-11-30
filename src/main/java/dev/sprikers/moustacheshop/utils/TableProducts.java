@@ -4,15 +4,18 @@ import java.util.List;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ListChangeListener;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import org.controlsfx.control.CheckComboBox;
 
 import dev.sprikers.moustacheshop.components.Toaster;
 import dev.sprikers.moustacheshop.interfaces.ProductSelectionHandler;
 import dev.sprikers.moustacheshop.models.CategoryModel;
 import dev.sprikers.moustacheshop.models.ProductModel;
+import dev.sprikers.moustacheshop.services.CategoryService;
 import dev.sprikers.moustacheshop.services.ProductService;
 
 /**
@@ -24,6 +27,7 @@ import dev.sprikers.moustacheshop.services.ProductService;
 public class TableProducts {
 
     private static final ProductService productService = new ProductService();
+    private static final CategoryService categoryService = new CategoryService();
     private final SpinnerLoader spinner = new SpinnerLoader();
 
     private final TableView<ProductModel> table;
@@ -31,6 +35,7 @@ public class TableProducts {
     private final Label total;
     private final Button btnReload;
     private final HBox hbSpinner;
+    private final CheckComboBox<CategoryModel> filterCategories;
 
     private TableColumn<ProductModel, String> colName;
     private TableColumn<ProductModel, Double> colPrice;
@@ -51,13 +56,22 @@ public class TableProducts {
      * @param label     Etiqueta donde se mostrará el total de productos.
      * @param reload    Botón para recargar la lista de productos.
      * @param container Contenedor del spinner de carga.
+     * @param filter    Filtro de categorías.
      */
-    public TableProducts(TableView<ProductModel> table, TextField search, Label label, Button reload, HBox container) {
+    public TableProducts(
+        TableView<ProductModel> table,
+        TextField search,
+        Label label,
+        Button reload,
+        HBox container,
+        CheckComboBox<CategoryModel> filter
+    ) {
         this.table = table;
         this.txtSearch = search;
         this.total = label;
         this.btnReload = reload;
         this.hbSpinner = container;
+        this.filterCategories = filter;
 
         Region region = (Region) container.getChildren().getFirst();
         spinner.setNode(region);
@@ -109,8 +123,10 @@ public class TableProducts {
         btnReload.setOnMouseClicked(event -> {
             refreshTable = true;
             loadProducts();
+            txtSearch.clear();
         });
         txtSearch.setOnKeyReleased(event -> handleSearch());
+        filterCategories.getCheckModel().getCheckedItems().addListener((ListChangeListener<CategoryModel>) c -> handleSearch());
     }
 
     /**
@@ -132,8 +148,16 @@ public class TableProducts {
     }
 
     /**
-     * Carga la lista de productos desde el servicio y actualiza la tabla.
-     * Muestra un spinner de carga mientras se realiza la petición.
+     * Carga la lista completa de productos desde el servicio y actualiza la tabla.
+     * También recarga las categorías disponibles en el filtro.
+     *
+     * <p>Comportamiento:</p>
+     * <ul>
+     *   <li>Muestra un spinner de carga mientras se obtienen los datos.</li>
+     *   <li>Limpia la selección actual de la tabla.</li>
+     *   <li>Establece el contador de productos en cero temporalmente.</li>
+     *   <li>Maneja errores durante la carga mostrando mensajes al usuario.</li>
+     * </ul>
      */
     public void loadProducts() {
         toggleSpinner(true);
@@ -143,6 +167,33 @@ public class TableProducts {
         productService.allProducts()
             .thenAccept(this::updateProductList)
             .exceptionally(this::handleLoadError);
+
+        loadCategories();
+    }
+
+    /**
+     * Carga la lista de categorías desde el servicio y actualiza el filtro de categorías.
+     *
+     * <p>Comportamiento:</p>
+     * <ul>
+     *   <li>Asigna las categorías obtenidas al filtro de categorías en la interfaz.</li>
+     *   <li>Limpia cualquier selección previa en el filtro.</li>
+     *   <li>Maneja errores durante la carga mostrando un mensaje al usuario.</li>
+     * </ul>
+     */
+    public void loadCategories() {
+        categoryService.getAll()
+            .thenApply(categories -> {
+                Platform.runLater(() -> {
+                    filterCategories.getItems().setAll(categories);
+                    filterCategories.getCheckModel().clearChecks();
+                });
+                return categories;
+            })
+            .exceptionally(ex -> {
+                Platform.runLater(() -> AlertManager.showErrorMessage("Error al cargar las categorías: " + ex.getCause().getMessage()));
+                return null;
+            });
     }
 
     /**
@@ -189,12 +240,29 @@ public class TableProducts {
     }
 
     /**
-     * Maneja la búsqueda de productos en la tabla.
+     * Filtra la lista de productos en la tabla según el texto ingresado en el campo de búsqueda
+     * y las categorías seleccionadas en el filtro
+     *
+     * <p>Comportamiento:</p>
+     * <ul>
+     *   <li>Si el campo de búsqueda está vacío, aplica solo el filtro de categorías</li>
+     *   <li>Si no hay categorías seleccionadas, aplica solo el filtro por texto</li>
+     *   <li>Si ambos filtros están activos, combina los criterios</li>
+     *   <li>Si no hay filtros activos, muestra todos los productos</li>
+     * </ul>
+     *
+     * <p>La tabla se actualiza dinámicamente con los resultados del filtro</p>
      */
     private void handleSearch() {
         String searchText = txtSearch.getText().trim().toLowerCase();
-        if (searchText.isEmpty()) setProductsList(productsList);
-        else searchProduct(searchText);
+        List<CategoryModel> selectedCategories = filterCategories.getCheckModel().getCheckedItems();
+
+        List<ProductModel> filteredProducts = productsList.stream()
+            .filter(product -> searchText.isEmpty() || product.getName().toLowerCase().contains(searchText))
+            .filter(product -> selectedCategories.isEmpty() || selectedCategories.contains(product.getCategory()))
+            .toList();
+
+        setProductsList(filteredProducts);
     }
 
     /**
@@ -206,22 +274,6 @@ public class TableProducts {
     private void setProductsList(List<ProductModel> products) {
         table.getItems().setAll(products);
         total.setText(String.valueOf(products.size()));
-    }
-
-    /**
-     * Busca productos por nombre en la lista de productos.
-     *
-     * @param name Nombre del producto a buscar.
-     */
-    private void searchProduct(String name) {
-        try {
-            List<ProductModel> results = productsList.stream()
-                .filter(product -> product.getName().toLowerCase().contains(name))
-                .toList();
-            setProductsList(results);
-        } catch (Exception e) {
-            Toaster.showError("Error al buscar el producto");
-        }
     }
 
 }

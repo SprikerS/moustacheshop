@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import org.controlsfx.control.CheckComboBox;
 
 import dev.sprikers.moustacheshop.components.Toaster;
 import dev.sprikers.moustacheshop.dto.ProductRequest;
@@ -47,6 +48,9 @@ public class ProductController implements Initializable {
     private ComboBox<CategoryModel> cbCategories;
 
     @FXML
+    private CheckComboBox<CategoryModel> chkcbFilterCategories;
+
+    @FXML
     private Label lblTotalProducts;
 
     @FXML
@@ -75,7 +79,7 @@ public class ProductController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tableProducts = new TableProducts(tblProducts, txtSearch, lblTotalProducts, btnReload, hbSpinner);
+        tableProducts = new TableProducts(tblProducts, txtSearch, lblTotalProducts, btnReload, hbSpinner, chkcbFilterCategories);
         tableProducts.setColumns(colName, colPrice, colStock, colCategory, colDescription);
         tableProducts.setOnProductSelected(this::setProductSelected);
         tableProducts.loadProducts();
@@ -91,6 +95,12 @@ public class ProductController implements Initializable {
     private void loadProductCategories() {
         categoryService.getAll()
             .thenAccept(categories -> Platform.runLater(() -> {
+
+                CategoryModel defaultCategory = new CategoryModel();
+                defaultCategory.setId(null);
+                defaultCategory.setName("Seleccione una categoría");
+                categories.addFirst(defaultCategory);
+
                 cbCategories.getItems().addAll(categories);
                 cbCategories.getSelectionModel().selectFirst();
             }))

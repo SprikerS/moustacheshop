@@ -16,16 +16,7 @@ public class CategoryService {
 
     public CompletableFuture<List<CategoryModel>> getAll() {
         return apiClient.getAsync(ApiEndpoints.CATEGORIES)
-            .thenApply(response -> {
-                List<CategoryModel> categories = JsonParserUtils.parseResponse(response.body(), new TypeReference<>() {});
-
-                CategoryModel defaultCategory = new CategoryModel();
-                defaultCategory.setId(null);
-                defaultCategory.setName("Seleccione una categoría");
-                categories.addFirst(defaultCategory);
-
-                return categories;
-            });
+            .thenApply(response -> JsonParserUtils.parseResponse(response.body(), new TypeReference<>() {}));
     }
 
 }

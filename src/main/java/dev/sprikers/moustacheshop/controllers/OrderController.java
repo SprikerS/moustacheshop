@@ -24,11 +24,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.IntegerStringConverter;
+import org.controlsfx.control.CheckComboBox;
 
 import dev.sprikers.moustacheshop.components.StepNavigator;
 import dev.sprikers.moustacheshop.components.Toaster;
 import dev.sprikers.moustacheshop.dto.OrderProductRequest;
 import dev.sprikers.moustacheshop.dto.OrderRequest;
+import dev.sprikers.moustacheshop.models.CategoryModel;
 import dev.sprikers.moustacheshop.models.OrderModel;
 import dev.sprikers.moustacheshop.models.ProductModel;
 import dev.sprikers.moustacheshop.services.OrderService;
@@ -47,6 +49,9 @@ public class OrderController implements Initializable {
 
     @FXML
     private Button btnReloadProducts;
+
+    @FXML
+    private CheckComboBox<CategoryModel> chkcbFilterCategories;
 
     @FXML
     private DatePicker dateOrder;
@@ -110,7 +115,7 @@ public class OrderController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        TableProducts tableProducts = new TableProducts(tblProducts, txtSearchProducts, lblProducts, btnReloadProducts, hbProductSpinner);
+        TableProducts tableProducts = new TableProducts(tblProducts, txtSearchProducts, lblProducts, btnReloadProducts, hbProductSpinner, chkcbFilterCategories);
         tableProducts.setColumns(colProductName, colProductPrice, colProductStock, colProductCategory, colProductDescription);
         tableProducts.setOnProductSelected(this::setProductSelected);
         tableProducts.loadProducts();
