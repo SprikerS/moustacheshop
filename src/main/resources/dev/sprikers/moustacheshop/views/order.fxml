@@ -474,8 +474,16 @@
             </Tab>
             <Tab fx:id="tabThree">
                <content>
-                  <VBox spacing="20.0">
+                  <VBox alignment="CENTER" spacing="20.0">
                      <children>
+                        <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/purshace-complete.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets bottom="20.0" top="20.0" />
+                           </VBox.margin>
+                        </ImageView>
                         <VBox alignment="CENTER_LEFT" spacing="20.0">
                            <children>
                               <Label styleClass="text-muted" text="Puede escanear el siguiente codigo QR para descargar el PDF del registro de la orden">
@@ -483,7 +491,11 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <ImageView fx:id="qrImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <ImageView fx:id="qrImageView" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </HBox>
                               <Label styleClass="text-muted" text="Tambien puede descargar el reporte directamente al sistema operativo mediante el siguiente boton">
                                  <font>
                                     <Font size="14.0" />
@@ -507,7 +519,7 @@
                                  </styleClass>
                               </Button>
                               <Region HBox.hgrow="ALWAYS" />
-                              <Button fx:id="btnSubmit" mnemonicParsing="false" prefWidth="100.0" text="Resetear">
+                              <Button fx:id="btnSubmit" mnemonicParsing="false" text="Resetear">
                                  <styleClass>
                                     <String fx:value="button-reset" />
                                     <String fx:value="button-outline" />

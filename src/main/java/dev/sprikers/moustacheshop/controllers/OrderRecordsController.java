@@ -13,10 +13,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import dev.sprikers.moustacheshop.components.Toaster;
@@ -31,6 +28,9 @@ public class OrderRecordsController implements Initializable {
     private static final OrderService orderService = new OrderService();
 
     private List<OrderModel> orders;
+
+    @FXML
+    private Button btnReload;
 
     @FXML
     private DatePicker dateFromPicker;
@@ -108,6 +108,7 @@ public class OrderRecordsController implements Initializable {
     private void initializeEventHandlers() {
         dateFromPicker.valueProperty().addListener((obs, oldDate, newDate) -> filterOrders());
         dateToPicker.valueProperty().addListener((obs, oldDate, newDate) -> filterOrders());
+        btnReload.setOnAction(event -> fetchOrderRecords());
     }
 
     private void filterOrders() {

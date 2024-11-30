@@ -28,6 +28,7 @@ import org.controlsfx.control.CheckComboBox;
 
 import dev.sprikers.moustacheshop.components.StepNavigator;
 import dev.sprikers.moustacheshop.components.Toaster;
+import dev.sprikers.moustacheshop.constants.PathViews;
 import dev.sprikers.moustacheshop.dto.OrderProductRequest;
 import dev.sprikers.moustacheshop.dto.OrderRequest;
 import dev.sprikers.moustacheshop.models.CategoryModel;
@@ -161,6 +162,7 @@ public class OrderController implements Initializable {
         );
 
         btnSaveOrder.setOnAction(event -> saveOrder());
+        btnSubmit.setOnAction(event -> resetView());
 
         DatePickerFormatter.configureDatePicker(dateOrder, lblOrderDate);
     }
@@ -298,6 +300,10 @@ public class OrderController implements Initializable {
                 Toaster.showError("No se pudo obtener el reporte: %s".formatted(ex.getCause().getMessage()));
                 return null;
             });
+    }
+
+    private void resetView() {
+        HomeController.getInstance().forceReloadView(PathViews.ORDERS);
     }
 
 }

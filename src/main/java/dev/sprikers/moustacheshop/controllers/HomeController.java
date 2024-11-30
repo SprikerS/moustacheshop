@@ -20,6 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import lombok.Getter;
 
 import dev.sprikers.moustacheshop.application.Main;
 import dev.sprikers.moustacheshop.components.SidebarButton;
@@ -40,6 +41,9 @@ public class HomeController implements Initializable {
     private final List<SidebarButtonController> buttonControllers = new ArrayList<>();
     private final WindowDragHandler windowDragHandler = new WindowDragHandler();
     private static final HomeService homeService = new HomeService();
+
+    @Getter
+    private static HomeController instance;
 
     @FXML
     private AnchorPane ap;
@@ -73,6 +77,7 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        instance = this;
         DateTimeUpdater.configureDateTimeLabels(lblDate, lblTime);
 
         btnLogout.setOnMouseClicked(this::logout);
@@ -228,4 +233,8 @@ public class HomeController implements Initializable {
         new Thread(loadTask).start();
     }
 
+    public void forceReloadView(String view) {
+        pageCache.remove(view);
+        loadView(view);
+    }
 }
