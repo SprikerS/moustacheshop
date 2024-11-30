@@ -11,6 +11,7 @@ public class ApiEndpoints {
     public static final String ORDER = BASE_URL + "/orders";
     public static final String PRODUCT = BASE_URL + "/products";
     public static final String REPORTS = BASE_URL + "/reports";
+    public static final String SUMMARIES = BASE_URL + "/summaries";
     public static final String USER = BASE_URL + "/user";
 
 }

@@ -28,7 +28,9 @@ import dev.sprikers.moustacheshop.constants.PathComponents;
 import dev.sprikers.moustacheshop.constants.PathSVG;
 import dev.sprikers.moustacheshop.constants.PathViews;
 import dev.sprikers.moustacheshop.enums.UserRole;
+import dev.sprikers.moustacheshop.models.SummaryModel;
 import dev.sprikers.moustacheshop.models.UserBindingModel;
+import dev.sprikers.moustacheshop.services.HomeService;
 import dev.sprikers.moustacheshop.utils.*;
 
 public class HomeController implements Initializable {
@@ -37,6 +39,7 @@ public class HomeController implements Initializable {
     private final UserBindingModel user = UserSession.getInstance().getUserBindingModel();
     private final List<SidebarButtonController> buttonControllers = new ArrayList<>();
     private final WindowDragHandler windowDragHandler = new WindowDragHandler();
+    private static final HomeService homeService = new HomeService();
 
     @FXML
     private AnchorPane ap;
@@ -45,7 +48,7 @@ public class HomeController implements Initializable {
     private BorderPane bp;
 
     @FXML
-    private Button btnLogout;
+    private Button btnLogout, btnReload;
 
     @FXML
     private HBox hbTitleBar;
@@ -57,6 +60,15 @@ public class HomeController implements Initializable {
     private Label lblDate, lblTime, sbDNI, sbNames;
 
     @FXML
+    private Label lblUserActives, lblUserAdmins, lblUserClients, lblUserEmployees, lblUserInactives, lblUsersTotal;
+
+    @FXML
+    private Label lblProductsActives, lblProductsInactives, lblProductsTotal;
+
+    @FXML
+    private Label lblOrdersActive, lblOrdersClient, lblOrdersEmployees, lblOrdersInactive, lblOrdesTotal;
+
+    @FXML
     private VBox sidebarVBox;
 
     @Override
@@ -66,6 +78,7 @@ public class HomeController implements Initializable {
         btnLogout.setOnMouseClicked(this::logout);
         btnClose.setOnMouseClicked(event -> System.exit(0));
         btnMinimize.setOnMouseClicked(event -> ((Stage) btnMinimize.getScene().getWindow()).setIconified(true));
+        btnReload.setOnAction(event -> loadSummaries());
 
         Platform.runLater(() -> {
             loadSidebar();
@@ -73,7 +86,40 @@ public class HomeController implements Initializable {
         });
 
         bindUserInfoToSidebar();
+        Platform.runLater(this::loadSummaries);
     }
+
+    private void loadSummaries() {
+        homeService.fetchSummaries()
+            .thenAccept(user -> Platform.runLater(() -> setCurrentSummary(user)))
+            .exceptionally(ex -> {
+                AlertManager.showErrorMessage("Error loading summaries: " + ex.getMessage());
+                return null;
+            });
+    }
+
+    private void setCurrentSummary(SummaryModel summary) {
+        if (summary != null) {
+            lblUsersTotal.setText(String.valueOf(summary.getUsersTotal()));
+            lblUserActives.setText(String.valueOf(summary.getUsersActive()));
+            lblUserInactives.setText(String.valueOf(summary.getUsersInactive()));
+            lblUserClients.setText(String.valueOf(summary.getUsersCustomers()));
+            lblUserEmployees.setText(String.valueOf(summary.getUsersEmployees()));
+            lblUserAdmins.setText(String.valueOf(summary.getUsersAdmins()));
+
+            lblProductsTotal.setText(String.valueOf(summary.getProductsTotal()));
+            lblProductsActives.setText(String.valueOf(summary.getProdutcsActive()));
+            lblProductsInactives.setText(String.valueOf(summary.getProdutcsInactive()));
+
+            lblOrdesTotal.setText(String.valueOf(summary.getOrdersTotal()));
+            lblOrdersClient.setText(summary.getTopCustomer());
+            lblOrdersEmployees.setText(summary.getTopEmployee());
+        }
+    }
+
+    /* ----------------------------------
+     * Sección de configuración de la UI
+     * ---------------------------------- */
 
     private void loadSidebar() {
         List<SidebarButton> sidebarButtons = getSidebarButtons();
