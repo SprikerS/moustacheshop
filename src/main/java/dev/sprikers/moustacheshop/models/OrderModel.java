@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderModel {
     private String id;
-    private String orderDate;
-    private UserModel customer;
-    private UserModel employee;
-    private ArrayList<OrderDetailModel> details;
+    private String fecha;
+    private UserModel cliente;
+    private UserModel empleado;
+    private ArrayList<OrderDetailModel> detalles;
 }

@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderDetailModel {
     private String id;
-    private int quantity;
-    private double salePrice;
+    private int cantidad;
+    private double precioVenta;
     private double total;
-    private ProductModel product;
+    private ProductModel producto;
 }

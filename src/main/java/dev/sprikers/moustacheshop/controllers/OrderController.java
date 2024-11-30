@@ -139,9 +139,9 @@ public class OrderController implements Initializable {
     }
 
     private void initializeOrderTableColumns() {
-        colOrderName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colOrderPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
-        colOrderQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colOrderName.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+        colOrderPrice.setCellValueFactory(new PropertyValueFactory<>("precio"));
+        colOrderQuantity.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
         colOrderTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
 
         tblOrder.setItems(listProductsOrder);
@@ -188,7 +188,7 @@ public class OrderController implements Initializable {
 
             if (newQuantity == null) {
                 errorMessage = "Debe ingresar un valor numérico";
-            } else if (newQuantity.equals(orderProduct.getQuantity())) {
+            } else if (newQuantity.equals(orderProduct.getCantidad())) {
                 return;
             } else if (newQuantity <= 0) {
                 errorMessage = "La cantidad mínima debe ser 1";
@@ -202,7 +202,7 @@ public class OrderController implements Initializable {
                 return;
             }
 
-            orderProduct.setQuantity(newQuantity);
+            orderProduct.setCantidad(newQuantity);
             orderProduct.setTotal(Math.round(newQuantity * orderProduct.getPrecio() * 100.0) / 100.0);
 
             tblOrder.refresh();
@@ -226,7 +226,7 @@ public class OrderController implements Initializable {
     }
 
     private void setupBindingsLabels() {
-        bindLabelToSum(lblShoppingCart, () -> String.valueOf(listProductsOrder.stream().mapToInt(OrderProductRequest::getQuantity).sum()));
+        bindLabelToSum(lblShoppingCart, () -> String.valueOf(listProductsOrder.stream().mapToInt(OrderProductRequest::getCantidad).sum()));
         bindLabelToSum(lblTotalAmount, () -> String.format("%.2f", listProductsOrder.stream().mapToDouble(OrderProductRequest::getTotal).sum()));
         lblShoppingClient.textProperty().bind(Bindings.format("%s %s %s", txtNames.textProperty(), txtPaternalSurname.textProperty(), txtMaternalSurname.textProperty()));
         lblShoppingDNI.textProperty().bind(txtDNI.textProperty());
@@ -252,8 +252,8 @@ public class OrderController implements Initializable {
         List<Map<String, Object>> productsOrder = listProductsOrder.stream()
             .map(product -> {
                 Map<String, Object> map = new HashMap<>();
-                map.put("productId", product.getId());
-                map.put("quantity", product.getQuantity());
+                map.put("productoId", product.getId());
+                map.put("cantidad", product.getCantidad());
                 return map;
             })
             .collect(Collectors.toList());

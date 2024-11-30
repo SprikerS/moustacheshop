@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderRequest {
-    private String orderDate;
+    private String fecha;
     private String dni;
-    private String names;
-    private String paternalSurname;
-    private String maternalSurname;
-    private List<Map<String, Object>> products; // Se usan mapas para los productos
+    private String nombres;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
+    private List<Map<String, Object>> productos; // Se usan mapas para los productos
 }

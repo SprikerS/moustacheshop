@@ -9,22 +9,22 @@ import dev.sprikers.moustacheshop.models.ProductModel;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class OrderProductRequest extends ProductModel {
-    private int quantity;
+    private int cantidad;
     private double total;
 
     public OrderProductRequest(
         String id,
-        String name,
-        double price,
+        String nombre,
+        double precio,
         int stock,
-        String description,
-        CategoryModel category,
-        boolean active,
-        int quantity,
+        String descripcion,
+        CategoryModel categoria,
+        boolean activo,
+        int cantidad,
         double total
     ) {
-        super(id, name, price, stock, description, category, active);
-        this.quantity = quantity;
+        super(id, nombre, precio, stock, descripcion, categoria, activo);
+        this.cantidad = cantidad;
         this.total = total;
     }
 }

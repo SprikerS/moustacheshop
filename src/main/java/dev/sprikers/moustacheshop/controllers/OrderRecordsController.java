@@ -118,7 +118,7 @@ public class OrderRecordsController implements Initializable {
         if (startDate != null && endDate != null) {
             List<OrderModel> filteredOrders = orders.stream()
                 .filter(order -> {
-                    LocalDate orderDate = LocalDate.parse(order.getOrderDate());
+                    LocalDate orderDate = LocalDate.parse(order.getFecha());
                     return !orderDate.isBefore(startDate) && !orderDate.isAfter(endDate);
                 })
                 .collect(Collectors.toList());
@@ -132,7 +132,7 @@ public class OrderRecordsController implements Initializable {
     }
 
     private SimpleStringProperty getCustomerProperty(OrderModel order, String property) {
-        UserModel customer = order.getCustomer();
+        UserModel customer = order.getCliente();
 
         return switch (property) {
             case "dni" -> new SimpleStringProperty(customer.getDni());
@@ -143,13 +143,13 @@ public class OrderRecordsController implements Initializable {
     }
 
     private ObservableValue<Integer> getQuantityProperty(OrderModel order) {
-        ArrayList<OrderDetailModel> details = order.getDetails();
-        int quantity = details.stream().mapToInt(OrderDetailModel::getQuantity).sum();
+        ArrayList<OrderDetailModel> details = order.getDetalles();
+        int quantity = details.stream().mapToInt(OrderDetailModel::getCantidad).sum();
         return new SimpleIntegerProperty(quantity).asObject();
     }
 
     private ObservableValue<Double> getTotalProperty(OrderModel order) {
-        ArrayList<OrderDetailModel> details = order.getDetails();
+        ArrayList<OrderDetailModel> details = order.getDetalles();
         double total = details.stream().mapToDouble(OrderDetailModel::getTotal).sum();
         return new SimpleDoubleProperty(total).asObject();
     }
