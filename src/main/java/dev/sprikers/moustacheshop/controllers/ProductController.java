@@ -5,6 +5,11 @@ import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -25,8 +30,15 @@ public class ProductController implements Initializable {
     private TableProducts tableProducts;
     private ProductModel productSelected;
 
+    private enum ProductState {
+        DEFAULT,
+        EDITING,
+        LOADING
+    }
+
     private final ProductService productService = new ProductService();
     private final CategoryService categoryService = new CategoryService();
+    private final ObjectProperty<ProductState> currentState = new SimpleObjectProperty<>(ProductState.DEFAULT);
 
     @FXML
     private Button btnClean, btnDelete, btnReload, btnSubmit;
@@ -70,9 +82,7 @@ public class ProductController implements Initializable {
 
         initializeEventHandlers();
         loadProductCategories();
-
-        btnClean.setVisible(false);
-        btnDelete.setVisible(false);
+        setupBindingsControls();
 
         TextFieldFormatter.applyIntegerFormat(txtStock);
         TextFieldFormatter.applyDecimalFormat(txtPrice, 2, 3);
@@ -93,12 +103,6 @@ public class ProductController implements Initializable {
     private String getSelectedCategory() {
         CategoryModel selectedCategory = cbCategories.getSelectionModel().getSelectedItem();
         return selectedCategory != null ? selectedCategory.getId() : null;
-    }
-
-    private void initializeEventHandlers() {
-        btnClean.setOnAction(event -> resetForm());
-        btnDelete.setOnAction(event -> deleteProduct());
-        btnSubmit.setOnAction(event -> submitProductForm());
     }
 
     private void submitProductForm() {
@@ -172,23 +176,60 @@ public class ProductController implements Initializable {
             });
     }
 
+    /* ----------------------------------
+     * Sección de configuración de la UI
+     * ---------------------------------- */
+
+    private void setupBindingsControls() {
+        btnDelete.visibleProperty().bind(currentState.isEqualTo(ProductState.EDITING));
+
+        btnSubmit.disableProperty().bind(currentState.isEqualTo(ProductState.LOADING));
+        btnSubmit.textProperty().bind(Bindings.createStringBinding(() -> switch (currentState.get()) {
+            case EDITING -> "Actualizar";
+            case LOADING -> "Cargando...";
+            default -> "Registrar";
+        }, currentState));
+
+        cbCategories.getItems().addListener((ListChangeListener<CategoryModel>) change -> {
+            if (cbCategories.getItems().isEmpty()) return;
+
+            BooleanBinding isFormModified = txtName.textProperty().isNotEmpty()
+                .or(txtStock.textProperty().isNotEmpty())
+                .or(txtPrice.textProperty().isNotEmpty())
+                .or(txtDescription.textProperty().isNotEmpty())
+                .or(cbCategories.getSelectionModel().selectedItemProperty().isNotEqualTo(cbCategories.getItems().getFirst()));
+
+            btnClean.visibleProperty().bind(isFormModified);
+        });
+    }
+
+    private void initializeEventHandlers() {
+        btnClean.setOnAction(event -> resetForm());
+        btnDelete.setOnAction(event -> deleteProduct());
+        btnSubmit.setOnAction(event -> submitProductForm());
+    }
+
     private void setProductSelected(ProductModel product) {
         productSelected = product;
-        txtName.setText(product.getName());
-        txtPrice.setText(String.valueOf(product.getPrice()));
-        txtStock.setText(String.valueOf(product.getStock()));
-        txtDescription.setText(product.getDescription());
 
-        CategoryModel category = product.getCategory();
-        cbCategories.getSelectionModel().select(category != null ? category : cbCategories.getItems().getFirst());
+        if (product != null) {
+            txtName.setText(product.getName());
+            txtPrice.setText(String.valueOf(product.getPrice()));
+            txtStock.setText(String.valueOf(product.getStock()));
+            txtDescription.setText(product.getDescription());
 
-        btnClean.setVisible(true);
-        btnDelete.setVisible(true);
-        btnSubmit.setText("Actualizar");
+            CategoryModel category = product.getCategory();
+            cbCategories.getSelectionModel().select(category != null ? category : cbCategories.getItems().getFirst());
+
+            currentState.set(ProductState.EDITING);
+        } else {
+            resetForm();
+        }
     }
 
     private void resetForm() {
         productSelected = null;
+
         txtName.clear();
         txtPrice.clear();
         txtSearch.clear();
@@ -197,19 +238,15 @@ public class ProductController implements Initializable {
         cbCategories.getSelectionModel().selectFirst();
         tblProducts.getSelectionModel().clearSelection();
 
-        btnClean.setVisible(false);
-        btnDelete.setVisible(false);
-        btnSubmit.setText("Registrar");
-        lblTotalProducts.requestFocus();
+        currentState.set(ProductState.DEFAULT);
     }
 
     private void submitButtonState(boolean isLoading) {
-        btnClean.setVisible(false);
-        btnDelete.setVisible(false);
-
-        String buttonText = isLoading ? "Cargando..." : productSelected != null ? "Actualizar" : "Registrar";
-        btnSubmit.setText(buttonText);
-        btnSubmit.setDisable(isLoading);
+        if (isLoading) {
+            currentState.set(ProductState.LOADING);
+        } else {
+            currentState.set(productSelected != null ? ProductState.EDITING : ProductState.DEFAULT);
+        }
     }
 
     private void handleReload() {

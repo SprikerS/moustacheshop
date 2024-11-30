@@ -169,14 +169,14 @@
             </GridPane>
             <HBox alignment="TOP_RIGHT" spacing="20.0">
                <children>
-                  <Button fx:id="btnDelete" text="Eliminar">
+                  <Button fx:id="btnDelete" text="Eliminar" visible="false">
                      <styleClass>
                         <String fx:value="button-reset" />
                         <String fx:value="button-destructive" />
                      </styleClass>
                   </Button>
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button fx:id="btnClean" text="Limpiar">
+                  <Button fx:id="btnClean" text="Limpiar" visible="false">
                      <styleClass>
                         <String fx:value="button-reset" />
                         <String fx:value="button-outline" />
