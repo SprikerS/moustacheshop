@@ -305,16 +305,20 @@
       </HBox>
       <StackPane alignment="BOTTOM_CENTER" prefHeight="265.0">
          <children>
-            <TableView>
+            <TableView fx:id="tblUsers">
                <columns>
-                  <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="DNI" />
-                  <TableColumn editable="false" maxWidth="-Infinity" minWidth="150.0" prefWidth="150.0" resizable="false" text="Nombres" />
-                  <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="A. Paterno" />
-                  <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="A. Materno" />
-                  <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Correo" />
-                  <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Roles" />
-                  <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Telefono" />
-                  <TableColumn editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Estado" />
+                  <TableColumn fx:id="colDNI" editable="false" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" resizable="false" text="DNI" />
+                  <TableColumn fx:id="colNames" editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Nombres" />
+                  <TableColumn editable="false" maxWidth="-1.0" minWidth="125.0" prefWidth="-1.0" resizable="false" sortable="false" text="Apellidos">
+                     <columns>
+                        <TableColumn fx:id="colSurPater" editable="false" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" resizable="false" text="Paterno" />
+                        <TableColumn fx:id="colSurMater" editable="false" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" resizable="false" text="Materno" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn fx:id="colEmail" editable="false" maxWidth="1.7976931348623157E308" minWidth="160.0" prefWidth="-1.0" text="Correo" />
+                  <TableColumn fx:id="colRoles" editable="false" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" resizable="false" text="Roles" />
+                  <TableColumn fx:id="colPhone" editable="false" maxWidth="-Infinity" minWidth="100.0" prefWidth="100.0" resizable="false" text="Telefono" />
+                  <TableColumn fx:id="colActive" editable="false" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" resizable="false" text="Activo" />
                </columns>
             </TableView>
             <HBox fx:id="hbProductSpinner" alignment="CENTER" spacing="10.0" styleClass="background" visible="false">

@@ -3,7 +3,6 @@ package dev.sprikers.moustacheshop.models;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,8 +21,6 @@ public class UserModel {
     private Integer phoneNumber;
     private List<String> roles;
     private String token;
-
-    @JsonProperty("isActive")
     private boolean active;
 
     public String getSurnames() {

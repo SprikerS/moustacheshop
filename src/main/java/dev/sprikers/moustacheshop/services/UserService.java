@@ -1,7 +1,10 @@
 package dev.sprikers.moustacheshop.services;
 
 import java.net.http.HttpResponse;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 
 import dev.sprikers.moustacheshop.clients.ApiClient;
 import dev.sprikers.moustacheshop.constants.ApiEndpoints;
@@ -15,6 +18,11 @@ import dev.sprikers.moustacheshop.utils.JsonParserUtils;
 public class UserService {
 
     private final ApiClient apiClient = new ApiClient();
+
+    public CompletableFuture<List<UserModel>> allUsers() {
+        return apiClient.getAsync(ApiEndpoints.USER)
+            .thenApply(response -> JsonParserUtils.parseResponse(response.body(), new TypeReference<>() {}));
+    }
 
     public CompletableFuture<UserModel> update(UpdateProfileRequest updateProfileRequest, String id) {
         return apiClient.patchAsync(ApiEndpoints.USER + "/" + id, updateProfileRequest)
