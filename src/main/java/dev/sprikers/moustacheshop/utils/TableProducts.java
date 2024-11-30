@@ -114,7 +114,7 @@ public class TableProducts {
         colStock.setCellValueFactory(new PropertyValueFactory<>("stock"));
         colCategory.setCellValueFactory(cellData -> {
             CategoryModel category = cellData.getValue().getCategoria();
-            return new SimpleStringProperty(category != null ? category.getName() : null);
+            return new SimpleStringProperty(category != null ? category.getNombre() : null);
         });
         colDescription.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         colActive.setCellValueFactory(new PropertyValueFactory<>("activo"));

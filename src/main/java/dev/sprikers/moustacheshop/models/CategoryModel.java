@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class CategoryModel {
     private String id;
-    private String name;
+    private String nombre;
 
     @Override
     public String toString() {
-        return name;
+        return nombre;
     }
 }

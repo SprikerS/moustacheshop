@@ -105,7 +105,7 @@ public class ProductController implements Initializable {
 
                 CategoryModel defaultCategory = new CategoryModel();
                 defaultCategory.setId(null);
-                defaultCategory.setName("Seleccione una categoría");
+                defaultCategory.setNombre("Seleccione una categoría");
                 categories.addFirst(defaultCategory);
 
                 cbCategories.getItems().addAll(categories);
