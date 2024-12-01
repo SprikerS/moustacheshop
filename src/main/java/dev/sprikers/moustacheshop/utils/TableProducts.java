@@ -143,8 +143,8 @@ public class TableProducts {
         table.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 ProductModel selectedProduct = table.getSelectionModel().getSelectedItem();
-                if (selectedProduct != null && !selectedProduct.equals(lastSelectedProduct)) {
-                    lastSelectedProduct = selectedProduct;
+                if (selectedProduct != null) { //&& !selectedProduct.equals(lastSelectedProduct)
+//                    lastSelectedProduct = selectedProduct;
                     onProductSelected.onProductSelected(selectedProduct);
                 }
             }
