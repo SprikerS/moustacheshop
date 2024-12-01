@@ -155,12 +155,14 @@ public class HomeController implements Initializable {
         SidebarButton sbOrders = new SidebarButton(PathSVG.NOTEBOOK_TEXT, "Ordenes", () -> setView(PathViews.ORDERS));
         SidebarButton sbUsers = new SidebarButton(PathSVG.USERS_ROUND, "Usuarios", () -> setView(PathViews.USERS));
         SidebarButton sbProducts = new SidebarButton(PathSVG.PACKAGE, "Productos", () -> setView(PathViews.PRODUCTS));
+        SidebarButton sbCategories = new SidebarButton(PathSVG.FILTER, "Categorías", () -> setView(PathViews.CATEGORIES));
         SidebarButton sbSettings = new SidebarButton(PathSVG.BOLT, "Configuración", () -> setView(PathViews.SETTINGS));
 
         list.add(sbHome);
         list.add(sbOrderRecords);
         list.add(sbOrders);
         list.add(sbProducts);
+        list.add(sbCategories);
 
         Set<String> allowedRoles = Set.of(UserRole.ADMIN.getRole(), UserRole.SUPERUSER.getRole());
         if (user.getRoles().stream().anyMatch(allowedRoles::contains)) {
