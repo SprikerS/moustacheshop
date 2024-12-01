@@ -146,6 +146,13 @@ public class OrderController implements Initializable {
 
         tblOrder.setItems(listProductsOrder);
         setupQuantityColumnWithFilter();
+
+        tblOrder.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                OrderProductRequest selectedProductOrden = tblOrder.getSelectionModel().getSelectedItem();
+                listProductsOrder.remove(selectedProductOrden);
+            }
+        });
     }
 
     private void initializeEventHandlers() {
