@@ -1,5 +1,7 @@
 package dev.sprikers.moustacheshop.utils;
 
+import java.awt.*;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -86,6 +88,40 @@ public class FileUtils {
 
         try (FileOutputStream fos = new FileOutputStream(filePath.toFile())) {
             fos.write(content);
+        }
+    }
+
+    /**
+     * Abre un archivo previamente guardado en el directorio base o en una subcarpeta específica.
+     * Si la subcarpeta no existe, se intentará crear automáticamente.
+     *
+     * @param folderName Nombre de la subcarpeta donde se encuentra el archivo. Si es nulo, se usará el directorio base.
+     * @param fileName   Nombre del archivo a abrir.
+     * @throws IllegalArgumentException si el nombre del archivo es nulo o vacío, o si el archivo no existe.
+     */
+    public static void openSavedFile(String folderName, String fileName) {
+        if (fileName == null || fileName.isEmpty()) {
+            throw new IllegalArgumentException("El nombre del archivo no puede ser nulo o vacío");
+        }
+
+        Path targetFolder = folderName == null ? getBaseFolderPath() : createSubfolder(folderName);
+        Path filePath = targetFolder.resolve(fileName);
+
+        File file = filePath.toFile();
+
+        if (!file.exists()) {
+            throw new IllegalArgumentException("El archivo no existe: " + file.getAbsolutePath());
+        }
+
+        try {
+            if (Desktop.isDesktopSupported()) {
+                Desktop desktop = Desktop.getDesktop();
+                desktop.open(file);
+            } else {
+                System.err.println("El entorno no soporta operaciones de escritorio.");
+            }
+        } catch (IOException e) {
+            System.err.println("Error al abrir el archivo: " + e.getMessage());
         }
     }
 

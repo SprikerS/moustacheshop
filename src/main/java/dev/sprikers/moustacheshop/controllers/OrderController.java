@@ -298,6 +298,7 @@ public class OrderController implements Initializable {
                 String fileName = "%s.pdf".formatted(currentOrder.getId());
                 try {
                     FileUtils.saveFile("reports", fileName, fileContent);
+                    FileUtils.openSavedFile("reports", fileName);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
